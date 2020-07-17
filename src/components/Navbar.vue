@@ -17,7 +17,7 @@
           </v-list-item-avatar>
 
           <v-list-item-content>
-            <v-list-item-title>Jhon Doe</v-list-item-title>
+            <v-list-item-title>Jhon some thing Doe</v-list-item-title>
             <v-list-item-subtitle>Subtext</v-list-item-subtitle>
           </v-list-item-content>
         </v-list-item>
