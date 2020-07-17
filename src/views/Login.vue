@@ -1,0 +1,71 @@
+<template>
+  <v-container>
+    <v-row justify="center">
+      <v-col cols="12" sm="6">
+        <h1 class="form-header text-center">Login</h1>
+        <v-card elevation="0" class="pa-6 rounded-lg">
+          <ValidationObserver ref="loginObserver">
+            <form>
+              <ValidationProvider v-slot="{ errors }" name="E-mail" rules="required|min:2">
+                <v-text-field
+                  v-model="email"
+                  :error-messages="errors"
+                  prepend-icon="mdi-email-outline"
+                  hint="Email account or Username"
+                  label="Username / E-mail"
+                  required
+                ></v-text-field>
+              </ValidationProvider>
+              <ValidationProvider v-slot="{ errors }" name="E-mail" rules="required|min:8">
+                <v-text-field
+                  v-model="password"
+                  :prepend-icon="loginpassword ? 'mdi-eye-outline' : 'mdi-eye-off-outline'"
+                  :type="loginpassword ? 'text' : 'password'"
+                  :error-messages="errors"
+                  name="password1"
+                  label="Password"
+                  hint="At least 8 characters"
+                  @click:prepend="loginpassword = !loginpassword"
+                  required
+                ></v-text-field>
+              </ValidationProvider>
+              <v-card-actions>
+                <v-btn to="/signup" small text color="info">Dont have Account?</v-btn>
+                <v-spacer></v-spacer>
+                <v-btn
+                  :loading="loadingLogin"
+                  :disabled="loadingLogin"
+                  color="indigo"
+                  class="ma-2 white--text"
+                  small
+                  @click="submit"
+                >
+                  <span v-show="!loadingLogin">Submit</span>
+                  <v-icon class="px-4" dark v-show="loadingLogin">mdi-cloud-upload</v-icon>
+                </v-btn>
+              </v-card-actions>
+            </form>
+          </ValidationObserver>
+        </v-card>
+      </v-col>
+    </v-row>
+  </v-container>
+</template>
+
+<script lang="ts">
+import { Component, Vue } from "vue-property-decorator";
+
+// form validation
+import { extend, setInteractionMode } from "vee-validate";
+import { required, email, min, max } from "vee-validate/dist/rules";
+
+setInteractionMode("eager");
+
+@Component
+export default class Login extends Vue {
+  email = "";
+  password = "";
+  loginpassword = false;
+  loadingLogin = false;
+}
+</script>

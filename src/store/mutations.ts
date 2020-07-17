@@ -1,3 +1,3 @@
-export const SET_THEME = (state: any, theme: string) => {
-  state.theme = theme;
-}
+export const TOGGLE_GLOBAL_THEME = (state: any) => {
+  state.globalTheme = !state.globalTheme;
+};

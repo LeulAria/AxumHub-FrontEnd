@@ -12,11 +12,11 @@ import * as getters from './getters'
 import * as mutations from './mutations'
 import * as actions from './actions'
 
-
 export default new Vuex.Store({
   strict: true,
   devtools: true,
   state,
+  getters,
   mutations,
   actions,
   modules: {

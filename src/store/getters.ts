@@ -1,3 +1,3 @@
-export const theme = (state: any) => {
-  return state.theme;
+export const globalTheme = (state: any) => {
+  return state.globalTheme;
 }

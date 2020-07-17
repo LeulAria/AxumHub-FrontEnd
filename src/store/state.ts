@@ -1,3 +1,4 @@
 export default {
-  theme: null
+  globalTheme: false,
+  appName: 'dood'
 }
