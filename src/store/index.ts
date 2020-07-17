@@ -1,11 +1,31 @@
 import Vue from "vue";
 import Vuex from "vuex";
+import VuexPersistence from 'vuex-persist';
+
+// Modules
+import userModule from './modules/users'
 
 Vue.use(Vuex);
 
+import state from './state'
+import * as getters from './getters'
+import * as mutations from './mutations'
+import * as actions from './actions'
+
+
 export default new Vuex.Store({
-  state: {},
-  mutations: {},
-  actions: {},
-  modules: {}
+  strict: true,
+  devtools: true,
+  state,
+  mutations,
+  actions,
+  modules: {
+
+  },
+  plugins: [
+    new VuexPersistence({
+      storage: window.localStorage,
+      key: 'AxumHUB',
+    }).plugin,
+  ],
 });

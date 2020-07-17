@@ -2,30 +2,28 @@ import Vue from "vue";
 import Vuetify from "vuetify";
 import "vuetify/dist/vuetify.min.css";
 
-import colors from 'vuetify/lib/util/colors'
-
 Vue.use(Vuetify);
 
 export default new Vuetify({
   theme: {
     themes: {
       light: {
-        primary: colors.grey.lighten5,
-        secondary: "#424242",
-        accent: "#82B1FF",
+        primary: "#E0FBFC",
+        secondary: "#32161F",
+        accent: "#787878",
         error: "#FF5252",
         info: "#2196F3",
-        success: "#4CAF50",
-        warning: "#FFC107"
+        success: "#92CB01",
+        warning: "#F4FF52"
       },
       dark: {
-        primary: colors.grey.darken4,
-        secondary: "#424242",
-        accent: "#82B1FF",
+        primary: "#202023",
+        secondary: "#E0FBFC",
+        accent: "#9a9a9a",
         error: "#FF5252",
         info: "#2196F3",
-        success: "#4CAF50",
-        warning: "#FFC107"
+        success: "#A0DF01",
+        warning: "#F4FF52"
       }
     }
   }
