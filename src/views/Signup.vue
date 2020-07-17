@@ -118,7 +118,39 @@ export default class Signup extends Vue {
   }
 
   submit() {
-    alert("wtf");
+    this.loadingSignup = true;
+    (this.$refs.singupObserver as Vue & {
+      validate: () => any;
+    })
+      .validate()
+      .then((isValid: boolean) => {
+        if (isValid) {
+          const info: any = {
+            name: this.username,
+            email: this.email,
+            password: this.password1,
+            password2: this.password2
+          };
+
+          this.$store
+            .dispatch("users/registerUser", info)
+            .then(res => {
+              console.log(res);
+              this.loadingSignup = false;
+              this.$router.push({ name: "Dashboard" });
+            })
+            .catch(err => {
+              setTimeout(() => (this.loadingSignup = false), 2000);
+              console.log(err);
+            });
+        } else {
+          setTimeout(() => (this.loadingSignup = false), 2000);
+        }
+      })
+      .catch((error: any) => {
+        setTimeout(() => (this.loadingSignup = false), 2000);
+        console.log(error);
+      });
   }
 }
 </script>

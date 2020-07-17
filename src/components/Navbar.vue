@@ -24,9 +24,9 @@
 
         <v-divider class="mb-2"></v-divider>
 
-        <v-list-item v-for="item in items" :key="item.title" link>
+        <v-list-item v-for="item in items" :key="item.title" :to="item.to" link>
           <v-list-item-icon>
-            <v-icon>{{ item.icon }}</v-icon>
+            <v-icon class="nav-icons">{{ item.icon }}</v-icon>
           </v-list-item-icon>
 
           <v-list-item-content>
@@ -36,8 +36,8 @@
 
         <v-list-item @click="changeTheme()">
           <v-list-item-icon>
-            <v-icon v-if="globalTheme">mdi-white-balance-sunny</v-icon>
-            <v-icon v-if="!globalTheme">mdi-moon-waxing-crescent</v-icon>
+            <v-icon class="nav-icons" v-if="globalTheme">mdi-white-balance-sunny</v-icon>
+            <v-icon class="nav-icons" v-if="!globalTheme">mdi-moon-waxing-crescent</v-icon>
           </v-list-item-icon>
 
           <v-list-item-content>
@@ -66,12 +66,12 @@ export default class Navbar extends Vue {
   toggleGlobalTheme!: any;
 
   items = [
-    { title: "Dashboard", icon: "mdi-view-dashboard-outline" },
-    { title: "Blog", icon: "mdi-account-settings-outline" },
-    { title: "Q/A", icon: "mdi-comment-question-outline" },
-    { title: "Profile", icon: "mdi-account-settings-outline" },
-    { title: "Logout", icon: "mdi-card-bulleted-settings-outline" },
-    { title: "Settings", icon: "mdi-cog-outline" }
+    { title: "Dashboard", icon: "mdi-view-dashboard", to: "/dashboard" },
+    { title: "Blog", icon: "mdi-compass", to: "/" },
+    { title: "Q/A", icon: "mdi-comment-question", to: "/" },
+    { title: "Profile", icon: "mdi-account-settings", to: "/" },
+    { title: "Logout", icon: "mdi-logout-variant", to: "/logout" },
+    { title: "Settings", icon: "mdi-cog", to: "/" }
   ];
   drawer = true;
   color = "blue";
@@ -105,4 +105,7 @@ export default class Navbar extends Vue {
   transition all .4s
   &:hover 
     transform scale(1.3)
+
+.nav-icons
+  margin-left: -4px !important
 </style>

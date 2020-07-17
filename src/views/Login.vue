@@ -54,6 +54,7 @@
 
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
+import { mapActions } from "vuex";
 
 // form validation
 import { extend, setInteractionMode } from "vee-validate";
@@ -61,11 +62,51 @@ import { required, email, min, max } from "vee-validate/dist/rules";
 
 setInteractionMode("eager");
 
-@Component
+@Component({
+  methods: {
+    ...mapActions(["loginUser"])
+  }
+})
 export default class Login extends Vue {
   email = "";
   password = "";
   loginpassword = false;
   loadingLogin = false;
+
+  submit() {
+    this.loadingLogin = true;
+    (this.$refs.loginObserver as Vue & {
+      validate: () => any;
+    })
+      .validate()
+      .then((isValid: boolean) => {
+        if (isValid) {
+          const info: any = {
+            password: this.password
+          };
+          if (/[\w._%+-]+@[\w.-]+\.[a-zA-Z]{2,3}/.test(this.email))
+            info.email = this.email;
+          else info.name = this.email;
+
+          console.log("preparing to unleash the beast");
+          this.$store
+            .dispatch("users/loginUser", info)
+            .then(res => {
+              console.log("alrity mighty");
+              this.loadingLogin = false;
+              this.$router.push({ name: "Dashboard" });
+            })
+            .catch(err => {
+              console.log(err);
+            });
+        } else {
+          setTimeout(() => (this.loadingLogin = false), 2000);
+        }
+      })
+      .catch((error: any) => {
+        setTimeout(() => (this.loadingLogin = false), 2000);
+        console.log("catch: ", error);
+      });
+  }
 }
 </script>

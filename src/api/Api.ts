@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 // deveopment env base url
-export const baseURL = "http://localhost:800/api"
+export const baseURL = "http://localhost:8000/api"
 
 const Api = axios.create({
   baseURL,

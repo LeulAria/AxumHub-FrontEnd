@@ -5,6 +5,11 @@ Vue.use(VueRouter);
 
 const routes: Array<RouteConfig> = [
   {
+    path: "/dashboard",
+    name: "Dashboard",
+    component: () => import('@/views/Dashboard.vue')
+  },
+  {
     path: "/login",
     name: "Login",
     component: () => import('@/views/Login.vue')
@@ -13,6 +18,11 @@ const routes: Array<RouteConfig> = [
     path: "/signup",
     name: "Signup",
     component: () => import('@/views/Signup.vue')
+  },
+  {
+    path: "/logout",
+    name: "Logout",
+    component: () => import('@/views/Logout.vue')
   },
   // {
   //   path: "/about",
