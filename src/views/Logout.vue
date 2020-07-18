@@ -13,7 +13,6 @@ export default class Logout extends Vue {
 
   created() {
     this.overlay = true;
-    alert("calling diaptch logout...");
     this.$store.dispatch("users/logOut");
     setTimeout(() => {
       this.$router.push({ name: "Login" });

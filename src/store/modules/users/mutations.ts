@@ -1,7 +1,7 @@
-export const SET_USER = (store: any, payload: any) => {
-  store.user = payload;
+export const SET_USER = (store: any, user: any) => {
+  store.user = user;
 }
 
 export const LOGOUT_USER = (store: any) => {
-  store = null;
+  store = '';
 } 

@@ -4,8 +4,9 @@ import User from '../../../api/User'
 export const registerUser = (context: any, user: any) => {
   return new Promise((resolve: any, reject: any) => {
     User.register(user)
-      .then((res) => {
-        alert('yay')
+      .then((res: any) => {
+        context.commit('SET_USER', res.user)
+        context.commit('SET_TOKEN', res.token, { root: true })
         resolve(res)
       })
       .catch((err) => {
@@ -14,10 +15,14 @@ export const registerUser = (context: any, user: any) => {
   })
 }
 
+
 export const loginUser = (context: any, user: any) => {
   return new Promise((resolve: any, reject: any) => {
     User.login(user)
-      .then((res) => {
+      .then((res: any) => {
+        console.log(res)
+        // context.commit('SET_USER', res.user)
+        context.commit('SET_TOKEN', res.data.token, { root: true })
         resolve(res)
       })
       .catch((err) => {
@@ -27,7 +32,6 @@ export const loginUser = (context: any, user: any) => {
 }
 
 export const logOut = (context: any) => {
-  alert('logging out...')
   localStorage.clear();
   localStorage.setItem('AxumHUB', '')
   context.commit('LOGOUT_USER');
