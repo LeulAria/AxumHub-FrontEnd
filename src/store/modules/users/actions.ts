@@ -20,8 +20,8 @@ export const loginUser = (context: any, user: any) => {
   return new Promise((resolve: any, reject: any) => {
     User.login(user)
       .then((res: any) => {
-        console.log(res)
-        // context.commit('SET_USER', res.user)
+        console.log('res: ', res)
+        context.commit('SET_USER', res.data.user)
         context.commit('SET_TOKEN', res.data.token, { root: true })
         resolve(res)
       })

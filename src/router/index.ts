@@ -8,6 +8,14 @@ Vue.use(VueRouter);
 
 const routes: Array<RouteConfig> = [
   {
+    path: "/chatborad",
+    name: "ChatBoard",
+    component: () => import('@/components/chat/ChatBoard.vue'),
+    meta: {
+      requiresVisitor: true
+    }
+  },
+  {
     path: "/",
     name: "Login",
     component: () => import('@/views/Login.vue'),
@@ -22,6 +30,11 @@ const routes: Array<RouteConfig> = [
     meta: {
       requiresVisitor: true
     }
+  },
+  {
+    path: "/qa",
+    name: "QA",
+    component: () => import('@/views/QA.vue'),
   },
   {
     path: "/signup",
@@ -85,5 +98,17 @@ router.beforeEach((to, form, next) => {
     next()
   }
 })
+
+Api.interceptors.request.use(
+  (config) => {
+    const token = store.getters.accessToken;
+    if (token) {
+      config.headers['Authorization'] = token;
+      console.log('req: ', config.headers);
+    }
+    return config;
+  },
+  (err) => Promise.reject(err)
+);
 
 export default router;

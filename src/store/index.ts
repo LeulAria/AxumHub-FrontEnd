@@ -4,6 +4,8 @@ import VuexPersistence from 'vuex-persist';
 
 // Modules
 import userModule from './modules/users'
+import qaModule from './modules/qa'
+import chatModule from './modules/chat'
 
 Vue.use(Vuex);
 
@@ -20,7 +22,9 @@ export default new Vuex.Store({
   mutations,
   actions,
   modules: {
-    users: userModule
+    users: userModule,
+    qa: qaModule,
+    chat: chatModule,
   },
   plugins: [
     new VuexPersistence({

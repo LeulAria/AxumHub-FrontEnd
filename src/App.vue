@@ -1,8 +1,8 @@
 <template>
-  <v-app>
+  <v-app pa-0>
     <side-navbar></side-navbar>
-    <v-main class="ml-md-14">
-      <router-view></router-view>
+    <v-main class="pa-0 ml-md-14">
+     <router-view></router-view>
     </v-main>
   </v-app>
 </template>
@@ -19,3 +19,8 @@ import Navbar from "@/components/Navbar.vue";
 })
 export default class App extends Vue {}
 </script>
+
+<style lang="stylus" scoped>
+.container
+  padding 0 !important
+</style>
