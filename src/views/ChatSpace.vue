@@ -36,16 +36,19 @@
 				<chat-board></chat-board>
 			</v-col>
 		</v-row>
+		<task-list></task-list>
 	</v-main>
 </template>
 
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
 import ChatBoard from "@/components/chat/ChatBoard.vue";
+import TaskList from "@/components/project/TaskList.vue";
 
 @Component({
 	components: {
-		"chat-board": ChatBoard
+		"chat-board": ChatBoard,
+		"task-list": TaskList
 	}
 })
 export default class ChatSpace extends Vue {

@@ -73,7 +73,7 @@ export default class Navbar extends Vue {
 		{ title: "Blog", icon: "mdi-compass", to: "/" },
 		{ title: "Q/A", icon: "mdi-comment-question", to: "/qa" },
 		{ title: "Project", icon: "mdi-folder-cog", to: "/chatspace" },
-		{ title: "Profile", icon: "mdi-account-settings", to: "/" },
+		{ title: "Profile", icon: "mdi-account-settings", to: "/profile" },
 		{ title: "Logout", icon: "mdi-logout-variant", to: "/logout" },
 		{ title: "Settings", icon: "mdi-cog", to: "/" }
 	];

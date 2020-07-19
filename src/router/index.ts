@@ -32,11 +32,6 @@ const routes: Array<RouteConfig> = [
     }
   },
   {
-    path: "/qa",
-    name: "QA",
-    component: () => import('@/views/QA.vue'),
-  },
-  {
     path: "/signup",
     name: "Signup",
     component: () => import('@/views/Signup.vue'),
@@ -53,9 +48,25 @@ const routes: Array<RouteConfig> = [
     }
   },
   {
+    path: "/qa",
+    name: "QA",
+    component: () => import('@/views/QA.vue'),
+    meta: {
+      requiresAuth: true
+    }
+  },
+  {
     path: "/chatspace",
     name: "ChatSpace",
     component: () => import('@/views/ChatSpace.vue'),
+    meta: {
+      requiresAuth: true
+    }
+  },
+  {
+    path: "/profile",
+    name: "Profile",
+    component: () => import('@/views/Profile.vue'),
     meta: {
       requiresAuth: true
     }

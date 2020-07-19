@@ -49,7 +49,7 @@
 					class="chat__conversation-panel__input panel-item"
 					placeholder="Type a message..."
 					v-model="userChatMessage"
-					v-on:keyup.enter="sendMessage()"
+					@keydown.enter="sendMessage()"
 				/>
 				<button
 					class="chat__conversation-panel__button panel-item btn-icon send-message-button"
