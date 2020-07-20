@@ -5,15 +5,15 @@
 				<h3 class="grey--text text--darken-2 mr-auto">Axum HUB Q&A</h3>
 				<v-menu transition="scroll-y-reverse-transition" class="ml-auto">
 					<template v-slot:activator="{ on, attrs }">
-						<v-btn color="primary" class="ma-2" fab small v-bind="attrs" v-on="on">
+						<v-btn color="primary" class="ma-2 elevation-0" fab small v-bind="attrs" v-on="on">
 							<v-icon>mdi-pencil-plus-outline</v-icon>
 						</v-btn>
 					</template>
 					<v-list>
-						<v-list-item link>
+						<v-list-item :to="{ name: 'CreateQuestion' }" link>
 							<v-list-item-title>Create New Question</v-list-item-title>
 						</v-list-item>
-						<v-list-item link>
+						<v-list-item :to="{ name: 'UserPosts' }" link>
 							<v-list-item-title>See Your Questions</v-list-item-title>
 						</v-list-item>
 						<v-list-item link>
@@ -41,7 +41,7 @@
 			</v-col>
 		</v-row>
 		<v-container>
-			<v-row justify="center">
+			<v-row>
 				<v-col v-if="isLoading" cols="12" xs="7" sm="6" md="4" lg="3" class="mt-15">
 					<v-progress-linear
 						color="deep-purple accent-4"
@@ -54,7 +54,7 @@
 			</v-row>
 		</v-container>
 		<v-container fluid class="px-xs-4 px-sm-8 px-md-15">
-			<v-row justify="space-around">
+			<v-row justify="space-between">
 				<v-col
 					cols="12"
 					xs="12"
@@ -64,9 +64,16 @@
 					:key="question.id"
 					transition="slide-y-reverse-transition"
 				>
-					<v-card outlined color="#232121" dark>
+					<v-card
+						outlined
+						color="#232121"
+						dark
+						class="rounded-lg pa-2"
+						min-height="270"
+						max-height="270"
+					>
 						<v-card-subtitle>{{question.date}}</v-card-subtitle>
-						<v-card-title class="headline">{{question.title}}</v-card-title>
+						<h4 class="ml-4 bolded">{{question.title}}</h4>
 
 						<v-card-subtitle>{{question.description}}</v-card-subtitle>
 

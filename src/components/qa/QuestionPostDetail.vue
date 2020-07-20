@@ -10,7 +10,7 @@
 			<v-col cols="12" xs="12" sm="10" md="8">
 				<v-card outlined class="mx-auto my-12 pa-2" max-width="600">
 					<div class="d-flex">
-						<v-card-title>{{question.title}}</v-card-title>
+						<v-card-title class="font-weight-black h5">{{question.title}}</v-card-title>
 						<v-img
 							width="100"
 							height="100"

@@ -8,6 +8,7 @@ export default {
     return Api.get(`/question_post/${id}`)
   },
   create(post: any) {
+    console.log('now lets send it', post)
     return Api.post('/question_post/create', post)
   },
   like(id: string) {
@@ -17,8 +18,6 @@ export default {
     return Api.post(`/question_post/unlike/${id}`)
   },
   answer(data: any) {
-    console.log('--------------------------------')
-    console.log('the answer is here.........', { data })
     return Api.post(`/question_post/answer/${data.id}`, { answer: data.answer })
   },
   deleteAnswer(qId: string, ansId: string) {

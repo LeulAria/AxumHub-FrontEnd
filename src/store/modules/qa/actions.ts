@@ -68,3 +68,21 @@ export const likePostedQuestion = (context: any, id: string) => {
     })
     .catch((err) => console.log('err: ', err))
 }
+
+export const createQuestionPost = (context: any, post: any) => {
+  console.log('now lets create a post...')
+  new Promise((resolve, reject) => {
+    console.log('alright create ...')
+    QA.create(post)
+      .then(res => {
+        console.log('it has been sent and the res is', res)
+        context.dispatch('getAllQuestions')
+        resolve(res)
+      })
+      .catch((err) => {
+        console.log('it has been sent and the err is uhhh: ', err)
+        console.log(err)
+        reject(err)
+      })
+  })
+}
