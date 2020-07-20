@@ -1,10 +1,15 @@
 import Api from './Api'
 
+const route = '/users'
+
 export default {
   register(user: any) {
-    return Api.post('/users/register', user)
+    return Api.post(`${route}/register`, user)
   },
   login(user: any) {
-    return Api.post('/users/login', user)
+    return Api.post(`${route}/login`, user)
+  },
+  currentUser() {
+    return Api.get(`${route}/current`);
   }
 }

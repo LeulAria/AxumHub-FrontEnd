@@ -2,83 +2,14 @@ import Vue from "vue";
 import VueRouter, { RouteConfig } from "vue-router";
 import store from '@/store'
 import Api, { baseURL } from '@/api/Api'
-import User from '@/api/User'
+
+// routes
+import urlRoutes from './routes'
 
 Vue.use(VueRouter);
 
 const routes: Array<RouteConfig> = [
-  {
-    path: "/chatborad",
-    name: "ChatBoard",
-    component: () => import('@/components/chat/ChatBoard.vue'),
-    meta: {
-      requiresVisitor: true
-    }
-  },
-  {
-    path: "/",
-    name: "Login",
-    component: () => import('@/views/Login.vue'),
-    meta: {
-      requiresVisitor: true
-    }
-  },
-  {
-    path: "/login",
-    name: "Login",
-    component: () => import('@/views/Login.vue'),
-    meta: {
-      requiresVisitor: true
-    }
-  },
-  {
-    path: "/signup",
-    name: "Signup",
-    component: () => import('@/views/Signup.vue'),
-    meta: {
-      requiresVisitor: true
-    }
-  },
-  {
-    path: "/dashboard",
-    name: "Dashboard",
-    component: () => import('@/views/Dashboard.vue'),
-    meta: {
-      requiresAuth: true
-    }
-  },
-  {
-    path: "/qa",
-    name: "QA",
-    component: () => import('@/views/QA.vue'),
-    meta: {
-      requiresAuth: true
-    }
-  },
-  {
-    path: "/chatspace",
-    name: "ChatSpace",
-    component: () => import('@/views/ChatSpace.vue'),
-    meta: {
-      requiresAuth: true
-    }
-  },
-  {
-    path: "/profile",
-    name: "Profile",
-    component: () => import('@/views/Profile.vue'),
-    meta: {
-      requiresAuth: true
-    }
-  },
-  {
-    path: "/logout",
-    name: "Logout",
-    component: () => import('@/views/Logout.vue'),
-    meta: {
-      requiresAuth: true
-    }
-  }
+  ...urlRoutes,
 ];
 
 const router = new VueRouter({
@@ -115,7 +46,6 @@ Api.interceptors.request.use(
     const token = store.getters.accessToken;
     if (token) {
       config.headers['Authorization'] = token;
-      console.log('req: ', config.headers);
     }
     return config;
   },
