@@ -39,7 +39,6 @@
 						<v-icon class="nav-icons" v-if="globalTheme">mdi-white-balance-sunny</v-icon>
 						<v-icon class="nav-icons" v-if="!globalTheme">mdi-moon-waxing-crescent</v-icon>
 					</v-list-item-icon>
-
 					<v-list-item-content>
 						<v-list-item-title>Change theme</v-list-item-title>
 					</v-list-item-content>

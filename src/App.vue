@@ -1,21 +1,25 @@
 <template>
-  <v-app pa-0>
-    <side-navbar></side-navbar>
-    <v-main class="pa-0 ml-md-14">
-     <router-view></router-view>
-    </v-main>
-  </v-app>
+	<v-app>
+		<side-navbar v-if="loggedIn"></side-navbar>
+		<v-main :class="{'pa-0': loggedIn, 'ml-md-14': loggedIn}">
+			<router-view></router-view>
+		</v-main>
+	</v-app>
 </template>
 
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
+import { mapGetters } from "vuex";
 
 import Navbar from "@/components/Navbar.vue";
 
 @Component({
-  components: {
-    "side-navbar": Navbar
-  }
+	components: {
+		"side-navbar": Navbar
+	},
+	computed: {
+		...mapGetters(["loggedIn"])
+	}
 })
 export default class App extends Vue {}
 </script>
