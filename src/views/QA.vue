@@ -41,7 +41,7 @@
 			</v-col>
 		</v-row>
 		<v-container>
-			<v-row>
+			<v-row justify="center">
 				<v-col v-if="isLoading" cols="12" xs="7" sm="6" md="4" lg="3" class="mt-15">
 					<v-progress-linear
 						color="deep-purple accent-4"

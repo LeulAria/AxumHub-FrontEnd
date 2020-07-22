@@ -67,9 +67,9 @@
 			<v-col cols="12" sm="10" md="5">
 				<v-expansion-panels popout>
 					<v-subheader class="ml-5 my-6">Make your questions more clearer by folowing this simple steps.</v-subheader>
-					<v-expansion-panel v-for="(item,i) in 3" :key="i">
-						<v-expansion-panel-header>Item</v-expansion-panel-header>
-						<v-expansion-panel-content>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</v-expansion-panel-content>
+					<v-expansion-panel v-for="(instruction,i) in instructions" :key="i">
+						<v-expansion-panel-header>{{instruction.title}}</v-expansion-panel-header>
+						<v-expansion-panel-content>{{instruction.body}}</v-expansion-panel-content>
 					</v-expansion-panel>
 				</v-expansion-panels>
 			</v-col>
@@ -86,6 +86,24 @@ export default class UserQuestionsPost extends Vue {
 	description = "";
 	tags = "";
 	loading = false;
+
+	instructions = [
+		{
+			title: "summerize the problem.",
+			body:
+				"Try to include detail explanation in the detail field, describe expected results..."
+		},
+		{
+			title: "Describe why?",
+			body:
+				"Try to include description why your asking this qustion and use cliean gramatic order in describing your questions"
+		},
+		{
+			title: "show or give some examples.",
+			body:
+				"Try to give example or scenario of the problem that you want to ask"
+		}
+	];
 
 	clear() {
 		this.title = "";

@@ -1,6 +1,6 @@
 <template>
   <v-container>
-    <v-row justify="center">
+    <v-row justify="center" class="mt-10">
       <v-col cols="12" sm="6">
         <h1 class="form-header text-center">Signup</h1>
         <v-card elevation="0" class="pa-6 rounded-lg">

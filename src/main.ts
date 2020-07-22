@@ -7,6 +7,8 @@ import vuetify from "./plugins/vuetify";
 import './sockets/config'
 import './utils/validation_observer'
 import './styles/global.styl';
+
+import '@mdi/font/css/materialdesignicons.css'
 import 'material-design-icons-iconfont/dist/material-design-icons.css';
 
 Vue.config.productionTip = false;
