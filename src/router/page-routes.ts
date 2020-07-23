@@ -8,6 +8,11 @@ export default [
     }
   },
   {
+    path: "/profileInfo",
+    name: "ProfileInfo",
+    component: () => import('@/components/profile/ProfileInfos.vue'),
+  },
+  {
     path: "/chatborad",
     name: "ChatBoard",
     component: () => import('@/components/chat/ChatBoard.vue'),

@@ -6,6 +6,7 @@ import VuexPersistence from 'vuex-persist';
 import userModule from './modules/users'
 import qaModule from './modules/qa'
 import chatModule from './modules/chat'
+import profileModule from './modules/profiles'
 
 Vue.use(Vuex);
 
@@ -23,6 +24,7 @@ export default new Vuex.Store({
   actions,
   modules: {
     users: userModule,
+    profile: profileModule,
     qa: qaModule,
     chat: chatModule,
   },

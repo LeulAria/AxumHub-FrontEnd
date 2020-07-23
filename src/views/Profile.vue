@@ -33,7 +33,7 @@
 								<v-list-item-group v-model="item" color="primary">
 									<v-list-item v-for="(item, i) in items" :key="i">
 										<v-list-item-icon>
-											<v-icon v-text="item.icon"></v-icon>
+											<v-icon>mdi-format-quote-close-outline</v-icon>
 										</v-list-item-icon>
 										<v-list-item-content>
 											<v-list-item-title v-text="item.text"></v-list-item-title>
@@ -126,6 +126,53 @@
 				</v-card>
 			</v-dialog>
 		</v-row>
+
+		<v-container>
+			<v-row>
+				<v-col cols="6" sm="12" md="6">
+					<v-card outlined class="pa-5">
+						<v-subheader>Experiance</v-subheader>
+					</v-card>
+				</v-col>
+				<v-col cols="6" sm="12" md="6">
+					<v-card outlined class="pa-5">
+						<v-subheader>Education</v-subheader>
+					</v-card>
+				</v-col>
+			</v-row>
+		</v-container>
+
+		<v-container>
+			<v-row>
+				<v-col cols="6" sm="12" md="6">
+					<v-card outlined class="pa-5">
+						<v-subheader>Bio</v-subheader>
+						<p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Vel beatae recusandae obcaecati reprehenderit itaque excepturi minima.</p>
+					</v-card>
+				</v-col>
+				<v-col cols="6" sm="12" md="6">
+					<v-card outlined class="rounded-lg">
+						<v-subheader>Skills</v-subheader>
+						<v-card class="mx-auto my-3 elevation-0" max-width="300" tile>
+							<v-list dense>
+								<v-list-item-group v-model="item" color="primary">
+									<v-list-item v-for="(item, i) in items" :key="i">
+										<v-list-item-icon>
+											<v-icon>mdi-format-quote-close-outline</v-icon>
+										</v-list-item-icon>
+										<v-list-item-content>
+											<v-list-item-title v-text="item.text"></v-list-item-title>
+										</v-list-item-content>
+									</v-list-item>
+								</v-list-item-group>
+							</v-list>
+						</v-card>
+					</v-card>
+				</v-col>
+			</v-row>
+
+			<p>{{userInfo}}</p>
+		</v-container>
 	</v-main>
 </template>
 
@@ -143,13 +190,13 @@ export default class Profile extends Vue {
 
 	item = 1;
 	items = [
-		{ text: "Html", icon: "mdi-format-quote-close-outline" },
-		{ text: "CSS", icon: "mdi-format-quote-close-outline" },
-		{ text: "JavaScript", icon: "mdi-format-quote-close-outline" },
-		{ text: "Python", icon: "mdi-format-quote-close-outline" },
-		{ text: "C++", icon: "mdi-format-quote-close-outline" },
-		{ text: "Vue, React", icon: "mdi-format-quote-close-outline" },
-		{ text: "Node", icon: "mdi-format-quote-close-outline" }
+		{ text: "Html" },
+		{ text: "CSS" },
+		{ text: "JavaScript" },
+		{ text: "Python" },
+		{ text: "C++" },
+		{ text: "Vue, React" },
+		{ text: "Node" }
 	];
 
 	dialog = false;

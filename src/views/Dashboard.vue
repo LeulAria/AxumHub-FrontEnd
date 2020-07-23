@@ -4,6 +4,9 @@
 			<v-col cols="5" sm="5">
 				<h1>Dashboard</h1>
 			</v-col>
+
+			<v-btn color="indigo" class="text--white" large link :to="{ name: 'Conference' }">Conference</v-btn>
+
 			<v-spacer></v-spacer>
 			<v-col cols="5" sm="5">
 				<div class="text-center">
