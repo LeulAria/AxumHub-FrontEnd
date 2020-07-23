@@ -22,7 +22,7 @@
 											></v-text-field>
 										</ValidationProvider>
 
-										<ValidationProvider v-slot="{ errors }" name="status" rules="required|min-2">
+										<ValidationProvider v-slot="{ errors }" name="status" rules="required|min:2">
 											<v-combobox
 												v-model="status"
 												:items="status_fields"
@@ -146,9 +146,9 @@
 												required
 											></v-text-field>
 										</ValidationProvider>
-										<ValidationProvider v-slot="{ errors }" name="instagramgram" rules="min:5">
+										<ValidationProvider v-slot="{ errors }" name="instagram" rules="min:5">
 											<v-text-field
-												v-model="instagramgram"
+												v-model="instagram"
 												:error-messages="errors"
 												prepend-icon="mdi-instagram"
 												label="Instagram"
@@ -200,7 +200,7 @@ export default class Signup extends Vue {
 	facebook = "";
 	twitter = "";
 	linkedin = "";
-	instagramgram = "";
+	instagram = "";
 	loadingProfileInfo = false;
 
 	status_fields = [
@@ -231,7 +231,7 @@ export default class Signup extends Vue {
 		this.facebook = "";
 		this.twitter = "";
 		this.linkedin = "";
-		this.instagramgram = "";
+		this.instagram = "";
 		(this.$refs.singupObserver as Vue & { reset: () => boolean }).reset();
 	}
 
@@ -256,15 +256,17 @@ export default class Signup extends Vue {
 						facebook: this.facebook,
 						twitter: this.twitter,
 						linkedin: this.linkedin,
-						instagramgram: this.instagramgram
+						instagram: this.instagram
 					};
-					
+
+					console.log("to be send...", info);
+
 					this.$store
-						.dispatch("users/registerUser", info)
+						.dispatch("profile/setProfileInfo", info)
 						.then(res => {
-							console.log(res);
+							console.log(res, "it has been sent...");
 							this.loadingProfileInfo = false;
-							this.$router.push({ name: "Dashboard" });
+							this.$router.push({ name: "Profile" });
 						})
 						.catch(err => {
 							setTimeout(() => (this.loadingProfileInfo = false), 2000);

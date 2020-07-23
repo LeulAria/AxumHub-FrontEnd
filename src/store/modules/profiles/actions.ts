@@ -1,19 +1,27 @@
 import Profile from '@/api/Profile'
 
-export const test = (context: any) => {
-  return context.commit('TEST');
+export const getUserProfile = (context: any, id: string) => {
+  Profile.getById(id)
+    .then(res => {
+      console.log('getting user profile info', res)
+      context.commit('SET_USER_PROFILE', res.data)
+    })
+    .catch((err) => {
+      console.log('what the hack is that: ', err)
+    })
 }
 
 export const setProfileInfo = (context: any, userinfo: any) => {
+  console.log('we are here...', userinfo)
   new Promise((resolve, reject) => {
     Profile.updateProfile(userinfo)
       .then((res) => {
-        console.log(res)
+        console.log('wohooo sent: ', res)
         context.commit('SET_USER_PROFILE', res.data)
         resolve(res)
       })
       .catch((err) => {
-        console.log(err)
+        console.log('what the hack is that: ', err)
         reject(err)
       })
   })

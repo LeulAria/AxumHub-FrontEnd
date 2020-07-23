@@ -8,11 +8,6 @@ export default [
     }
   },
   {
-    path: "/profileInfo",
-    name: "ProfileInfo",
-    component: () => import('@/components/profile/ProfileInfos.vue'),
-  },
-  {
     path: "/chatborad",
     name: "ChatBoard",
     component: () => import('@/components/chat/ChatBoard.vue'),
@@ -32,14 +27,6 @@ export default [
     path: "/chatspace",
     name: "ChatSpace",
     component: () => import('@/views/ChatSpace.vue'),
-    meta: {
-      requiresAuth: true
-    }
-  },
-  {
-    path: "/profile",
-    name: "Profile",
-    component: () => import('@/views/Profile.vue'),
     meta: {
       requiresAuth: true
     }

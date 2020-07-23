@@ -27,11 +27,7 @@
 								></v-text-field>
 							</ValidationProvider>
 
-							<ValidationProvider
-								v-slot="{ errors }"
-								name="password"
-								rules="required|min:8|confirmed:confirmation"
-							>
+							<ValidationProvider v-slot="{ errors }" name="password" rules="required|min:8">
 								<v-text-field
 									v-model="password1"
 									:prepend-icon="showPassword ? 'mdi-eye-outline' : 'mdi-eye-off-outline'"
@@ -44,12 +40,7 @@
 								></v-text-field>
 							</ValidationProvider>
 
-							<ValidationProvider
-								v-slot="{ errors }"
-								name="confirm password"
-								rules="required|min:8"
-								vid="confirmation"
-							>
+							<ValidationProvider v-slot="{ errors }" name="confirm password" rules="required|min:8">
 								<v-text-field
 									v-model="password2"
 									:prepend-icon="showPassword ? 'mdi-eye-outline' : 'mdi-eye-off-outline'"
@@ -138,7 +129,7 @@ export default class Signup extends Vue {
 						.then(res => {
 							console.log(res);
 							this.loadingSignup = false;
-							this.$router.push({ name: "Dashboard" });
+							this.$router.push({ name: "Login" });
 						})
 						.catch(err => {
 							setTimeout(() => (this.loadingSignup = false), 2000);

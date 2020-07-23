@@ -17,11 +17,8 @@ export const registerUser = (context: any, user: any) => {
 
 export const loginUser = (context: any, user: any) => {
   return new Promise((resolve: any, reject: any) => {
-    console.log('sending request to server...')
     User.login(user)
       .then((res: any) => {
-        console.log('request sent and rthe req is: ', res)
-        console.log('res: ', res)
         context.commit('SET_USER', res.data.user)
         context.commit('SET_TOKEN', res.data.token, { root: true })
         resolve(res)
