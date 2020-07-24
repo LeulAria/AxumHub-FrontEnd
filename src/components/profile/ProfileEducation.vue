@@ -112,15 +112,15 @@
 
 							<v-card-actions class="mt-4 ml-5">
 								<v-btn
-									:loading="loadingSignup"
-									:disabled="loadingSignup"
+									:loading="loadingEducation"
+									:disabled="loadingEducation"
 									color="indigo"
 									class="mr-4 white--text"
 									small
 									@click="submit"
 								>
-									<span v-show="!loadingSignup">Submit</span>
-									<v-icon class="px-4" dark v-show="loadingSignup">mdi-cloud-upload</v-icon>
+									<span v-show="!loadingEducation">Submit</span>
+									<v-icon class="px-4" dark v-show="loadingEducation">mdi-cloud-upload</v-icon>
 								</v-btn>
 								<v-btn depressed small @click="clear">clear</v-btn>
 							</v-card-actions>
@@ -143,7 +143,7 @@ export default class Signup extends Vue {
 	to = "";
 	current = false;
 	description = "";
-	loadingSignup = false;
+	loadingEducation = false;
 
 	date = null;
 	menuFrom = false;
@@ -174,45 +174,41 @@ export default class Signup extends Vue {
 	}
 
 	submit() {
-		const info = {
-			school: this.school,
-			degree: this.degree,
-			from: this.from,
-			to: !this.current ? this.to : "now",
-			current: this.current,
-			description: this.description
-		};
-		console.log(info);
-		// 	this.loadingSignup = true;
-		// 	(this.$refs.singupObserver as Vue & {
-		// 		validate: () => any;
-		// 	})
-		// 		.validate()
-		// 		.then((isValid: boolean) => {
-		// 			if (isValid) {
-		// 				const info: any = {
-		// 					name: this.handle
-		// 				};
+		this.loadingEducation = true;
+		(this.$refs.singupObserver as Vue & {
+			validate: () => any;
+		})
+			.validate()
+			.then((isValid: boolean) => {
+				if (isValid) {
+					const info = {
+						school: this.school,
+						degree: this.degree,
+						from: this.from,
+						to: !this.current ? this.to : new Date().toISOString().slice(0, 10),
+						current: this.current,
+						description: this.description
+					};
 
-		// 				this.$store
-		// 					.dispatch("users/registerUser", info)
-		// 					.then(res => {
-		// 						console.log(res);
-		// 						this.loadingSignup = false;
-		// 						this.$router.push({ name: "Dashboard" });
-		// 					})
-		// 					.catch(err => {
-		// 						setTimeout(() => (this.loadingSignup = false), 2000);
-		// 						console.log(err);
-		// 					});
-		// 			} else {
-		// 				setTimeout(() => (this.loadingSignup = false), 2000);
-		// 			}
-		// 		})
-		// 		.catch((error: any) => {
-		// 			setTimeout(() => (this.loadingSignup = false), 2000);
-		// 			console.log(error);
-		// 		});
+					this.$store
+						.dispatch("profile/addEducationProfile", info)
+						.then(res => {
+							console.log(res);
+							this.loadingEducation = false;
+							this.$router.push({ name: "Profile" });
+						})
+						.catch(err => {
+							setTimeout(() => (this.loadingEducation = false), 2000);
+							console.log(err);
+						});
+				} else {
+					setTimeout(() => (this.loadingEducation = false), 2000);
+				}
+			})
+			.catch((error: any) => {
+				setTimeout(() => (this.loadingEducation = false), 2000);
+				console.log(error);
+			});
 	}
 }
 </script>

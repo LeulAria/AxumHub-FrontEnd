@@ -129,7 +129,7 @@ export default class Signup extends Vue {
 						.then(res => {
 							console.log(res);
 							this.loadingSignup = false;
-							this.$router.push({ name: "Login" });
+							this.$router.push({ name: "ProfileInfo" });
 						})
 						.catch(err => {
 							setTimeout(() => (this.loadingSignup = false), 2000);

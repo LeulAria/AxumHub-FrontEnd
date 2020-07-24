@@ -112,15 +112,15 @@
 
 							<v-card-actions class="mt-4 ml-5">
 								<v-btn
-									:loading="loadingSignup"
-									:disabled="loadingSignup"
+									:loading="loadingExperiance"
+									:disabled="loadingExperiance"
 									color="indigo"
 									class="mr-4 white--text"
 									small
 									@click="submit()"
 								>
-									<span v-show="!loadingSignup">Submit</span>
-									<v-icon class="px-4" dark v-show="loadingSignup">mdi-cloud-upload</v-icon>
+									<span v-show="!loadingExperiance">Submit</span>
+									<v-icon class="px-4" dark v-show="loadingExperiance">mdi-cloud-upload</v-icon>
 								</v-btn>
 								<v-btn depressed small @click="clear()">clear</v-btn>
 							</v-card-actions>
@@ -143,7 +143,7 @@ export default class Signup extends Vue {
 	to = "";
 	current = false;
 	description = "";
-	loadingSignup = false;
+	loadingExperiance = false;
 
 	date = null;
 	menuFrom = false;
@@ -174,45 +174,39 @@ export default class Signup extends Vue {
 	}
 
 	submit() {
-		const info = {
-			title: this.title,
-			company: this.company,
-			from: this.from,
-			to: !this.current ? this.to : "now",
-			current: this.current,
-			description: this.description
-		};
-		console.log(info);
-		// 	this.loadingSignup = true;
-		// 	(this.$refs.singupObserver as Vue & {
-		// 		validate: () => any;
-		// 	})
-		// 		.validate()
-		// 		.then((isValid: boolean) => {
-		// 			if (isValid) {
-		// 				const info: any = {
-		// 					name: this.handle
-		// 				};
-
-		// 				this.$store
-		// 					.dispatch("users/registerUser", info)
-		// 					.then(res => {
-		// 						console.log(res);
-		// 						this.loadingSignup = false;
-		// 						this.$router.push({ name: "Dashboard" });
-		// 					})
-		// 					.catch(err => {
-		// 						setTimeout(() => (this.loadingSignup = false), 2000);
-		// 						console.log(err);
-		// 					});
-		// 			} else {
-		// 				setTimeout(() => (this.loadingSignup = false), 2000);
-		// 			}
-		// 		})
-		// 		.catch((error: any) => {
-		// 			setTimeout(() => (this.loadingSignup = false), 2000);
-		// 			console.log(error);
-		// 		});
+		this.loadingExperiance = true;
+		(this.$refs.singupObserver as Vue & {
+			validate: () => any;
+		})
+			.validate()
+			.then((isValid: boolean) => {
+				if (isValid) {
+					const info = {
+						title: this.title,
+						company: this.company,
+						from: this.from,
+						to: !this.current ? this.to : new Date().toISOString().slice(0, 10),
+						current: this.current,
+						description: this.description
+					};
+					this.$store
+						.dispatch("profile/addExpeianceProfile", info)
+						.then(res => {
+							this.loadingExperiance = false;
+							this.$router.push({ name: "Profile" });
+						})
+						.catch(err => {
+							setTimeout(() => (this.loadingExperiance = false), 2000);
+							console.log(err);
+						});
+				} else {
+					setTimeout(() => (this.loadingExperiance = false), 2000);
+				}
+			})
+			.catch((error: any) => {
+				setTimeout(() => (this.loadingExperiance = false), 2000);
+				console.log(error);
+			});
 	}
 }
 </script>

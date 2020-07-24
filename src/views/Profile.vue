@@ -57,21 +57,93 @@
 		<v-container>
 			<v-row>
 				<v-col cols="6" sm="12" md="6">
-					<v-card :key="i" outlined class="pa-5">
+					<v-card outlined class="pa-4 elevation-0">
 						<v-subheader>Experiance</v-subheader>
 						<template v-for="(exp, i) in experiance">
-							<div :key="i">{{exp}}</div>
+							<v-card :key="i" class="card_field ma-5 pa-4 elevation-0">
+								<div class="mb-2">
+									<h4>JobTitle:</h4>
+									<span class="darken-3">{{exp.title}}</span>
+								</div>
+								<div class="mb-2">
+									<h4>Compay:</h4>
+									<span class="darken-3">{{exp.company}}</span>
+								</div>
+								<div class="mb-2">
+									<h4>From-To:</h4>
+									<span class="darken-3">{{exp.from.slice(0,10)}} ~ {{exp.to.slice(0,10)}}</span>
+								</div>
+								<div class="mb-2">
+									<h4>Description:</h4>
+									<span class="darken-3">{{exp.description}}</span>
+								</div>
+								<div class="d-flex delete_btn" flat>
+									<v-btn
+										color="error"
+										:loading="loadingExpDel"
+										:disabled="loadingExpDel"
+										class="ml-auto elevation-0"
+										@click="deleteExperianceField(exp._id)"
+									>
+										Delete
+										<v-icon right dark>mdi-delete-outline</v-icon>
+									</v-btn>
+								</div>
+								<v-divider class="my-3"></v-divider>
+							</v-card>
 						</template>
 						<v-subheader v-if="experiance.length==0">No experiance profile found...</v-subheader>
+						<div class="d-flex justify-center">
+							<v-btn color="primary" link :to="{ name: 'ProfileExperiance' }" class="elevation-0">
+								Add Profile Experiance
+								<v-icon right dark>mdi-book-plus-multiple-outline</v-icon>
+							</v-btn>
+						</div>
 					</v-card>
 				</v-col>
 				<v-col cols="6" sm="12" md="6">
-					<v-card :key="i" outlined class="pa-5">
+					<v-card outlined class="pa-5">
 						<v-subheader>Education</v-subheader>
-						<template v-for="(exp, i) in education">
-							<div :key="i">{{exp}}</div>
+						<template v-for="(edu, i) in education">
+							<v-card :key="i" class="card_field ma-5 pa-4 elevation-0">
+								<div class="mb-2">
+									<h4>School:</h4>
+									<span class="darken-3">{{edu.school}}</span>
+								</div>
+								<div class="mb-2">
+									<h4>Degree:</h4>
+									<span class="darken-3">{{edu.degree}}</span>
+								</div>
+								<div class="mb-2">
+									<h4>From-To:</h4>
+									<span class="darken-3">{{edu.from.slice(0,10)}} ~ {{edu.to.slice(0,10)}}</span>
+								</div>
+								<div class="mb-2">
+									<h4>Description:</h4>
+									<span class="darken-3">{{edu.description}}</span>
+								</div>
+								<div class="d-flex delete_btn" flat>
+									<v-btn
+										color="error"
+										:loading="loadingEduDel"
+										:disabled="loadingEduDel"
+										class="ml-auto elevation-0"
+										@click="deleteEducationField(edu._id)"
+									>
+										Delete
+										<v-icon right dark>mdi-delete-outline</v-icon>
+									</v-btn>
+								</div>
+								<v-divider class="my-3"></v-divider>
+							</v-card>
 						</template>
 						<v-subheader v-if="experiance.length==0">No education profile found...</v-subheader>
+						<div class="d-flex justify-center">
+							<v-btn color="primary" link :to="{ name: 'ProfileEducation' }" class="elevation-0">
+								Add Profile Education
+								<v-icon right dark>mdi-book-plus-multiple-outline</v-icon>
+							</v-btn>
+						</div>
 					</v-card>
 				</v-col>
 			</v-row>
@@ -95,7 +167,7 @@
 						<v-subheader>Skills</v-subheader>
 						<v-card class="mx-auto my-3 elevation-0" max-width="300" tile>
 							<v-list dense>
-								<v-list-item-group v-model="item" color="primary">
+								<v-list-item-group color="primary">
 									<v-list-item v-for="(skill, i) in skills" :key="i">
 										<v-list-item-icon>
 											<v-icon>mdi-format-quote-close-outline</v-icon>
@@ -118,8 +190,7 @@
 			<v-row justify="center">
 				<v-col cols="6" sm="12" md="8">
 					<v-card outlined class="pa-5">
-						<v-subheader class="error--text">Danger zone</v-subheader>
-
+						<h3 class="error--text mb-4">Danger zone</h3>
 						<v-btn color="error" class="elevation-0">Delete Account</v-btn>
 					</v-card>
 				</v-col>
@@ -144,7 +215,11 @@ import { mapGetters, mapActions } from "vuex";
 		])
 	},
 	methods: {
-		...mapGetters("profile", ["getUserProfile"])
+		...mapActions("profile", [
+			"getUserProfile",
+			"deleteExperiance",
+			"deleteEducation"
+		])
 	}
 })
 export default class Profile extends Vue {
@@ -155,6 +230,11 @@ export default class Profile extends Vue {
 	experiance!: any;
 	education!: any;
 	getUserProfile!: any;
+	deleteExperiance!: any;
+	deleteEducation!: any;
+
+	loadingExpDel = false;
+	loadingEduDel = false;
 
 	created() {
 		if (!Object.keys(this.userProfile).length) this.getUserProfile();
@@ -180,14 +260,39 @@ export default class Profile extends Vue {
 		return [];
 	}
 
-	dialog = false;
-	notifications = false;
-	sound = true;
-	widgets = false;
+	deleteExperianceField(id: string) {
+		this.loadingExpDel = true;
+		this.deleteExperiance(id)
+			.then(() => {
+				this.loadingExpDel = false;
+			})
+			.catch((err: any) => {
+				this.loadingExpDel = false;
+				console.log(err);
+			});
+	}
+
+	deleteEducationField(id: string) {
+		this.loadingEduDel = true;
+		this.deleteEducation(id)
+			.then(() => {
+				this.loadingEduDel = false;
+			})
+			.catch((err: any) => {
+				this.loadingEduDel = false;
+				console.log(err);
+			});
+	}
 }
 </script>
 
 <style lang="stylus" scoped>
 .social-links
 	margin-top: -15px !important
+.card-field
+	position relative
+.delete_btn
+	position absolute
+	top 40px
+	right 10px
 </style>
