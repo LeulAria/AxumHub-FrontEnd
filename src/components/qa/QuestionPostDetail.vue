@@ -11,11 +11,6 @@
 				<v-card outlined class="mx-auto my-12 pa-2" max-width="600">
 					<div class="d-flex">
 						<v-card-title class="font-weight-black h5">{{question.title}}</v-card-title>
-						<v-img
-							width="100"
-							height="100"
-							src="https://thumbs.dreamstime.com/z/q-questions-answers-sign-icon-q-questions-answers-sign-icon-white-background-143020204.jpg"
-						></v-img>
 					</div>
 					<v-card-text>
 						<div>{{question.description}}</div>
@@ -40,14 +35,18 @@
 				</v-card>
 			</v-col>
 			<v-col cols="12" xs="12" sm="10" md="8">
-				<v-text-field
-					v-model="commentText"
-					prepend-icon="mdi-comment"
-					label="Comment you'r answer here..."
-					:rules="rules"
-					hide-details="auto"
-					@keydown.enter="commentPostAnswer()"
-				></v-text-field>
+				<div class="d-flex">
+					<v-text-field
+						v-model="commentText"
+						prepend-icon="mdi-comment"
+						label="Comment you'r answer here..."
+						hide-details="auto"
+						@keydown.enter="commentPostAnswer()"
+					></v-text-field>
+					<v-btn fab small text color="primary" @click="commentPostAnswer()">
+						<v-icon>mdi-send</v-icon>
+					</v-btn>
+				</div>
 			</v-col>
 		</v-row>
 
@@ -60,7 +59,7 @@
 								<v-subheader class="username_comment">Sub header here...</v-subheader>
 								<v-list-item>
 									<v-list-item-avatar>
-										<v-img src="https://cdn.vuetifyjs.com/images/lists/1.jpg"></v-img>
+										<v-img max-width="40" src="https://cdn.vuetifyjs.com/images/lists/1.jpg"></v-img>
 									</v-list-item-avatar>
 									<v-list-item-content>
 										<v-list-item-subtitle>{{answer.answer}}</v-list-item-subtitle>
@@ -117,11 +116,6 @@ export default class QuestionPostDetail extends Vue {
 	answerOnQuestion!: any;
 	likePostedQuestion!: any;
 	commentText = "";
-
-	rules = [
-		(value: string) => !!value || "Required.",
-		(value: string) => (value && value.length >= 2) || "Min 2 characters"
-	];
 
 	created() {
 		this.getSingleQuestion(this.id);

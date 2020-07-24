@@ -54,7 +54,7 @@
 			</v-row>
 		</v-container>
 		<v-container fluid class="px-xs-4 px-sm-8 px-md-15">
-			<v-row justify="space-between">
+			<v-row justify="space-evenly">
 				<v-col
 					cols="12"
 					xs="12"
@@ -75,7 +75,7 @@
 						<v-card-subtitle>{{question.date}}</v-card-subtitle>
 						<h4 class="ml-4 bolded">{{question.title}}</h4>
 
-						<v-card-subtitle>{{question.description}}</v-card-subtitle>
+						<v-card-subtitle>{{question.description.split(' ').slice(0,25).join(' ')}}</v-card-subtitle>
 
 						<v-card-actions class="d-flex">
 							<v-btn fab small text class="mr-1" @click="likePostedQuestion(question._id)">

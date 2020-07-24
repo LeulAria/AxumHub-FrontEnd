@@ -3,7 +3,7 @@
 		<v-row justify="center" class="mt-10">
 			<v-col cols="12" sm="6">
 				<h1 class="form-header text-center">Signup</h1>
-				<v-card elevation="0" class="pa-6 rounded-lg">
+				<v-card class="pa-6 rounded-lg elevation-0">
 					<ValidationObserver ref="singupObserver">
 						<form>
 							<ValidationProvider v-slot="{ errors }" name="username" rules="required|min:2|max:150">
@@ -20,9 +20,9 @@
 							<ValidationProvider v-slot="{ errors }" name="email" rules="required|email|min:5">
 								<v-text-field
 									v-model="email"
-									:error-messages="errors"
 									prepend-icon="mdi-email-outline"
 									label="E-mail"
+									:error-messages="errors"
 									required
 								></v-text-field>
 							</ValidationProvider>
@@ -57,7 +57,7 @@
 									color="info"
 									v-model="agreeterms"
 									:error-messages="errors"
-									value="1"
+									:value="1"
 									label="I agree to Axumhub Terms and Service and Privacy Policy"
 									type="checkbox"
 									required
@@ -129,7 +129,7 @@ export default class Signup extends Vue {
 						.then(res => {
 							console.log(res);
 							this.loadingSignup = false;
-							this.$router.push({ name: "ProfileInfo" });
+							this.$router.push({ name: "Login" });
 						})
 						.catch(err => {
 							setTimeout(() => (this.loadingSignup = false), 2000);

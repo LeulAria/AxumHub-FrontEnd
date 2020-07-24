@@ -92,7 +92,7 @@
 								<v-divider class="my-3"></v-divider>
 							</v-card>
 						</template>
-						<v-subheader v-if="experiance.length==0">No experiance profile found...</v-subheader>
+						<v-subheader v-if="experiance&&experiance.length==0">No experiance profile found...</v-subheader>
 						<div class="d-flex justify-center">
 							<v-btn color="primary" link :to="{ name: 'ProfileExperiance' }" class="elevation-0">
 								Add Profile Experiance
