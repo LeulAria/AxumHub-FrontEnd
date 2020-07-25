@@ -1,5 +1,5 @@
 <template>
- <v-card class="rounded-lg mb-5 bshadow">
+ <v-card outlined class="rounded-lg mb-5">
     <v-list subheader>
       <v-subheader>Recent chat</v-subheader>
 

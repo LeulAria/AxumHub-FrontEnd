@@ -58,7 +58,7 @@
 
 		<v-container>
 			<v-row>
-				<v-col cols="6" sm="12" md="6">
+				<v-col cols="12" xs="12" sm="6">
 					<v-card outlined class="pa-4 elevation-0">
 						<v-subheader>Experiance</v-subheader>
 						<template v-for="(exp, i) in experiance">
@@ -103,7 +103,7 @@
 						</div>
 					</v-card>
 				</v-col>
-				<v-col cols="6" sm="12" md="6">
+				<v-col cols="12" xs="12" sm="6">
 					<v-card outlined class="pa-5">
 						<v-subheader>Education</v-subheader>
 						<template v-for="(edu, i) in education">
@@ -153,7 +153,7 @@
 
 		<v-container>
 			<v-row>
-				<v-col cols="6" sm="12" md="6">
+				<v-col cols="12" xs="12" sm="6">
 					<v-card outlined class="pa-5">
 						<v-subheader>Bio</v-subheader>
 						<p class="ml-4">{{ userProfile&&(userProfile.bio||'No user bio found...') }}</p>
@@ -164,7 +164,7 @@
 						</div>
 					</v-card>
 				</v-col>
-				<v-col cols="6" sm="12" md="6">
+				<v-col cols="12" xs="12" sm="6">
 					<v-card outlined class="rounded-lg">
 						<v-subheader>Skills</v-subheader>
 						<v-card class="mx-auto my-3 elevation-0" max-width="300" tile>
@@ -190,7 +190,7 @@
 
 		<v-container>
 			<v-row justify="center">
-				<v-col cols="6" sm="12" md="8">
+				<v-col cols="12" xs="12" sm="8">
 					<v-card outlined class="pa-5">
 						<h3 class="error--text mb-4">Danger zone</h3>
 						<v-btn color="error" class="elevation-0">Delete Account</v-btn>

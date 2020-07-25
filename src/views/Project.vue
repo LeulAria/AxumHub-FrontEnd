@@ -25,82 +25,80 @@
 		</v-row>
 		<v-container fluid class="px-xs-4 px-sm-8 px-md-15 py-0">
 			<v-row justify="space-between">
-				<v-col cols="12" xs="12" sm="6" md="5">
-					<v-text-field
-						v-model="search"
-						cache-items
-						prepend-inner-icon="mdi-magnify"
-						class="auto-complete mx-4 mx-md-13"
-						flat
-						hide-no-data
-						label="Search Events..."
-						:autocomplete="false"
-					></v-text-field>
-					<v-card
-						transition="slide-y-transition"
-						v-bind="attrs"
-						v-for="(question, i) in filteredQuestions"
-						:key="question.id"
-						outlined
-						class="project-card rounded-lg pa-2 py-5 my-3 overflow-hidden"
-						min-height="150"
-						max-height="150"
-					>
-						<small class="project-date grey--text text--darken-1 ma-0">{{question.date.slice(0,10)}}</small>
-						<h4 class="ml-4 bolded">{{question.title}}</h4>
-						<v-card-subtitle>{{question.description.split(' ').slice(0,10).join(' ')}}</v-card-subtitle>
-						<div class="project-star d-flex align-center">
-							<v-icon color="info">mdi-star-outline</v-icon>
-							<small>12</small>
-						</div>
-						<v-col cols="12" sm="6" offset-sm="3">
-							<div class="text-center" v-if="i==0">
-								<v-menu v-model="menu" :close-on-content-click="false" :nudge-width="200" offset-x>
-									<template v-slot:activator="{ on, attrs }">
-										<v-btn text fab small class="project-more-btn elevation-0" v-bind="attrs" v-on="on">
-											<v-icon>mdi-dots-vertical</v-icon>
-										</v-btn>
-									</template>
-
-									<v-card>
-										<v-list>
-											<v-list-item>
-												<v-list-item-action>
-													<v-switch inset v-model="message" color="purple"></v-switch>
-												</v-list-item-action>
-												<v-list-item-title>Enable messages</v-list-item-title>
-											</v-list-item>
-
-											<v-list-item>
-												<v-list-item-action>
-													<v-switch inset v-model="hints" color="purple"></v-switch>
-												</v-list-item-action>
-												<v-list-item-title>Enable hints</v-list-item-title>
-											</v-list-item>
-										</v-list>
-
-										<v-card-actions>
-											<v-spacer></v-spacer>
-
-											<v-btn text @click="menu = false">Cancel</v-btn>
-											<v-btn color="primary" text @click="menu = false">Save</v-btn>
-										</v-card-actions>
-									</v-card>
-								</v-menu>
-							</div>
-						</v-col>
-					</v-card>
-				</v-col>
 				<v-col cols="12" xs="12" sm="6" md="6">
 					<v-row>
 						<v-col cols="12" xs="12">
-							<v-card outlined class="rounded-lg" min-height="80">
-								recent-chats
-							</v-card>
+							<v-card outlined class="rounded-lg" min-height="80">recent-chats</v-card>
 						</v-col>
 					</v-row>
 				</v-col>
 			</v-row>
+			<v-col cols="12" xs="12" sm="6" md="5">
+				<v-text-field
+					v-model="search"
+					cache-items
+					prepend-inner-icon="mdi-magnify"
+					class="auto-complete mx-4 mx-md-13"
+					flat
+					hide-no-data
+					label="Search Events..."
+					:autocomplete="false"
+				></v-text-field>
+				<v-card
+					transition="slide-y-transition"
+					v-bind="attrs"
+					v-for="(question, i) in filteredQuestions"
+					:key="question.id"
+					outlined
+					class="project-card rounded-lg pa-2 py-5 my-3 overflow-hidden"
+					min-height="150"
+					max-height="150"
+				>
+					<small class="project-date grey--text text--darken-1 ma-0">{{question.date.slice(0,10)}}</small>
+					<h4 class="ml-4 bolded">{{question.title}}</h4>
+					<v-card-subtitle>{{question.description.split(' ').slice(0,10).join(' ')}}</v-card-subtitle>
+					<div class="project-star d-flex align-center">
+						<v-icon color="info">mdi-star-outline</v-icon>
+						<small>12</small>
+					</div>
+					<v-col cols="12" sm="6" offset-sm="3">
+						<div class="text-center" v-if="i==0">
+							<v-menu v-model="menu" :close-on-content-click="false" :nudge-width="200" offset-x>
+								<template v-slot:activator="{ on, attrs }">
+									<v-btn text fab small class="project-more-btn elevation-0" v-bind="attrs" v-on="on">
+										<v-icon>mdi-dots-vertical</v-icon>
+									</v-btn>
+								</template>
+
+								<v-card>
+									<v-list>
+										<v-list-item>
+											<v-list-item-action>
+												<v-switch inset v-model="message" color="purple"></v-switch>
+											</v-list-item-action>
+											<v-list-item-title>Enable messages</v-list-item-title>
+										</v-list-item>
+
+										<v-list-item>
+											<v-list-item-action>
+												<v-switch inset v-model="hints" color="purple"></v-switch>
+											</v-list-item-action>
+											<v-list-item-title>Enable hints</v-list-item-title>
+										</v-list-item>
+									</v-list>
+
+									<v-card-actions>
+										<v-spacer></v-spacer>
+
+										<v-btn text @click="menu = false">Cancel</v-btn>
+										<v-btn color="primary" text @click="menu = false">Save</v-btn>
+									</v-card-actions>
+								</v-card>
+							</v-menu>
+						</div>
+					</v-col>
+				</v-card>
+			</v-col>
 		</v-container>
 		<v-overlay :value="isLoading">
 			<v-progress-circular indeterminate size="64"></v-progress-circular>

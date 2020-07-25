@@ -69,7 +69,7 @@
 		<v-divider class="mx-4 mb-5"></v-divider>
 		<v-row justify="center">
 			<v-col cols="4" xs="12" sm="6" md="4">
-				<v-card class="rounded-lg mb-5 bshadow">
+				<v-card outlined class="rounded-lg mb-5">
 					<v-list dense>
 						<v-subheader>REPORTS</v-subheader>
 						<v-list-item-group v-model="item" color="primary">
@@ -85,7 +85,7 @@
 					</v-list>
 				</v-card>
 
-				<v-card class="rounded-lg mt-5 bshadow">
+				<v-card outlined class="rounded-lg mt-5">
 					<v-list dense>
 						<v-subheader>REPORTS</v-subheader>
 						<v-list-item-group v-model="item" color="primary">
@@ -102,7 +102,7 @@
 				</v-card>
 			</v-col>
 			<v-col cols="7" xs="12" sm="6" md="7">
-				<v-card class="rounded-lg bshadow">
+				<v-card outlined class="rounded-lg">
 					<v-list>
 						<v-list-item>
 							<v-list-item-icon>
@@ -155,7 +155,7 @@
 		<v-row justify="center">
 			<v-col cols="7" xs="12" sm="6" md="7">
 				<!-- personal Progress -->
-				<v-card class="rounded-lg bshadow" max-width="600" color="blue" dark>
+				<v-card outlined class="rounded-lg" max-width="600" color="blue" dark>
 					<v-card-text>
 						<v-sheet color="rgba(0, 0, 0, .12)">
 							<v-sparkline
