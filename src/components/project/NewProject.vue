@@ -20,7 +20,7 @@
 									:error-messages="errors"
 									label="Titel"
 									required
-									hint="Question title character between 3-30"
+									hint="Short Title of the Project"
 								></v-text-field>
 							</ValidationProvider>
 
@@ -32,7 +32,7 @@
 									:error-messages="errors"
 									label="Version"
 									required
-									hint="Question title character between 3-30"
+									hint="Version of the application version sould be in the form eg: 1.0.0  'major.minor.patch'"
 								></v-text-field>
 							</ValidationProvider>
 
@@ -44,11 +44,11 @@
 									label="Summary"
 									counter="255"
 									required
-									hint="Question descirption"
+									hint="A brife summary of the proejct"
 								></v-text-field>
 							</ValidationProvider>
 
-							<ValidationProvider v-slot="{ errors }" name="license" rules="required|min:2">
+							<ValidationProvider v-slot="{ errors }" name="license" rules="required|min:5">
 								<v-combobox
 									v-model="license"
 									:items="license_items"
