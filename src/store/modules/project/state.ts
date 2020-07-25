@@ -1,3 +1,6 @@
 export default {
-  projects: []
+  projects: [],
+  isLoading: false,
+  userProjects: [],
+  isLoadingUser: false
 };

@@ -10,6 +10,14 @@ export default [
     }
   },
   {
+    path: `${routePath}/new_project`,
+    name: "NewProject",
+    component: () => import('@/components/project/NewProject.vue'),
+    meta: {
+      requiresAuth: true
+    }
+  },
+  {
     path: `${routePath}/chatborad`,
     name: "ChatBoard",
     component: () => import('@/components/chat/ChatBoard.vue'),

@@ -54,14 +54,14 @@
 			</v-row>
 		</v-container>
 		<v-container fluid class="px-xs-4 px-sm-8 px-md-15">
-			<v-row justify="space-evenly">
+			<v-row>
 				<v-col
 					cols="12"
 					xs="12"
 					sm="6"
 					md="4"
 					v-for="question in filteredQuestions"
-					:key="question.id"
+					:key="question._id"
 					transition="slide-y-reverse-transition"
 				>
 					<v-card

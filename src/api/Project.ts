@@ -6,6 +6,9 @@ export default {
   getAll() {
     return Api.get(`${route}/all`)
   },
+  getUserProjects(id: string) {
+    return Api.get(`${route}/user_projects/${id}`)
+  },
   getContributers(id: string) {
     return Api.get(`${route}/${id}/contributers`)
   },
@@ -27,10 +30,10 @@ export default {
   applyJoin(id: string) {
     return Api.post(`${route}/${id}/apply`)
   },
-  acceptApplicant(id: string, user_id: string) {
-    return Api.post(`${route}/${id}/user/${user_id}/accept`)
+  acceptApplicant(id: string, userId: string) {
+    return Api.post(`${route}/${id}/user/${userId}/accept`)
   },
-  rejectApplicant(id: string, user_id: string) {
-    return Api.post(`${route}/${id}/user/${user_id}/reject`)
+  rejectApplicant(id: string, userId: string) {
+    return Api.post(`${route}/${id}/user/${userId}/reject`)
   }
 }
