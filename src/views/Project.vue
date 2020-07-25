@@ -94,7 +94,9 @@
 				<v-col cols="12" xs="12" sm="6" md="6">
 					<v-row>
 						<v-col cols="12" xs="12">
-							<v-card outlined class="rounded-lg" min-height="80"></v-card>
+							<v-card outlined class="rounded-lg" min-height="80">
+								recent-chats
+							</v-card>
 						</v-col>
 					</v-row>
 				</v-col>

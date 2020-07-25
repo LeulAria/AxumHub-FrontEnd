@@ -48,7 +48,9 @@
 								</div>
 							</template>
 						</div>
-						<v-subheader class="center text-center">{{userProfile.bio || 'no profile detail!'}}</v-subheader>
+						<v-subheader
+							class="center text-center"
+						>{{userProfile&&userProfile.bio || 'no profile detail!'}}</v-subheader>
 					</v-col>
 				</v-row>
 			</v-col>
@@ -237,7 +239,7 @@ export default class Profile extends Vue {
 	loadingEduDel = false;
 
 	created() {
-		if (!Object.keys(this.userProfile).length) this.getUserProfile();
+		this.getUserProfile(this.userInfo.id);
 	}
 
 	get socialLinksDispaly() {
