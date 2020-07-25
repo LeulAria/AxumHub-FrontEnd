@@ -24,10 +24,10 @@
 								></v-text-field>
 							</ValidationProvider>
 
-							<ValidationProvider v-slot="{ errors }" name="title" rules="required|min:3|max:30">
+							<ValidationProvider v-slot="{ errors }" name="version" rules="required|min:3|max:30">
 								<v-text-field
 									v-model="version"
-									prepend-icon="mdi-pencil-circle-outline"
+									prepend-icon="mdi-progress-check"
 									:counter="30"
 									:error-messages="errors"
 									label="Version"
@@ -36,85 +36,86 @@
 								></v-text-field>
 							</ValidationProvider>
 
-							<ValidationProvider v-slot="{ errors }" name="description" rules="required">
+							<ValidationProvider v-slot="{ errors }" name="summary" rules="required">
 								<v-text-field
 									v-model="summary"
 									:error-messages="errors"
 									prepend-icon="mdi-subtitles-outline"
 									label="Summary"
+									counter="255"
 									required
 									hint="Question descirption"
 								></v-text-field>
 							</ValidationProvider>
 
-							<ValidationProvider v-slot="{ errors }" name="status" rules="required|min:2">
+							<ValidationProvider v-slot="{ errors }" name="license" rules="required|min:2">
 								<v-combobox
 									v-model="license"
 									:items="license_items"
-									prepend-icon="mdi-briefcase-account-outline"
+									prepend-icon="mdi-license"
 									label="Project License"
 									:error-messages="errors"
-									hint="current status of work, education..."
+									hint="poject license.."
 									chips
 								></v-combobox>
 							</ValidationProvider>
 
-							<ValidationProvider v-slot="{ errors }" name="status" rules="required|min:2">
+							<ValidationProvider v-slot="{ errors }" name="developmentmodel">
 								<v-combobox
 									v-model="developmentmodel"
 									:items="developmentmodel_items"
-									prepend-icon="mdi-briefcase-account-outline"
+									prepend-icon="mdi-lightbulb-group"
 									label="Developmet Model"
 									:error-messages="errors"
-									hint="current status of work, education..."
+									hint="(Optional) Development model for the project"
 									chips
 								></v-combobox>
 							</ValidationProvider>
 
-							<ValidationProvider v-slot="{ errors }" name="tags" rules="required">
+							<ValidationProvider v-slot="{ errors }" name="tools" rules="required">
 								<v-text-field
 									v-model="tools"
 									:error-messages="errors"
-									prepend-icon="mdi-label-multiple-outline"
-									label="Major Tools/ Thecnology using"
+									prepend-icon="mdi-tools"
+									label="Tools"
 									required
-									hint="Question Tags comma separarated eg: test1, test2"
+									hint="Major Development Tools, Frameworks, Programming languages..."
 								></v-text-field>
 							</ValidationProvider>
 
 							<v-subheader>Other optional infos</v-subheader>
 							<v-divider inset></v-divider>
-							<ValidationProvider v-slot="{ errors }" name="description" rules="required">
+							<ValidationProvider v-slot="{ errors }" name="githubrepolink">
 								<v-text-field
 									v-model="githubrepolink"
 									:error-messages="errors"
-									prepend-icon="mdi-subtitles-outline"
+									prepend-icon="mdi-github"
 									label="Github Repository Link"
 									required
-									hint="Question descirption"
+									hint="(Optional) github repository url link eg: https://github.com/testuser/project_name"
 								></v-text-field>
 							</ValidationProvider>
 
-							<ValidationProvider v-slot="{ errors }" name="description" rules="required">
+							<ValidationProvider v-slot="{ errors }" name="website">
 								<v-text-field
 									v-model="website"
 									:error-messages="errors"
-									prepend-icon="mdi-subtitles-outline"
+									prepend-icon="mdi-web"
 									label="Website"
 									required
-									hint="Question descirption"
+									hint="(Optional) A deployed/deployable website link url"
 								></v-text-field>
 							</ValidationProvider>
 
 							<v-subheader>Axuhhub chat and colaboration Group</v-subheader>
 							<v-divider inset></v-divider>
-							<ValidationProvider v-slot="{ errors }" rules="required" name="agreeterms">
+							<ValidationProvider v-slot="{ errors }" rules="required" name="createchatgroup">
 								<v-checkbox
 									color="info"
 									v-model="createchatgroup"
 									:error-messages="errors"
 									:value="1"
-									label="Create Chat group"
+									label="Create Chat group for the project"
 									type="checkbox"
 									required
 								></v-checkbox>
@@ -123,13 +124,13 @@
 							<ValidationProvider
 								v-if="createchatgroup"
 								v-slot="{ errors }"
-								name="description"
+								name="chatgroupname"
 								rules="required"
 							>
 								<v-text-field
 									v-model="chatgroupname"
 									:error-messages="errors"
-									prepend-icon="mdi-subtitles-outline"
+									prepend-icon="mdi-account-group"
 									label="Chat Group Name"
 									required
 									hint="a simple name for the project group that doen't contain space and sparial characters like &*+$..."
@@ -183,7 +184,7 @@ export default class UserQuestionsPost extends Vue {
 
 	addNewProject!: any;
 
-	license_items = ["ET", "AXU", "EAXL"];
+	license_items = ["ET", "AXU", "EAXL", "MIT"];
 
 	developmentmodel_items = [
 		"Waterfall",
