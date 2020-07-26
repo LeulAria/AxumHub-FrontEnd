@@ -5,6 +5,7 @@
 				<chat-message-box :key="i" :reversed="chatMsg.reversed">{{chatMsg.txt}}</chat-message-box>
 			</template>
 		</div>
+
 		<div class="chat__conversation-panel">
 			<div class="chat__conversation-panel__container">
 				<button class="chat__conversation-panel__button panel-item btn-icon add-file-button">
@@ -144,7 +145,7 @@ export default class ChatBoard extends Vue {
 
 <style lang="stylus" scoped>
 .--dark-theme {
-	// --chat-background: rgba(10, 14, 14, 0.95);
+	--chat-background: rgba(0,0,0,0);
 	--chat-panel-background: #131719;
 	--chat-bubble-background: #14181a;
 	--chat-bubble-active-background: #171a1b;
@@ -154,32 +155,18 @@ export default class ChatBoard extends Vue {
 	--chat-options-svg: #a3a3a3;
 }
 
-body {
-	background: url('https://images.unsplash.com/photo-1495808985667-ba4ce2ef31b3?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1050&q=80'); // images.unsplash.com/photo-1495808985667-ba4ce2ef31b3?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1050&q=80)
-	background-size: cover;
-}
-
 #chat {
-	background: var(--chat-background);
-	max-width: 600px;
-	margin: 25px auto;
+	background: var(--chat-background)
 	box-sizing: border-box;
 	padding: 1em;
-	border-radius: 12px;
+	height: 100vh;
+	overflow: hidden;
 	position: relative;
 	overflow: hidden;
-
-	&::before {
-		content: '';
-		position: absolute;
-		top: 0;
-		left: 0;
-		width: 100%;
-		height: 100%;
-		background: url('https://images.unsplash.com/photo-1495808985667-ba4ce2ef31b3?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1050&q=80') fixed; // images.unsplash.com/photo-1495808985667-ba4ce2ef31b3?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1050&q=80) fixed
-		z-index: -1;
-	}
-
+	// background-image: linear-gradient(to bottom, rgba(255,255,255,0.2),rgba(255,255,255,0.8)), url('https://www.omenkaonline.com/wp-content/uploads/2017/08/ETH_2015_DK_154_0.jpg');
+  // background-position: center;
+  // background-size: cover;
+	
 	.btn-icon {
 		position: relative;
 		cursor: pointer;
@@ -199,7 +186,7 @@ body {
 
 	.chat__conversation-board {
 		padding: 1em 1em 0 1em;
-		height: calc(100vh - 55px - 2em - 25px * 2 - 0.5em - 3em);
+		height: calc(100vh - 105px);
 		overflow: auto;
 	}
 
@@ -366,6 +353,7 @@ body {
 		padding: 0 1em;
 		height: 55px;
 		margin: 0.5em 0 0;
+		border 1px solid #333
 
 		.add-file-button {
 			height: 23px;

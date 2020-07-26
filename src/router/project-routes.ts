@@ -26,9 +26,9 @@ export default [
     }
   },
   {
-    path: `${routePath}/chatspace`,
-    name: "ChatSpace",
-    component: () => import('@/views/ChatSpace.vue'),
+    path: `${routePath}/chat`,
+    name: "Chat",
+    component: () => import('@/views/Chat.vue'),
     meta: {
       requiresAuth: true
     }

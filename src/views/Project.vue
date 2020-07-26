@@ -1,5 +1,5 @@
 <template>
-	<v-main>
+	<v-main class="chat">
 		<v-row no-gutters class="my-2 mb-1">
 			<v-col cols="10" sm="10" class="mx-5 mb-2 d-flex align-center">
 				<h3 class="grey--text text--darken-2 mr-auto">Axum HUB Project</h3>
@@ -20,6 +20,7 @@
 				</v-menu>
 			</v-col>
 		</v-row>
+
 		<v-container fluid class="px-xs-4 px-sm-8 px-md-15 py-0">
 			<v-row justify="space-between">
 				<v-col cols="12" xs="12" sm="6" md="6">
@@ -118,7 +119,7 @@
 					></v-text-field>
 					<v-subheader>Your Projects</v-subheader>
 					<v-card
-						v-for="(project, i) in filteredUserProjects"
+						v-for="project in filteredUserProjects"
 						:key="project._id"
 						outlined
 						class="project-card rounded-lg pa-2 py-5 my-3 overflow-hidden"
@@ -135,37 +136,40 @@
 							<small>12</small>
 						</div>
 						<v-col cols="12" sm="6" offset-sm="3">
-							<div class="text-center" v-if="i==0">
-								<v-menu v-model="menu" :close-on-content-click="false" :nudge-width="200" offset-x>
+							<div class="text-center">
+								<v-menu
+									class="menu-project"
+									v-model="project.menu"
+									:close-on-content-click="false"
+									:nudge-width="200"
+									offset-x
+								>
 									<template v-slot:activator="{ on, attrs }">
 										<v-btn text fab small class="project-more-btn elevation-0" v-bind="attrs" v-on="on">
 											<v-icon>mdi-dots-vertical</v-icon>
 										</v-btn>
 									</template>
 
-									<v-card>
+									<v-card outlined class="rounded-xl elevation-0">
 										<v-list>
 											<v-list-item>
 												<v-list-item-action>
-													<v-switch inset v-model="message" color="purple"></v-switch>
+													<v-btn fab small class="elevation-0" link>
+														<v-icon>mdi-eye</v-icon>
+													</v-btn>
 												</v-list-item-action>
-												<v-list-item-title>Enable messages</v-list-item-title>
+												<v-list-item-title>See Detail</v-list-item-title>
 											</v-list-item>
 
 											<v-list-item>
 												<v-list-item-action>
-													<v-switch inset v-model="hints" color="purple"></v-switch>
+													<v-btn :to="{ name: 'Chat' }" fab small class="elevation-0" link>
+														<v-icon>mdi-chat</v-icon>
+													</v-btn>
 												</v-list-item-action>
-												<v-list-item-title>Enable hints</v-list-item-title>
+												<v-list-item-title>Go to chat</v-list-item-title>
 											</v-list-item>
 										</v-list>
-
-										<v-card-actions>
-											<v-spacer></v-spacer>
-
-											<v-btn text @click="menu = false">Cancel</v-btn>
-											<v-btn color="primary" text @click="menu = false">Save</v-btn>
-										</v-card-actions>
 									</v-card>
 								</v-menu>
 							</div>
@@ -219,6 +223,9 @@ export default class Project extends Vue {
 	mounted() {
 		this.getAllProjects();
 		this.getUserProjects(this.userInfo.id);
+		this.projects.forEach((project: any) => {
+			project.menu = false;
+		});
 		console.log(this.projects);
 	}
 
@@ -258,6 +265,10 @@ export default class Project extends Vue {
 </script>
 
 <style lang="stylus" scoped>
+.chat
+	width 100vw
+	height 100vh
+	overflow hidden
 .container
 	padding 0
 .project-card
@@ -288,4 +299,9 @@ export default class Project extends Vue {
 .tab--active
 	background #45B
 	color #FFF
+
+.v-menu__content
+	background transparent !important
+	box-shadow none !important
+	background yellow
 </style>

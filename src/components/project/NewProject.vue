@@ -48,7 +48,7 @@
 								></v-text-field>
 							</ValidationProvider>
 
-							<ValidationProvider v-slot="{ errors }" name="license" rules="required|min:5">
+							<ValidationProvider v-slot="{ errors }" name="license" rules="required">
 								<v-combobox
 									v-model="license"
 									:items="license_items"
