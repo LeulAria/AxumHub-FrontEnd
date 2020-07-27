@@ -8,6 +8,7 @@ import qaModule from './modules/qa'
 import chatModule from './modules/chat'
 import profileModule from './modules/profiles'
 import projectModule from './modules/project'
+import blogModule from './modules/blog'
 
 Vue.use(Vuex);
 
@@ -28,7 +29,8 @@ export default new Vuex.Store({
     profile: profileModule,
     qa: qaModule,
     chat: chatModule,
-    project: projectModule
+    project: projectModule,
+    blog: blogModule
   },
   plugins: [
     new VuexPersistence({

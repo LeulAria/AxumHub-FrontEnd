@@ -5,7 +5,7 @@
 				<h3 class="grey--text text--darken-2 mr-auto">Axum HUB Q&A</h3>
 				<v-menu transition="scroll-y-reverse-transition" class="ml-auto">
 					<template v-slot:activator="{ on, attrs }">
-						<v-btn color="primary" class="ma-2 elevation-0" fab small v-bind="attrs" v-on="on">
+						<v-btn class="ma-2 elevation-0" fab small v-bind="attrs" v-on="on">
 							<v-icon>mdi-pencil-plus-outline</v-icon>
 						</v-btn>
 					</template>
@@ -23,7 +23,6 @@
 				</v-menu>
 			</v-col>
 		</v-row>
-		<v-divider class="mb-2"></v-divider>
 		<v-row no-gutters class="my-2 my-4">
 			<v-subheader>All Questions</v-subheader>
 			<v-col cols="12" xs="12">

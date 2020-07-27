@@ -72,7 +72,7 @@ export default class Navbar extends Vue {
 
 	items = [
 		{ title: "Dashboard", icon: "mdi-view-dashboard", to: "/dashboard" },
-		{ title: "Blog", icon: "mdi-compass", to: "/" },
+		{ title: "Blog", icon: "mdi-compass", to: "/axum_blogs" },
 		{ title: "Q/A", icon: "mdi-comment-question", to: "/qa" },
 		{ title: "Project", icon: "mdi-folder-cog", to: "/project" },
 		{ title: "Profile", icon: "mdi-account-settings", to: "/profile" },

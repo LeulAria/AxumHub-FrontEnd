@@ -1,5 +1,5 @@
 <template>
-	<v-main class="chat">
+	<v-main>
 		<v-row no-gutters class="my-2 mb-1">
 			<v-col cols="10" sm="10" class="mx-5 mb-2 d-flex align-center">
 				<h3 class="grey--text text--darken-2 mr-auto">Axum HUB Project</h3>
@@ -71,37 +71,7 @@
 							</v-row>
 						</v-col>
 						<v-col cols="12" xs="12" v-if="isTab(2)">
-							<v-text-field
-								v-model="search"
-								cache-items
-								prepend-inner-icon="mdi-magnify"
-								class="auto-complete mx-4 mx-md-13"
-								flat
-								solo-inverted
-								hide-no-data
-								label="Search Working Projects..."
-								:autocomplete="false"
-							></v-text-field>
-							<v-row>
-								<v-col cols="12" xs="12" sm="6" v-for="project in filteredProjects" :key="project._id">
-									<v-card
-										outlined
-										class="project-card rounded-lg pa-2 py-5 my-3 overflow-hidden"
-										min-height="150"
-										max-height="150"
-									>
-										<small
-											class="project-date grey--text text--darken-1 ma-0"
-										>{{project&&project.data.slice(0,10)}}</small>
-										<h4 class="ml-4 bolded">{{project.title}}</h4>
-										<v-card-subtitle>{{project&&project.summary.split(' ').slice(0,10).join(' ')}}</v-card-subtitle>
-										<div class="project-star d-flex align-center">
-											<v-icon color="info">mdi-star-outline</v-icon>
-											<small>12</small>
-										</div>
-									</v-card>
-								</v-col>
-							</v-row>
+							<h5>Projects..... Joined...</h5>
 						</v-col>
 					</v-row>
 				</v-col>
@@ -265,10 +235,6 @@ export default class Project extends Vue {
 </script>
 
 <style lang="stylus" scoped>
-.chat
-	width 100vw
-	height 100vh
-	overflow hidden
 .container
 	padding 0
 .project-card
