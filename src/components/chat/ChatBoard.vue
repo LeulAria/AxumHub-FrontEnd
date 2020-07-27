@@ -1,5 +1,8 @@
 <template>
-	<div class="--dark-theme" id="chat">
+	<div
+		:class="{'--light-theme': $vuetify.theme.dark, '--dark-theme': !$vuetify.theme.dark, 'chat-bg-dark': $vuetify.theme.dark, 'chat-bg-light': !$vuetify.theme.dark }"
+		id="chat"
+	>
 		<div class="chat__conversation-board" ref="chatBoardContainer">
 			<template v-for="(chatMsg, i) in chatMessages">
 				<chat-message-box :key="i" :reversed="chatMsg.reversed">{{chatMsg.txt}}</chat-message-box>
@@ -114,8 +117,6 @@ export default class ChatBoard extends Vue {
 		this.$nextTick(() => {
 			const chatMsgBoard = this.$refs.chatBoardContainer as HTMLDivElement;
 			chatMsgBoard.scrollTop = chatMsgBoard.scrollHeight + 10;
-			console.log("the scroll top: ", chatMsgBoard.scrollTop);
-			console.log("the scroll height: ", chatMsgBoard.scrollHeight);
 		});
 	}
 
@@ -146,13 +147,33 @@ export default class ChatBoard extends Vue {
 <style lang="stylus" scoped>
 .--dark-theme {
 	--chat-background: rgba(0,0,0,0);
-	--chat-panel-background: #131719;
-	--chat-bubble-background: #14181a;
+	--chat-panel-background: #fff9;
+	--chat-bubble-background: #fffa;
 	--chat-bubble-active-background: #171a1b;
 	--chat-add-button-background: #212324;
 	--chat-send-button-background: #8147fc;
-	--chat-text-color: #a3a3a3;
+	--chat-text-color: #111;
 	--chat-options-svg: #a3a3a3;
+}
+
+.--light-theme {
+	--chat-background: rgba(250,250,250,0);
+	--chat-panel-background: #3334;
+	--chat-bubble-background: #00000069;
+	--chat-bubble-active-background: #171aff;
+	--chat-add-button-background: #212324;
+	--chat-send-button-background: #8147fc;
+	--chat-text-color: #f0f0f0;
+	--chat-options-svg: #a3a3a3;
+}
+
+.chat-bg-dark {
+	background-image: linear-gradient(to bottom, rgba(0,0,0,0.7),rgba(0,0,0,1)), url('https://www.omenkaonline.com/wp-content/uploads/2017/08/ETH_2015_DK_154_0.jpg') !important;
+  background-position: center !important; 
+}
+.chat-bg-light {
+	background-image: linear-gradient(to bottom, rgba(155,155,155,0.2),rgba(155,155,155,0.8)), url('https://www.omenkaonline.com/wp-content/uploads/2017/08/ETH_2015_DK_154_0.jpg') !important;
+  background-position: center !important;
 }
 
 #chat {
@@ -163,8 +184,6 @@ export default class ChatBoard extends Vue {
 	overflow: hidden;
 	position: relative;
 	overflow: hidden;
-	// background-image: linear-gradient(to bottom, rgba(255,255,255,0.2),rgba(255,255,255,0.8)), url('https://www.omenkaonline.com/wp-content/uploads/2017/08/ETH_2015_DK_154_0.jpg');
-  // background-position: center;
   // background-size: cover;
 	
 	.btn-icon {
@@ -353,7 +372,7 @@ export default class ChatBoard extends Vue {
 		padding: 0 1em;
 		height: 55px;
 		margin: 0.5em 0 0;
-		border 1px solid #333
+		box-shadow: 0px 1px 10px rgba(0,0,0,0.2);
 
 		.add-file-button {
 			height: 23px;
@@ -361,6 +380,7 @@ export default class ChatBoard extends Vue {
 			width: 23px;
 			background: var(--chat-add-button-background);
 			border-radius: 50%;
+			box-shadow: 0px 2px 10px rgba(0,0,0,0.2);
 
 			svg {
 				width: 70%;
@@ -434,7 +454,7 @@ export default class ChatBoard extends Vue {
 		outline: none;
 		position: relative;
 		color: var(--chat-text-color);
-		font-size: 13px;
+		font-size: 14px;
 		background: transparent;
 		border: 0;
 		resize: none;

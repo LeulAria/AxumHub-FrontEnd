@@ -1,10 +1,31 @@
 <template>
-	<v-container style="max-width: 500px">
+	<v-container style="max-width: 700px" class="pa-5">
+		<v-row no-gutters class="my-2 mb-1">
+			<v-col cols="10" sm="10" class="mx-5 mb-2 d-flex align-center">
+				<h3 class="grey--text text--darken-2 mr-auto">Axum HUB Tasks</h3>
+				<v-menu transition="scroll-y-reverse-transition" class="ml-auto">
+					<template v-slot:activator="{ on, attrs }">
+						<v-btn class="ma-2 elevation-0" fab small v-bind="attrs" v-on="on">
+							<v-icon>mdi-pencil-plus-outline</v-icon>
+						</v-btn>
+					</template>
+					<v-list>
+						<v-list-item :to="{ name: 'CreateQuestion' }" link>
+							<v-list-item-title>Save</v-list-item-title>
+						</v-list-item>
+						<v-list-item :to="{ name: 'UserPosts' }" link>
+							<v-list-item-title>Clear</v-list-item-title>
+						</v-list-item>
+					</v-list>
+				</v-menu>
+			</v-col>
+		</v-row>
 		<v-text-field
 			v-model="task"
 			prepend-icon="mdi-clipboard-list-outline"
 			label="What are you working on?"
 			@keydown.enter="create"
+			class="mt-13"
 		>
 			<v-fade-transition v-slot:append>
 				<v-icon v-if="task" @click="create">add_circle</v-icon>
@@ -95,15 +116,12 @@ export default class TaskList extends Vue {
 	}
 
 	create() {
-		alert("wtf handle it...");
-		console.log(this.tasks);
 		this.tasks.push({
 			done: false,
 			text: this.ownTask
 		});
-		console.log(this.tasks);
-
 		this.ownTask = "";
+		this.task = "";
 	}
 }
 </script>

@@ -5,7 +5,8 @@
 				<v-card max-width="420" class="mx-6 chat-sizebar" flat outlined>
 					<v-toolbar class="chat-app-bar">
 						<v-app-bar-nav-icon @click="toggleChatList()"></v-app-bar-nav-icon>
-						<h5 class="grey--text text--darken-1" v-if="chatgruplist">AxumHUB project Group</h5>
+						<h5 class="grey--text" v-if="chatgruplist">Available Groups</h5>
+						<h5 class="grey--text" v-if="!chatgruplist">{{id}} project Group</h5>
 						<v-spacer></v-spacer>
 					</v-toolbar>
 
@@ -30,7 +31,7 @@
 
 					<v-list three-line class="chat-lists" v-if="!chatgruplist">
 						<template v-for="(item, index) in items">
-							<v-subheader v-if="item.header" :key="item.header" v-text="item.header"></v-subheader>
+							<v-subheader v-if="item.header" :key="index" v-text="item.header"></v-subheader>
 
 							<v-divider v-else-if="item.divider" :key="index" :inset="item.inset"></v-divider>
 
@@ -56,7 +57,7 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from "vue-property-decorator";
+import { Component, Vue, Prop } from "vue-property-decorator";
 import ChatBoard from "@/components/chat/ChatBoard.vue";
 
 @Component({
@@ -65,7 +66,9 @@ import ChatBoard from "@/components/chat/ChatBoard.vue";
 	}
 })
 export default class ChatSpace extends Vue {
-	chatgruplist = true;
+	@Prop({ type: String, required: true })
+	id!: string;
+	chatgruplist = false;
 	txt = "ok msg goes here";
 
 	toggleChatList() {
@@ -73,7 +76,7 @@ export default class ChatSpace extends Vue {
 	}
 
 	items = [
-		{ header: "Today" },
+		{ header: "Group Members" },
 		{
 			avatar: "https://cdn.vuetifyjs.com/images/lists/1.jpg",
 			title: "Brunch this weekend?",
@@ -86,61 +89,6 @@ export default class ChatSpace extends Vue {
 			title: 'Summer BBQ <span class="grey--text text--lighten-1">4</span>',
 			subtitle:
 				"<span class='text--primary'>to Alex, Scott, Jennifer</span> &mdash; Wish I could come, but I'm out of town this weekend."
-		},
-		{ divider: true, inset: true },
-		{
-			avatar: "https://cdn.vuetifyjs.com/images/lists/3.jpg",
-			title: "Oui oui",
-			subtitle:
-				"<span class='text--primary'>Sandra Adams</span> &mdash; Do you have Paris recommendations? Have you ever been?"
-		},
-		{ divider: true, inset: true },
-		{
-			avatar: "https://cdn.vuetifyjs.com/images/lists/4.jpg",
-			title: "Birthday gift",
-			subtitle:
-				"<span class='text--primary'>Trevor Hansen</span> &mdash; Have any ideas about what we should get Heidi for her birthday?"
-		},
-		{ divider: true, inset: true },
-		{
-			avatar: "https://cdn.vuetifyjs.com/images/lists/5.jpg",
-			title: "Recipe to try",
-			subtitle:
-				"<span class='text--primary'>Britta Holt</span> &mdash; We should eat this: Grate, Squash, Corn, and tomatillo Tacos."
-		},
-		{
-			avatar: "https://cdn.vuetifyjs.com/images/lists/1.jpg",
-			title: "Brunch this weekend?",
-			subtitle:
-				"<span class='text--primary'>Ali Connors</span> &mdash; I'll be in your neighborhood doing errands this weekend. Do you want to hang out?"
-		},
-		{ divider: true, inset: true },
-		{
-			avatar: "https://cdn.vuetifyjs.com/images/lists/2.jpg",
-			title: 'Summer BBQ <span class="grey--text text--lighten-1">4</span>',
-			subtitle:
-				"<span class='text--primary'>to Alex, Scott, Jennifer</span> &mdash; Wish I could come, but I'm out of town this weekend."
-		},
-		{ divider: true, inset: true },
-		{
-			avatar: "https://cdn.vuetifyjs.com/images/lists/3.jpg",
-			title: "Oui oui",
-			subtitle:
-				"<span class='text--primary'>Sandra Adams</span> &mdash; Do you have Paris recommendations? Have you ever been?"
-		},
-		{ divider: true, inset: true },
-		{
-			avatar: "https://cdn.vuetifyjs.com/images/lists/4.jpg",
-			title: "Birthday gift",
-			subtitle:
-				"<span class='text--primary'>Trevor Hansen</span> &mdash; Have any ideas about what we should get Heidi for her birthday?"
-		},
-		{ divider: true, inset: true },
-		{
-			avatar: "https://cdn.vuetifyjs.com/images/lists/5.jpg",
-			title: "Recipe to try",
-			subtitle:
-				"<span class='text--primary'>Britta Holt</span> &mdash; We should eat this: Grate, Squash, Corn, and tomatillo Tacos."
 		}
 	];
 }

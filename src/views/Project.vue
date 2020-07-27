@@ -133,7 +133,7 @@
 
 											<v-list-item>
 												<v-list-item-action>
-													<v-btn :to="{ name: 'Chat' }" fab small class="elevation-0" link>
+													<v-btn @click="openChat(project.chatgroupname)" fab small class="elevation-0">
 														<v-icon>mdi-chat</v-icon>
 													</v-btn>
 												</v-list-item-action>
@@ -207,9 +207,12 @@ export default class Project extends Vue {
 		return this.tab == tab;
 	}
 
+	openChat(id: string) {
+		this.$router.push({ name: "Chat", params: { id } });
+	}
+
 	showDetail(id: string) {
 		console.log("show project detail");
-		// this.$router.push({ name: "QuestionDetail", params: { id } });
 	}
 
 	set filteredUserProjects(val: any) {

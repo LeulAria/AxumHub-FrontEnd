@@ -18,17 +18,10 @@ export default [
     }
   },
   {
-    path: `${routePath}/chatborad`,
-    name: "ChatBoard",
-    component: () => import('@/components/chat/ChatBoard.vue'),
-    meta: {
-      requiresAuth: true
-    }
-  },
-  {
-    path: `${routePath}/chat`,
+    path: `${routePath}/chat/:id`,
     name: "Chat",
     component: () => import('@/views/Chat.vue'),
+    props: true,
     meta: {
       requiresAuth: true
     }
@@ -37,6 +30,14 @@ export default [
     path: `${routePath}/conference`,
     name: "Conference",
     component: () => import('@/views/Conference.vue'),
+    meta: {
+      requiresAuth: true
+    }
+  },
+  {
+    path: `${routePath}/tasks`,
+    name: "TaskList",
+    component: () => import('@/components/project/TaskList.vue'),
     meta: {
       requiresAuth: true
     }
