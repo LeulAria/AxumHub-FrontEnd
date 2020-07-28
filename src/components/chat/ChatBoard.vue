@@ -5,7 +5,13 @@
 	>
 		<div class="chat__conversation-board" ref="chatBoardContainer">
 			<template v-for="(chatMsg, i) in chatMessages">
-				<chat-message-box :key="i" :reversed="chatMsg.reversed">{{chatMsg.txt}}</chat-message-box>
+				<chat-message-box
+					:key="i"
+					:reversed="chatMsg.reversed"
+					:userName="chatMsg.user"
+					:message="chatMsg.message"
+					chatTime="8:32"
+				></chat-message-box>
 			</template>
 		</div>
 
@@ -85,44 +91,63 @@
 import { Component, Vue } from "vue-property-decorator";
 import ChatMessageBox from "@/components/chat/ChatMessageBox.vue";
 import { Socket } from "vue-socket.io-extended";
+import { mapGetters } from "vuex";
 
 @Component({
 	components: {
 		"chat-message-box": ChatMessageBox
+	},
+	computed: {
+		...mapGetters("users", ["userInfo"])
 	}
 })
 export default class ChatBoard extends Vue {
+	userInfo!: any;
 	userChatMsg!: string;
 
 	chatMessages = [
-		{ txt: "this is my text!", reversed: false },
-		{ txt: "this is my text two!", reversed: true },
-		{ txt: "this is my text three!", reversed: false },
-		{ txt: "this is my text four!", reversed: true }
+		{ message: "this is my text!", user: "Anonymus", reversed: false },
+		{ message: "this is my text two!", user: "Anonymus", reversed: true }
 	];
 
 	@Socket()
 	connect() {
 		console.log("connection established...");
 		this.chatMessages.push({
-			txt: "connection established...",
+			message: "connection established...",
+			user: "AxumHUB",
 			reversed: false
 		});
 	}
 
-	@Socket("test")
-	onTest(msg: string) {
-		this.chatMessages.push({ txt: msg, reversed: true });
-
-		this.$nextTick(() => {
-			const chatMsgBoard = this.$refs.chatBoardContainer as HTMLDivElement;
-			chatMsgBoard.scrollTop = chatMsgBoard.scrollHeight + 10;
+	@Socket("getChatMsg")
+	onTest(chatPayload: any) {
+		this.chatMessages.push({
+			message: chatPayload.message,
+			user: chatPayload.user,
+			reversed: chatPayload.id == this.userInfo.id
 		});
+
+		this.scrollChatBoad();
+	}
+
+	sendMessage() {
+		this.$socket.client.emit("sendChat", {
+			message: this.userChatMsg,
+			user: this.userInfo
+		});
+		this.$store.dispatch("chat/chatEvent");
+		this.scrollChatBoad();
 	}
 
 	@Socket("disconnected")
-	onDisconnect(msg: string) {
-		this.chatMessages.push({ txt: msg, reversed: false });
+	onDisconnect(message: string) {
+		this.chatMessages.push({
+			message: message,
+			user: "AxumHUB",
+			reversed: false
+		});
+		this.scrollChatBoad();
 	}
 
 	userEmit(msg: string) {
@@ -137,9 +162,11 @@ export default class ChatBoard extends Vue {
 		this.userChatMsg = val;
 	}
 
-	sendMessage() {
-		this.$socket.client.emit("sendChat", this.userChatMsg);
-		this.$store.dispatch("chat/chatEvent");
+	scrollChatBoad() {
+		this.$nextTick(() => {
+			const chatMsgBoard = this.$refs.chatBoardContainer as HTMLDivElement;
+			chatMsgBoard.scrollTop = chatMsgBoard.scrollHeight + 10;
+		});
 	}
 }
 </script>

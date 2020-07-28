@@ -6,13 +6,13 @@
 			<div class="chat__conversation-board__message__person__avatar">
 				<img src="https://randomuser.me/api/portraits/men/9.jpg" alt="Dennis Mikle" />
 			</div>
-			<span class="chat__conversation-board__message__person__nickname">Dennis Mikle</span>
+			<span class="chat__conversation-board__message__person__nickname">{{userName}}</span>
 		</div>
 		<div class="chat__conversation-board__message__context">
 			<div class="chat__conversation-board__message__bubble">
 				<span>
-					<slot></slot>
-					<small :class="{'chat_time': true, 'reverse_chat_time': reversed}">8:28 pm</small>
+					{{message}}
+					<small :class="{'chat_time': true, 'reverse_chat_time': reversed}">{{chatTime}}</small>
 				</span>
 			</div>
 		</div>
@@ -71,6 +71,12 @@ import { Component, Prop, Vue } from "vue-property-decorator";
 export default class ChatMessageBox extends Vue {
 	@Prop({ default: true })
 	reversed!: boolean;
+	@Prop({ type: String, default: "Anonymus" })
+	userName!: string;
+	@Prop({ type: String, required: true })
+	message!: string;
+	@Prop({ type: String, required: true })
+	chatTime!: string;
 }
 </script>
 
@@ -177,15 +183,14 @@ export default class ChatMessageBox extends Vue {
 			width: auto;
 		}
 	}
-
 	.chat__conversation-board__message__person__nickname {
-		font-size: 9px;
-		color: #484848;
+		font-size: 11px;
+		max-width: 160px;
+		color: var(--chat-text-color);
 		-webkit-user-select: none;
 		-moz-user-select: none;
 		-ms-user-select: none;
 		user-select: none;
-		display: none;
 	}
 
 	.chat__conversation-board__message__context {
