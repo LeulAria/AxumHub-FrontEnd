@@ -9,6 +9,12 @@ export default {
   getUserProjects(id: string) {
     return Api.get(`${route}/user_projects/${id}`)
   },
+  getProjectById(id: string) {
+    return Api.get(`${route}/${id}`)
+  },
+  getProjectByChatName(chatName: string) {
+    return Api.get(`${route}/chat/${chatName}`)
+  },
   getContributers(id: string) {
     return Api.get(`${route}/${id}/contributers`)
   },

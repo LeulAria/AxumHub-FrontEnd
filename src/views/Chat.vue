@@ -30,21 +30,21 @@
 					</v-list>
 
 					<v-list three-line class="chat-lists" v-if="!chatgruplist">
-						<template v-for="(item, index) in items">
-							<v-subheader v-if="item.header" :key="index" v-text="item.header"></v-subheader>
+						<template v-for="(member, i) in members">
+							<v-subheader v-if="i==0" :key="i">Group Members</v-subheader>
+							<div :key="i">
+								<v-list-item ripple>
+									<v-list-item-avatar>
+										<v-img src="https://cdn.vuetifyjs.com/images/lists/1.jpg"></v-img>
+									</v-list-item-avatar>
 
-							<v-divider v-else-if="item.divider" :key="index" :inset="item.inset"></v-divider>
-
-							<v-list-item v-else :key="item.title" ripple>
-								<v-list-item-avatar>
-									<v-img :src="item.avatar"></v-img>
-								</v-list-item-avatar>
-
-								<v-list-item-content>
-									<v-list-item-title v-html="item.title"></v-list-item-title>
-									<v-list-item-subtitle>Offline...</v-list-item-subtitle>
-								</v-list-item-content>
-							</v-list-item>
+									<v-list-item-content>
+										<v-list-item-title>{{member.name}}</v-list-item-title>
+										<v-list-item-subtitle>Offline...</v-list-item-subtitle>
+									</v-list-item-content>
+								</v-list-item>
+								<v-divider inset></v-divider>
+							</div>
 						</template>
 					</v-list>
 				</v-card>
@@ -53,6 +53,9 @@
 				<chat-board></chat-board>
 			</v-col>
 		</v-row>
+		<v-overlay :value="loading">
+			<v-progress-circular indeterminate size="64"></v-progress-circular>
+		</v-overlay>
 	</v-main>
 </template>
 
@@ -60,25 +63,47 @@
 import { Component, Vue, Prop } from "vue-property-decorator";
 import ChatBoard from "@/components/chat/ChatBoard.vue";
 
+import { mapGetters, mapActions } from "vuex";
+
 @Component({
 	components: {
 		"chat-board": ChatBoard
+	},
+	computed: {
+		...mapGetters("chat", [
+			"admins",
+			"contributers",
+			"members",
+			"chats",
+			"loading"
+		])
+	},
+	methods: {
+		...mapActions("chat", ["getProjectByChatName"])
 	}
 })
 export default class ChatSpace extends Vue {
 	@Prop({ type: String, required: true })
 	id!: string;
 	chatgruplist = false;
-	txt = "ok msg goes here";
+
+	admins!: [any];
+	contributers!: [any];
+	members!: [any];
+	chats!: [any];
+	loading!: boolean;
+	getProjectByChatName!: Function;
+
+	created() {
+		this.getProjectByChatName(this.id);
+	}
 
 	toggleChatList() {
 		this.chatgruplist = !this.chatgruplist;
 	}
 
 	items = [
-		{ header: "Group Members" },
 		{
-			avatar: "https://cdn.vuetifyjs.com/images/lists/1.jpg",
 			title: "Brunch this weekend?",
 			subtitle:
 				"<span class='text--primary'>Ali Connors</span> &mdash; I'll be in your neighborhood doing errands this weekend. Do you want to hang out?"
@@ -98,7 +123,7 @@ export default class ChatSpace extends Vue {
 .chat
 	width 100vw
 	height 100vh
-	overflow height
+	overflow hidden
 	padding 0 !important
 	margin 0 !important
 .chat-container
