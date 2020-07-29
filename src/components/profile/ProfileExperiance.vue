@@ -193,6 +193,10 @@ export default class Signup extends Vue {
 						.dispatch("profile/addExpeianceProfile", info)
 						.then(res => {
 							this.loadingExperiance = false;
+							this.$store.dispatch(
+								"snackbar",
+								"Education Field added Successfully"
+							);
 							this.$router.push({ name: "Profile" });
 						})
 						.catch(err => {

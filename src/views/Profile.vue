@@ -5,7 +5,7 @@
 				<h3 class="grey--text text--darken-2 mr-auto">Profile Detail</h3>
 				<v-menu transition="scroll-y-reverse-transition" class="ml-auto">
 					<template v-slot:activator="{ on, attrs }">
-						<v-btn color="primary" class="ma-2 elevation-0" fab small v-bind="attrs" v-on="on">
+						<v-btn class="ma-2 elevation-0" fab small v-bind="attrs" v-on="on">
 							<v-icon>mdi-pencil-plus-outline</v-icon>
 						</v-btn>
 					</template>
@@ -73,7 +73,9 @@
 								</div>
 								<div class="mb-2">
 									<h4>From-To:</h4>
-									<span class="darken-3">{{exp.from.slice(0,10)}} ~ {{exp.to.slice(0,10)}}</span>
+									<span
+										class="darken-3"
+									>{{exp.from&&exp.from.slice(0,10)}} ~ {{exp.to?exp.to.slice(0,10):new Date().toISOString().slice(0,10)}}</span>
 								</div>
 								<div class="mb-2">
 									<h4>Description:</h4>
@@ -118,7 +120,9 @@
 								</div>
 								<div class="mb-2">
 									<h4>From-To:</h4>
-									<span class="darken-3">{{edu.from.slice(0,10)}} ~ {{edu.to.slice(0,10)}}</span>
+									<span
+										class="darken-3"
+									>{{edu.from&&edu.from.slice(0,10)}} ~ {{edu.to?edu.to.slice(0,10):new Date().toISOString().slice(0,10)}}</span>
 								</div>
 								<div class="mb-2">
 									<h4>Description:</h4>
@@ -139,7 +143,7 @@
 								<v-divider class="my-3"></v-divider>
 							</v-card>
 						</template>
-						<v-subheader v-if="experiance.length==0">No education profile found...</v-subheader>
+						<v-subheader v-if="education&&education.length==0">No education profile found...</v-subheader>
 						<div class="d-flex justify-center">
 							<v-btn color="primary" link :to="{ name: 'ProfileEducation' }" class="elevation-0">
 								Add Profile Education
@@ -266,6 +270,10 @@ export default class Profile extends Vue {
 		this.loadingExpDel = true;
 		this.deleteExperiance(id)
 			.then(() => {
+				this.$store.dispatch(
+					"snackbar",
+					"Experiance Field Delete Successfully"
+				);
 				this.loadingExpDel = false;
 			})
 			.catch((err: any) => {
@@ -278,6 +286,7 @@ export default class Profile extends Vue {
 		this.loadingEduDel = true;
 		this.deleteEducation(id)
 			.then(() => {
+				this.$store.dispatch("snackbar", "Education Field Delete Successfully");
 				this.loadingEduDel = false;
 			})
 			.catch((err: any) => {

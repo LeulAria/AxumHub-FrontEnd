@@ -195,6 +195,10 @@ export default class Signup extends Vue {
 						.then(res => {
 							console.log(res);
 							this.loadingEducation = false;
+							this.$store.dispatch(
+								"snackbar",
+								"Education Field added Successfully"
+							);
 							this.$router.push({ name: "Profile" });
 						})
 						.catch(err => {
