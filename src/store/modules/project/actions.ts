@@ -8,8 +8,6 @@ export const getAllProjects = (context: any) => {
       .then((res => {
         // remove in prod...
         context.commit('LOADING', false)
-        console.log('got the data successfully', res.data)
-        console.log('setting for the first time......')
         context.commit('SET_PROJECTS', res.data)
       }))
       .catch((err) => {
@@ -24,7 +22,6 @@ export const getAllProjects = (context: any) => {
         // checking if thir is new project show loading...
         context.commit('LOADING', true)
         // remove in prod...
-        console.log('fi second time couse len is > 0: ', res.data)
         setTimeout(() => context.commit('LOADING', false), 1000)
         context.commit('SET_PROJECTS', res.data)
         // commit any way... if any change...
@@ -100,6 +97,7 @@ export const addNewProject = (context: any, project: any) => {
       .then(res => {
         resolve(res)
         context.dispatch('getUserProjects', res.data.admins[0])
+        context.dispatch('getAllProjects')
       })
       .catch((err) => {
         reject(err)
@@ -120,27 +118,36 @@ export const applyJoin = (context: any, id: string) => {
       })
   })
 }
-export const acceptJoin = (context: any, id: string) => {
+
+export const acceptJoin = (context: any, ids: any) => {
+  console.log('accept a user: ', ids)
   return new Promise((resolve: any, reject: any) => {
-    Project.applyJoin(id)
+    Project.acceptApplicant(ids.projectid, ids.userid)
       .then(res => {
+        console.log('accepted: ', res)
+        context.dispatch('getUserProjects', context.rootState.users.user.id)
         context.dispatch('getAllProjects')
         resolve(res)
       })
       .catch((err) => {
+        context.dispatch('getUserProjects', context.rootState.users.user.id)
+        context.dispatch('getAllProjects')
         console.log(err)
         reject(err)
       })
   })
 }
-export const rejectJoin = (context: any, id: string) => {
+export const rejectJoin = (context: any, ids: any) => {
   return new Promise((resolve: any, reject: any) => {
-    Project.applyJoin(id)
+    Project.rejectApplicant(ids.projectid, ids.userid)
       .then(res => {
+        context.dispatch('getUserProjects', context.rootState.users.user.id)
         context.dispatch('getAllProjects')
         resolve(res)
       })
       .catch((err) => {
+        context.dispatch('getUserProjects', context.rootState.users.user.id)
+        context.dispatch('getAllProjects')
         console.log(err)
         reject(err)
       })

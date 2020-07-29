@@ -3,14 +3,10 @@ export const projects = (state: any, getters: any, rootState: any) => {
     const userId = rootState.users.user.id
     const projects = [...state.projects];
 
-    console.log('alright here in getter: ', projects)
-
     projects.forEach((project: any) => {
       project.isOwn = (project.author == userId);
       project.isContrib = project.contributers.some((contributer: any) => contributer._id == userId)
     });
-
-    console.log('after tweking: geter looks like: ', projects)
 
     return projects
   }
@@ -39,7 +35,7 @@ export const isJoinedLoading = (state: any) => {
 }
 
 // notification
-export const joinNotifications = (state: any, getters: any, rootState: any) => {
+export const joinNotifications = (state: any, getters: any) => {
   let joinRequests: any;
 
   joinRequests = []

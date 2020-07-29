@@ -36,7 +36,7 @@
 							<v-divider inset></v-divider>
 						</div>
 						<v-list-item>
-							<v-list-item-title>{{joinNotification.name}}</v-list-item-title>
+							<v-list-item-title>{{joinNotification.userid.name}}</v-list-item-title>
 							<v-tooltip top>
 								<template v-slot:activator="{ on, attrs }">
 									<v-btn
@@ -46,7 +46,7 @@
 										class="elevation-0 ml-3"
 										v-bind="attrs"
 										v-on="on"
-										@click="acceptJoinProject(joinNotification.id)"
+										@click="acceptJoinProject(joinNotification)"
 									>
 										<v-icon>mdi-check</v-icon>
 									</v-btn>
@@ -63,7 +63,7 @@
 										class="elevation-0 mx-3"
 										v-bind="attrs"
 										v-on="on"
-										@click="rejectJoinProject(joinNotification.id)"
+										@click="rejectJoinProject(joinNotification)"
 									>
 										<v-icon>mdi-close</v-icon>
 									</v-btn>
@@ -441,11 +441,49 @@ export default class Project extends Vue {
 			});
 	}
 
-	acceptJoinProject(id: string) {
-		this.acceptJoin(id);
+	acceptJoinProject(project: any) {
+		const {
+			projectid: { title, _id },
+			userid: { name },
+			userid
+		} = project;
+
+		this.acceptJoin({ projectid: _id, userid: userid._id })
+			.then(() => {
+				this.$store.dispatch(
+					"snackbar",
+					`${name} Joined project ${title} successfully!`
+				);
+			})
+			.catch((err: any) => {
+				this.$store.dispatch(
+					"snackbar",
+					`${name} Joined project ${title} successfully!`
+				);
+			});
 	}
-	rejectJoinProject(id: string) {
-		this.rejectJoin(id);
+
+	rejectJoinProject(project: any) {
+		console.log(project);
+		const {
+			projectid: { title, _id },
+			userid: { name },
+			userid
+		} = project;
+
+		this.rejectJoin({ projectid: _id, userid: userid._id })
+			.then(() => {
+				this.$store.dispatch(
+					"snackbar",
+					`${name}'s request has been rejected successfully for project ${title}!`
+				);
+			})
+			.catch((err: any) => {
+				this.$store.dispatch(
+					"snackbar",
+					`${name}'s request has been rejected successfully for project ${title}!`
+				);
+			});
 	}
 }
 </script>

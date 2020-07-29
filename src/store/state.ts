@@ -4,6 +4,6 @@ export default {
   snackbar: {
     text: '',
     show: true,
-    timeout: 4000
+    timeout: 6000
   }
 }
