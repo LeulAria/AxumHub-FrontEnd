@@ -9,6 +9,9 @@ export default {
   getUserProjects(id: string) {
     return Api.get(`${route}/user_projects/${id}`)
   },
+  getJoinedProjects(id: string) {
+    return Api.get(`${route}/joined`)
+  },
   getProjectById(id: string) {
     return Api.get(`${route}/${id}`)
   },

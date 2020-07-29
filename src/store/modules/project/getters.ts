@@ -10,3 +10,9 @@ export const userProjects = (state: any) => {
 export const isLoadingUser = (state: any) => {
   return state.isLoading
 }
+export const joinedProjects = (state: any) => {
+  return state.joinedProjects
+}
+export const isJoinedLoading = (state: any) => {
+  return state.isJoinedLoading
+}

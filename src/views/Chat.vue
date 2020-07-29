@@ -11,21 +11,24 @@
 					</v-toolbar>
 
 					<v-list three-line class="chat-lists" v-if="chatgruplist">
-						<template v-for="(item, index) in items">
-							<v-subheader v-if="index==0" :key="index">Groups</v-subheader>
+						<template v-for="(project, i) in filteredJoinedProjects">
+							<v-subheader v-if="i==0" :key="i">Groups</v-subheader>
+							<v-divider :key="i==0" inset></v-divider>
+							<div :key="i">
+								<v-list-item :key="i" ripple>
+									<v-list-item-avatar>
+										<v-img
+											src="https://png.pngtree.com/png-vector/20191028/ourlarge/pngtree-men-avatar-icon-for-your-design-websites-and-projects-png-image_1888521.jpg"
+										></v-img>
+									</v-list-item-avatar>
 
-							<v-divider v-else-if="item.divider" :key="index" :inset="item.inset"></v-divider>
-
-							<v-list-item v-else :key="item.title" ripple>
-								<v-list-item-avatar>
-									<v-img :src="item.avatar"></v-img>
-								</v-list-item-avatar>
-
-								<v-list-item-content>
-									<v-list-item-title v-html="item.title"></v-list-item-title>
-									<v-list-item-subtitle v-html="item.subtitle"></v-list-item-subtitle>
-								</v-list-item-content>
-							</v-list-item>
+									<v-list-item-content>
+										<v-list-item-title>{{project&&project.title}}</v-list-item-title>
+										<v-list-item-subtitle>{{project&&project.summary.split(' ').slice(0,7).join(' ')}}</v-list-item-subtitle>
+									</v-list-item-content>
+								</v-list-item>
+								<v-divider></v-divider>
+							</div>
 						</template>
 					</v-list>
 
@@ -35,7 +38,9 @@
 							<div :key="i">
 								<v-list-item ripple>
 									<v-list-item-avatar>
-										<v-img src="https://cdn.vuetifyjs.com/images/lists/1.jpg"></v-img>
+										<v-img
+											src="http://www.chicagohrs.com/wp-content/uploads/2017/05/Man-Placeholder-300x300.png"
+										></v-img>
 									</v-list-item-avatar>
 
 									<v-list-item-content>
@@ -76,16 +81,19 @@ import { mapGetters, mapActions } from "vuex";
 			"members",
 			"chats",
 			"loading"
-		])
+		]),
+		...mapGetters("project", ["joinedProjects"])
 	},
 	methods: {
 		...mapActions("chat", ["getProjectByChatName"])
 	}
 })
-export default class ChatSpace extends Vue {
+export default class Chat extends Vue {
 	@Prop({ type: String, required: true })
 	id!: string;
 	chatgruplist = false;
+	joinedProjects!: [any];
+	searchGroups = "";
 
 	admins!: [any];
 	contributers!: [any];
@@ -100,6 +108,16 @@ export default class ChatSpace extends Vue {
 
 	toggleChatList() {
 		this.chatgruplist = !this.chatgruplist;
+	}
+
+	set filteredJoinedProjects(val: any) {
+		this.joinedProjects = val;
+	}
+	get filteredJoinedProjects() {
+		const jp = this.joinedProjects.filter((project: any) => {
+			return project.title.toLowerCase().match(this.searchGroups);
+		});
+		return jp;
 	}
 
 	items = [

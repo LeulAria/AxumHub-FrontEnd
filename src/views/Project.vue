@@ -3,7 +3,7 @@
 		<v-row no-gutters class="my-2 mb-1">
 			<v-col cols="10" sm="10" class="mx-5 mb-2 d-flex align-center">
 				<h3 class="grey--text text--darken-2 mr-auto">Axum HUB Project</h3>
-				<v-menu transition="scroll-y-reverse-transition" class="ml-auto">
+				<v-menu transition="scroll-y-reverse-transition" class="ml-auto" offset-y>
 					<template v-slot:activator="{ on, attrs }">
 						<v-btn text class="ma-2 elevation-0" fab small v-bind="attrs" v-on="on">
 							<v-icon>mdi-pencil-plus-outline</v-icon>
@@ -15,6 +15,19 @@
 						</v-list-item>
 						<v-list-item :to="{ name: 'UserPosts' }" link>
 							<v-list-item-title>See Your Projects</v-list-item-title>
+						</v-list-item>
+					</v-list>
+				</v-menu>
+				<v-menu transition="scale-transition" class="rounded-lg" bottom offset-y>
+					<template v-slot:activator="{ on, attrs }">
+						<v-badge class="mr-5" content="0" value="0" overlap>
+							<v-icon v-bind="attrs" v-on="on">mdi-bell-outline</v-icon>
+						</v-badge>
+					</template>
+
+					<v-list>
+						<v-list-item>
+							<v-list-item-title>Notifications</v-list-item-title>
 						</v-list-item>
 					</v-list>
 				</v-menu>
@@ -71,7 +84,74 @@
 							</v-row>
 						</v-col>
 						<v-col cols="12" xs="12" v-if="isTab(2)">
-							<h5>Projects..... Joined...</h5>
+							<v-text-field
+								v-model="searchJoinedProjects"
+								cache-items
+								prepend-inner-icon="mdi-magnify"
+								class="auto-complete mx-4 mx-md-13"
+								flat
+								hide-no-data
+								:autocomplete="false"
+								v-if="projects"
+							></v-text-field>
+							<v-subheader>Joined Projects</v-subheader>
+							<v-card
+								v-for="project in filteredJoinedProjects"
+								:key="project._id"
+								outlined
+								class="project-card rounded-lg pa-2 py-5 my-3 overflow-hidden"
+								min-height="150"
+								max-height="150"
+							>
+								<small
+									class="project-date grey--text text--darken-1 ma-0"
+								>{{project&&project.data.slice(0,10)}}</small>
+								<h4 class="ml-4 bolded">{{project.title}}</h4>
+								<v-card-subtitle>{{project&&project.summary.split(' ').slice(0,10).join(' ')}}</v-card-subtitle>
+								<div class="project-star d-flex align-center">
+									<v-icon color="info">mdi-star-outline</v-icon>
+									<small>12</small>
+								</div>
+								<v-col cols="12" sm="6" offset-sm="3">
+									<div class="text-center">
+										<v-menu
+											class="menu-project"
+											v-model="project.menu"
+											:close-on-content-click="false"
+											:nudge-width="200"
+											offset-x
+										>
+											<template v-slot:activator="{ on, attrs }">
+												<v-btn text fab small class="project-more-btn elevation-0" v-bind="attrs" v-on="on">
+													<v-icon>mdi-dots-vertical</v-icon>
+												</v-btn>
+											</template>
+
+											<v-card outlined class="rounded-lg elevation-0">
+												<v-list>
+													<v-list-item>
+														<v-list-item-action>
+															<v-btn fab small class="elevation-0" link>
+																<v-icon>mdi-eye</v-icon>
+															</v-btn>
+														</v-list-item-action>
+														<v-list-item-title>See Detail</v-list-item-title>
+													</v-list-item>
+
+													<v-list-item>
+														<v-list-item-action>
+															<v-btn @click="openChat(project.chatgroupname)" fab small class="elevation-0">
+																<v-icon>mdi-chat</v-icon>
+															</v-btn>
+														</v-list-item-action>
+														<v-list-item-title>Go to chat</v-list-item-title>
+													</v-list-item>
+												</v-list>
+											</v-card>
+										</v-menu>
+									</div>
+								</v-col>
+							</v-card>
 						</v-col>
 					</v-row>
 				</v-col>
@@ -120,7 +200,7 @@
 										</v-btn>
 									</template>
 
-									<v-card outlined class="rounded-xl elevation-0">
+									<v-card outlined class="rounded-lg elevation-0">
 										<v-list>
 											<v-list-item>
 												<v-list-item-action>
@@ -148,7 +228,7 @@
 				</v-col>
 			</v-row>
 		</v-container>
-		<v-overlay :value="isLoading | isLoadingUser">
+		<v-overlay :value="isLoading | isLoadingUser | isJoinedLoading">
 			<v-progress-circular indeterminate size="64"></v-progress-circular>
 		</v-overlay>
 	</v-main>
@@ -165,23 +245,32 @@ import { mapGetters, mapActions } from "vuex";
 			"isLoading",
 			"isLoadingUser",
 			"projects",
-			"userProjects"
+			"userProjects",
+			"joinedProjects",
+			"isJoinedLoading"
 		])
 	},
 	methods: {
-		...mapActions("project", ["getAllProjects", "getUserProjects"])
+		...mapActions("project", [
+			"getAllProjects",
+			"getUserProjects",
+			"getJoinedProjects"
+		])
 	}
 })
 export default class Project extends Vue {
 	search = "";
 	searchUserProjects = "";
+	searchJoinedProjects = "";
 	isLoading!: boolean;
 	isLoadingUser!: boolean;
 	userInfo!: any;
 	projects!: [any];
 	userProjects!: [any];
+	joinedProjects!: [any];
 	getAllProjects!: any;
 	getUserProjects!: any;
+	getJoinedProjects!: any;
 
 	tab = 1;
 
@@ -193,6 +282,7 @@ export default class Project extends Vue {
 	mounted() {
 		this.getAllProjects();
 		this.getUserProjects(this.userInfo.id);
+		this.getJoinedProjects();
 		this.projects.forEach((project: any) => {
 			project.menu = false;
 		});
@@ -234,6 +324,16 @@ export default class Project extends Vue {
 		});
 		return p;
 	}
+
+	set filteredJoinedProjects(val: any) {
+		this.joinedProjects = val;
+	}
+	get filteredJoinedProjects() {
+		const jp = this.joinedProjects.filter((project: any) => {
+			return project.title.toLowerCase().match(this.search);
+		});
+		return jp;
+	}
 }
 </script>
 
@@ -272,5 +372,7 @@ export default class Project extends Vue {
 .v-menu__content
 	background transparent !important
 	box-shadow none !important
+	box-shadow 0px 0px 11px rgba(0,0,0,0.182) !important
 	background yellow
+	border-radius .5rem
 </style>

@@ -67,6 +67,38 @@ export const getUserProjects = (context: any, id: string) => {
   }
 }
 
+export const getJoinedProjects = (context: any, id: string) => {
+
+  if (context.state.joinedProjects.length) {
+    context.commit('LOADING_JOINED', true)
+    Project.getJoinedProjects(id)
+      .then((res => {
+        context.commit('LOADING_JOINED', false)
+        context.commit('SET_JOINED_PROJECTS', res.data)
+      }))
+      .catch((err) => {
+        console.log(err)
+        context.commit('LOADING_JOINED', false)
+      })
+  }
+  else {
+    Project.getJoinedProjects(id)
+      .then((res => {
+        if (res.data.length > context.state.joinedProjects.length) {
+          context.commit('LOADING_JOINED', true)
+          // remove in prod
+          setTimeout(() => context.commit('LOADING_JOINED', false), 1000)
+          context.commit('SET_JOINED_PROJECTS', res.data)
+        }
+        context.commit('SET_PROJECTS', res.data)
+      }))
+      .catch((err) => {
+        console.log(err)
+        context.commit('LOADING_JOINED', false)
+      })
+  }
+}
+
 export const addNewProject = (context: any, project: any) => {
   console.log(project)
   console.log('we are here....')

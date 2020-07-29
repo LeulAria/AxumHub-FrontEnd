@@ -10,7 +10,7 @@
 					:reversed="chatMsg.reversed"
 					:userName="chatMsg.user"
 					:message="chatMsg.message"
-					chatTime="8:32"
+					:chatTime="chatMsg.date"
 				></chat-message-box>
 			</template>
 		</div>
@@ -106,8 +106,18 @@ export default class ChatBoard extends Vue {
 	userChatMsg!: string;
 
 	chatMessages = [
-		{ message: "this is my text!", user: "Anonymus", reversed: false },
-		{ message: "this is my text two!", user: "Anonymus", reversed: true }
+		{
+			message: "this is my text!",
+			user: "Anonymus",
+			date: "2:20 pm",
+			reversed: false
+		},
+		{
+			message: "this is my text two!",
+			user: "Anonymus",
+			date: "2:20 pm",
+			reversed: true
+		}
 	];
 
 	@Socket()
@@ -115,7 +125,8 @@ export default class ChatBoard extends Vue {
 		console.log("connection established...");
 		this.chatMessages.push({
 			message: "connection established...",
-			user: "AxumHUB",
+			user: "AxumHUB--",
+			date: "2:20 pm",
 			reversed: false
 		});
 	}
@@ -125,6 +136,7 @@ export default class ChatBoard extends Vue {
 		this.chatMessages.push({
 			message: chatPayload.message,
 			user: chatPayload.user,
+			date: chatPayload.date,
 			reversed: chatPayload.id == this.userInfo.id
 		});
 
@@ -140,11 +152,23 @@ export default class ChatBoard extends Vue {
 		this.scrollChatBoad();
 	}
 
+	@Socket("connected")
+	onConnected(message: string) {
+		this.chatMessages.push({
+			message: message,
+			user: "AxumHUB",
+			date: "2:20 pm",
+			reversed: false
+		});
+		this.scrollChatBoad();
+	}
+
 	@Socket("disconnected")
 	onDisconnect(message: string) {
 		this.chatMessages.push({
 			message: message,
 			user: "AxumHUB",
+			date: "2:20 pm",
 			reversed: false
 		});
 		this.scrollChatBoad();

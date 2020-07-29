@@ -2,5 +2,7 @@ export default {
   projects: [],
   isLoading: false,
   userProjects: [],
-  isLoadingUser: false
+  isLoadingUser: false,
+  joinedProjects: [],
+  isJoinedLoading: false
 };
