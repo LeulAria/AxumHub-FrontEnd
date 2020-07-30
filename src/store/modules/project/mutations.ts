@@ -1,4 +1,5 @@
 export const SET_PROJECTS = (state: any, projects: any) => {
+  console.log('setting project mutations: ', projects)
   state.projects = projects;
 }
 export const LOADING = (state: any, loading: boolean) => {

@@ -8,6 +8,8 @@ export const getAllProjects = (context: any) => {
       .then((res => {
         // remove in prod...
         context.commit('LOADING', false)
+        console.log('got the data successfully', res.data)
+        console.log('setting for the first time......')
         context.commit('SET_PROJECTS', res.data)
       }))
       .catch((err) => {
@@ -20,14 +22,12 @@ export const getAllProjects = (context: any) => {
     Project.getAll()
       .then((res => {
         // checking if thir is new project show loading...
-        if (res.data.length > context.state.projects.length) {
-          context.commit('LOADING', true)
-          // remove in prod...
-          setTimeout(() => context.commit('LOADING', false), 1000)
-          context.commit('SET_PROJECTS', res.data)
-        }
-        // commit any way... if any change...
+        context.commit('LOADING', true)
+        // remove in prod...
+        console.log('fi second time couse len is > 0: ', res.data)
+        setTimeout(() => context.commit('LOADING', false), 1000)
         context.commit('SET_PROJECTS', res.data)
+        // commit any way... if any change...
       }))
       .catch((err) => {
         console.log(err)
@@ -52,13 +52,10 @@ export const getUserProjects = (context: any, id: string) => {
   else {
     Project.getUserProjects(id)
       .then((res => {
-        if (res.data.length > context.state.userProjects.length) {
-          context.commit('LOADING_USER', true)
-          // remove in prod
-          setTimeout(() => context.commit('LOADING_USER', false), 1000)
-          context.commit('SET_USER_PROJECTS', res.data)
-        }
-        context.commit('SET_PROJECTS', res.data)
+        context.commit('LOADING_USER', true)
+        // remove in prod
+        setTimeout(() => context.commit('LOADING_USER', false), 1000)
+        context.commit('SET_USER_PROJECTS', res.data)
       }))
       .catch((err) => {
         console.log(err)
@@ -68,7 +65,6 @@ export const getUserProjects = (context: any, id: string) => {
 }
 
 export const getJoinedProjects = (context: any, id: string) => {
-
   if (context.state.joinedProjects.length) {
     context.commit('LOADING_JOINED', true)
     Project.getJoinedProjects(id)
@@ -90,7 +86,6 @@ export const getJoinedProjects = (context: any, id: string) => {
           setTimeout(() => context.commit('LOADING_JOINED', false), 1000)
           context.commit('SET_JOINED_PROJECTS', res.data)
         }
-        context.commit('SET_PROJECTS', res.data)
       }))
       .catch((err) => {
         console.log(err)
@@ -100,18 +95,24 @@ export const getJoinedProjects = (context: any, id: string) => {
 }
 
 export const addNewProject = (context: any, project: any) => {
-  console.log(project)
-  console.log('we are here....')
   new Promise((resolve, reject) => {
     Project.createProject(project)
       .then(res => {
-        console.log('wohhooo....', res)
         resolve(res)
         context.dispatch('getUserProjects', res.data.admins[0])
       })
       .catch((err) => {
-        console.log('uhhhh..', err)
         reject(err)
       })
   })
+}
+
+export const applyJoin = (context: any, id: string) => {
+  Project.applyJoin(id)
+    .then(res => {
+      context.dispatch('getUserProjects', res.data.admins[0])
+    })
+    .catch((err) => {
+      console.log(err)
+    })
 }

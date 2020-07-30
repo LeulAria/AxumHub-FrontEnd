@@ -67,18 +67,62 @@
 									<v-card
 										outlined
 										class="project-card rounded-lg pa-2 py-5 my-1 overflow-hidden"
-										min-height="160"
-										max-height="200"
+										min-height="180"
+										max-height="180"
 									>
+										<v-tooltip top>
+											<template v-slot:activator="{ on, attrs }">
+												<v-icon
+													v-bind="attrs"
+													v-if="project.isOwn"
+													v-on="on"
+													color="info"
+													class="top-mark"
+												>mdi-bookmark-check</v-icon>
+											</template>
+											<span>Your Project</span>
+										</v-tooltip>
+										<v-tooltip top>
+											<template v-slot:activator="{ on, attrs }">
+												<v-icon
+													v-bind="attrs"
+													v-if="project.isContrib"
+													v-on="on"
+													color="info"
+													class="top-mark"
+												>mdi-account-group</v-icon>
+											</template>
+											<span>Contributer on this project</span>
+										</v-tooltip>
 										<small
 											class="project-date grey--text text--darken-1 ma-0"
 										>{{project&&project.data.slice(0,10)}}</small>
-										<h4 class="ml-4 bolded">{{project.title}}</h4>
-										<v-card-subtitle>{{project&&project.summary.split(' ').slice(0,10).join(' ')}}</v-card-subtitle>
-										<div class="project-star d-flex align-center">
-											<v-icon color="info">mdi-star-outline</v-icon>
-											<small>12</small>
+										<h4 class="ml-4 bolded">{{project&&project.title}}</h4>
+										<v-card-subtitle
+											class="project-summary"
+										>{{project&&project.summary.split(' ').slice(0,6).join(' ')+'...'}}</v-card-subtitle>
+										<div class="project-star d-flex align-center justify-center">
+											<div>
+												<v-icon color="info">mdi-star-outline</v-icon>
+												<small>12</small>
+											</div>
 										</div>
+
+										<v-tooltip top class>
+											<template v-slot:activator="{ on, attrs }">
+												<v-btn
+													class="project-join-action"
+													v-if="!project.isContrib&&!project.isOwn"
+													icon
+													v-bind="attrs"
+													v-on="on"
+													@click="applyJoin(project._id)"
+												>
+													<v-icon>mdi-reply-circle</v-icon>
+												</v-btn>
+											</template>
+											<span>Requst Join Project</span>
+										</v-tooltip>
 									</v-card>
 								</v-col>
 							</v-row>
@@ -86,13 +130,13 @@
 						<v-col cols="12" xs="12" v-if="isTab(2)">
 							<v-text-field
 								v-model="searchJoinedProjects"
-								cache-items
-								prepend-inner-icon="mdi-magnify"
-								class="auto-complete mx-4 mx-md-13"
+								prepend-inner-icon="mdi-magnify mt-5"
+								class="auto-complete"
 								flat
+								solo-inverted
 								hide-no-data
+								label="Search Projects..."
 								:autocomplete="false"
-								v-if="projects"
 							></v-text-field>
 							<v-subheader>Joined Projects</v-subheader>
 							<v-card
@@ -107,7 +151,9 @@
 									class="project-date grey--text text--darken-1 ma-0"
 								>{{project&&project.data.slice(0,10)}}</small>
 								<h4 class="ml-4 bolded">{{project.title}}</h4>
-								<v-card-subtitle>{{project&&project.summary.split(' ').slice(0,10).join(' ')}}</v-card-subtitle>
+								<v-card-subtitle
+									class="project-summary"
+								>{{project&&project.summary.split(' ').slice(0,10).join(' ')}}</v-card-subtitle>
 								<div class="project-star d-flex align-center">
 									<v-icon color="info">mdi-star-outline</v-icon>
 									<small>12</small>
@@ -180,7 +226,9 @@
 							class="project-date grey--text text--darken-1 ma-0"
 						>{{project&&project.data.slice(0,10)}}</small>
 						<h4 class="ml-4 bolded">{{project.title}}</h4>
-						<v-card-subtitle>{{project&&project.summary.split(' ').slice(0,10).join(' ')}}</v-card-subtitle>
+						<v-card-subtitle
+							class="project-summary"
+						>{{project&&project.summary.split(' ').slice(0,10).join(' ')}}</v-card-subtitle>
 						<div class="project-star d-flex align-center">
 							<v-icon color="info">mdi-star-outline</v-icon>
 							<small>12</small>
@@ -228,7 +276,7 @@
 				</v-col>
 			</v-row>
 		</v-container>
-		<v-overlay :value="isLoading | isLoadingUser | isJoinedLoading">
+		<v-overlay :value="isLoading || isLoadingUser || isJoinedLoading">
 			<v-progress-circular indeterminate size="64"></v-progress-circular>
 		</v-overlay>
 	</v-main>
@@ -254,7 +302,8 @@ import { mapGetters, mapActions } from "vuex";
 		...mapActions("project", [
 			"getAllProjects",
 			"getUserProjects",
-			"getJoinedProjects"
+			"getJoinedProjects",
+			"applyJoin"
 		])
 	}
 })
@@ -283,10 +332,6 @@ export default class Project extends Vue {
 		this.getAllProjects();
 		this.getUserProjects(this.userInfo.id);
 		this.getJoinedProjects();
-		this.projects.forEach((project: any) => {
-			project.menu = false;
-		});
-		console.log(this.projects);
 	}
 
 	toggleTab(tab: number) {
@@ -352,7 +397,14 @@ export default class Project extends Vue {
 	bottom 8px
 	left: 20px
 	.v-icon
-		font-size 1em
+		font-size 1.2em
+.project-join-action
+	position absolute
+	bottom 8px
+	right: 20px
+	.v-icon
+		font-size 1.8em
+	
 .project-more-btn
 	position absolute
 	bottom 8px
@@ -375,4 +427,11 @@ export default class Project extends Vue {
 	box-shadow 0px 0px 11px rgba(0,0,0,0.182) !important
 	background yellow
 	border-radius .5rem
+.top-mark
+	position absolute
+	top -2px
+	left 4px
+	font-size 1.5rem !important
+.project-summary
+	font-size .83rem !important
 </style>
