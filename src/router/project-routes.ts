@@ -18,7 +18,7 @@ export default [
     }
   },
   {
-    path: `${routePath}/chat/:id`,
+    path: `${routePath}/:id/chat/`,
     name: "Chat",
     component: () => import('@/views/Chat.vue'),
     props: true,
@@ -27,9 +27,10 @@ export default [
     }
   },
   {
-    path: `${routePath}/conference`,
+    path: `${routePath}/:id/conference`,
     name: "Conference",
     component: () => import('@/views/Conference.vue'),
+    props: true,
     meta: {
       requiresAuth: true
     }

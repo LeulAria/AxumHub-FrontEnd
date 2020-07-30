@@ -52,6 +52,9 @@
 							</div>
 						</template>
 					</v-list>
+					<v-btn fab class="elevation-0 mb-10 ml-1" :to="{ name: 'Conference' }" link>
+						<v-icon>mdi-message-video</v-icon>
+					</v-btn>
 				</v-card>
 			</v-col>
 			<v-col cols="12" xs="12" sm="8">
