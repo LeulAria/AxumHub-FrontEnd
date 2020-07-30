@@ -20,14 +20,56 @@
 				</v-menu>
 				<v-menu transition="scale-transition" class="rounded-lg" bottom offset-y>
 					<template v-slot:activator="{ on, attrs }">
-						<v-badge class="mr-5" content="0" value="0" overlap>
+						<v-badge
+							class="mr-5"
+							:content="joinNotifications.length"
+							:value="joinNotifications.length"
+							overlap
+						>
 							<v-icon v-bind="attrs" v-on="on">mdi-bell-outline</v-icon>
 						</v-badge>
 					</template>
 
-					<v-list>
+					<v-list v-for="(joinNotification, i) in joinNotifications" :key="i">
+						<div v-if="i==0">
+							<v-subheader>Join Requests</v-subheader>
+							<v-divider inset></v-divider>
+						</div>
 						<v-list-item>
-							<v-list-item-title>Notifications</v-list-item-title>
+							<v-list-item-title>{{joinNotification.name}}</v-list-item-title>
+							<v-tooltip top>
+								<template v-slot:activator="{ on, attrs }">
+									<v-btn
+										icon
+										small
+										color="success"
+										class="elevation-0 ml-3"
+										v-bind="attrs"
+										v-on="on"
+										@click="acceptJoinProject(joinNotification.id)"
+									>
+										<v-icon>mdi-check</v-icon>
+									</v-btn>
+								</template>
+								<span>Accept Join Request</span>
+							</v-tooltip>
+							<v-tooltip top>
+								<template v-slot:activator="{ on, attrs }">
+									<v-btn
+										icon
+										small
+										fab
+										color="error"
+										class="elevation-0 mx-3"
+										v-bind="attrs"
+										v-on="on"
+										@click="rejectJoinProject(joinNotification.id)"
+									>
+										<v-icon>mdi-close</v-icon>
+									</v-btn>
+								</template>
+								<span>Reject Join Request</span>
+							</v-tooltip>
 						</v-list-item>
 					</v-list>
 				</v-menu>
@@ -116,7 +158,7 @@
 													icon
 													v-bind="attrs"
 													v-on="on"
-													@click="applyJoin(project._id)"
+													@click="applyJoinProject(project._id)"
 												>
 													<v-icon>mdi-reply-circle</v-icon>
 												</v-btn>
@@ -130,8 +172,8 @@
 						<v-col cols="12" xs="12" v-if="isTab(2)">
 							<v-text-field
 								v-model="searchJoinedProjects"
-								prepend-inner-icon="mdi-magnify mt-5"
-								class="auto-complete"
+								prepend-inner-icon="mdi-magnify"
+								class="auto-complete mt-5"
 								flat
 								solo-inverted
 								hide-no-data
@@ -295,7 +337,8 @@ import { mapGetters, mapActions } from "vuex";
 			"projects",
 			"userProjects",
 			"joinedProjects",
-			"isJoinedLoading"
+			"isJoinedLoading",
+			"joinNotifications"
 		])
 	},
 	methods: {
@@ -303,7 +346,10 @@ import { mapGetters, mapActions } from "vuex";
 			"getAllProjects",
 			"getUserProjects",
 			"getJoinedProjects",
-			"applyJoin"
+			"applyJoin",
+			"joinNotification",
+			"acceptJoin",
+			"rejectJoin"
 		])
 	}
 })
@@ -317,9 +363,13 @@ export default class Project extends Vue {
 	projects!: [any];
 	userProjects!: [any];
 	joinedProjects!: [any];
+	joinNotifications!: [any];
 	getAllProjects!: any;
 	getUserProjects!: any;
 	getJoinedProjects!: any;
+	applyJoin!: any;
+	acceptJoin!: any;
+	rejectJoin!: any;
 
 	tab = 1;
 
@@ -378,6 +428,24 @@ export default class Project extends Vue {
 			return project.title.toLowerCase().match(this.search);
 		});
 		return jp;
+	}
+
+	// apply to join project
+	applyJoinProject(id: string) {
+		this.applyJoin(id)
+			.then(() => {
+				this.$store.dispatch("snackbar", "Join request send successfully!");
+			})
+			.catch((err: any) => {
+				this.$store.dispatch("snackbar", "Join request have been sent...");
+			});
+	}
+
+	acceptJoinProject(id: string) {
+		this.acceptJoin(id);
+	}
+	rejectJoinProject(id: string) {
+		this.rejectJoin(id);
 	}
 }
 </script>

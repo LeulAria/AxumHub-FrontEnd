@@ -108,11 +108,41 @@ export const addNewProject = (context: any, project: any) => {
 }
 
 export const applyJoin = (context: any, id: string) => {
-  Project.applyJoin(id)
-    .then(res => {
-      context.dispatch('getUserProjects', res.data.admins[0])
-    })
-    .catch((err) => {
-      console.log(err)
-    })
+  return new Promise((resolve: any, reject: any) => {
+    Project.applyJoin(id)
+      .then(res => {
+        context.dispatch('getAllProjects')
+        resolve(res)
+      })
+      .catch((err) => {
+        console.log(err)
+        reject(err)
+      })
+  })
+}
+export const acceptJoin = (context: any, id: string) => {
+  return new Promise((resolve: any, reject: any) => {
+    Project.applyJoin(id)
+      .then(res => {
+        context.dispatch('getAllProjects')
+        resolve(res)
+      })
+      .catch((err) => {
+        console.log(err)
+        reject(err)
+      })
+  })
+}
+export const rejectJoin = (context: any, id: string) => {
+  return new Promise((resolve: any, reject: any) => {
+    Project.applyJoin(id)
+      .then(res => {
+        context.dispatch('getAllProjects')
+        resolve(res)
+      })
+      .catch((err) => {
+        console.log(err)
+        reject(err)
+      })
+  })
 }

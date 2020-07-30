@@ -7,12 +7,19 @@
 		<v-main :class="{'pa-0': loggedIn, 'nav-drawer-padding': loggedIn}" class="secondary">
 			<router-view></router-view>
 		</v-main>
+		<v-snackbar v-model="show" bottom dark left :timeout="snackbarTimeout">
+			{{snackbarText}}
+			<template v-slot:action="{ attrs }">
+				<v-btn color="pink lighten-3" text v-bind="attrs" @click="closeHideSnackbar()">Close</v-btn>
+			</template>
+		</v-snackbar>
 	</v-app>
 </template>
 
 <script lang="ts">
-import { Component, Vue } from "vue-property-decorator";
-import { mapGetters } from "vuex";
+// transition: slide-y-reverse-transition
+import { Component, Vue, Watch } from "vue-property-decorator";
+import { mapGetters, mapActions } from "vuex";
 
 import Navbar from "@/components/Navbar.vue";
 
@@ -21,10 +28,34 @@ import Navbar from "@/components/Navbar.vue";
 		"side-navbar": Navbar
 	},
 	computed: {
-		...mapGetters(["loggedIn"])
+		...mapGetters([
+			"loggedIn",
+			"snackbarText",
+			"snackbarShow",
+			"snackbarTimeout"
+		])
+	},
+	methods: {
+		...mapActions(["hideSnackbar"])
 	}
 })
-export default class App extends Vue {}
+export default class App extends Vue {
+	loaggedIn!: any;
+	hideSnackbar!: any;
+	snackbarText!: string;
+	snackbarShow!: boolean;
+	snackbarTimeout!: number;
+
+	set show(val) {
+		this.hideSnackbar();
+	}
+	get show() {
+		return this.snackbarShow;
+	}
+	closeHideSnackbar() {
+		this.hideSnackbar();
+	}
+}
 </script>
 
 <style lang="stylus" scoped>

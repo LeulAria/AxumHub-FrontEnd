@@ -14,3 +14,12 @@ export const loggedIn = (state: any) => {
     state.token !== ''
   );
 }
+export const snackbarText = (state: any) => {
+  return state.snackbar.text
+}
+export const snackbarShow = (state: any) => {
+  return state.snackbar.show
+}
+export const snackbarTimeout = (state: any) => {
+  return state.snackbar.timeout
+}

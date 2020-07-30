@@ -10,3 +10,12 @@ export const REMOVE_TOKEN = (state: any) => {
   state.token = '';
   state = '';
 }
+
+export const TOGGLE_SNACKBAR = (state: any, text: string, timeout?: number) => {
+  state.snackbar.text = text;
+  state.snackbar.show = true;
+  state.snackbar.timeout = timeout ? timeout : state.snackbar.timeout;
+}
+export const CLOSE_SNACKBAR = (state: any) => {
+  state.snackbar.show = false;
+}

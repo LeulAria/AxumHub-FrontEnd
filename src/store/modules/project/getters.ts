@@ -37,3 +37,15 @@ export const joinedProjects = (state: any) => {
 export const isJoinedLoading = (state: any) => {
   return state.isJoinedLoading
 }
+
+// notification
+export const joinNotifications = (state: any, getters: any, rootState: any) => {
+  let joinRequests: any;
+
+  joinRequests = []
+  getters.userProjects.forEach((project: any) => {
+    joinRequests = [...joinRequests, ...project.joinrequests]
+  })
+
+  return joinRequests
+}

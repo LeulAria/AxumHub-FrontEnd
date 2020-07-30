@@ -1,4 +1,9 @@
 export default {
   globalTheme: false,
-  token: null
+  token: null,
+  snackbar: {
+    text: '',
+    show: true,
+    timeout: 4000
+  }
 }
