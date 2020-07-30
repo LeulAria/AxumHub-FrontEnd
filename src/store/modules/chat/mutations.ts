@@ -13,3 +13,17 @@ export const SET_CHATS = (state: any, chats: any) => {
 export const SET_LOADING = (state: any, loading: any) => {
   state.loading = loading
 }
+export const SET_ROOM_ID = (state: any, chatName: string) => {
+  state.roomid = chatName
+}
+
+// socket server dispatched events
+export const ADD_ONLINE_USER = (state: any, uid: string) => {
+  console.log(uid, 'adding user sto online users')
+  state.onlineusers.push(uid)
+  console.log('the online usrs are: ', state.onlineusers)
+}
+export const REMOVE_ONLINE_USER = (state: any, uid: string) => {
+  const removeIndex = state.onlineusers.indexOf(uid)
+  state.onlineusers.splice(removeIndex, 1)
+}

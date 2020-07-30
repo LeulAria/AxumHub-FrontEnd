@@ -45,7 +45,7 @@
 
 									<v-list-item-content>
 										<v-list-item-title>{{member.name}}</v-list-item-title>
-										<v-list-item-subtitle>Offline...</v-list-item-subtitle>
+										<v-list-item-subtitle>{{member.isOnline?'Online....' : 'Offline...' }}</v-list-item-subtitle>
 									</v-list-item-content>
 								</v-list-item>
 								<v-divider inset></v-divider>
@@ -85,7 +85,7 @@ import { mapGetters, mapActions } from "vuex";
 		...mapGetters("project", ["joinedProjects"])
 	},
 	methods: {
-		...mapActions("chat", ["getProjectByChatName"])
+		...mapActions("chat", ["getProjectByChatName", "setRoomId"])
 	}
 })
 export default class Chat extends Vue {
@@ -101,9 +101,11 @@ export default class Chat extends Vue {
 	chats!: [any];
 	loading!: boolean;
 	getProjectByChatName!: Function;
+	setRoomId!: Function;
 
 	created() {
 		this.getProjectByChatName(this.id);
+		this.setRoomId(this.id);
 	}
 
 	toggleChatList() {

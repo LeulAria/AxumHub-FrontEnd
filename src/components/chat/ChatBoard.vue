@@ -91,19 +91,26 @@
 import { Component, Vue } from "vue-property-decorator";
 import ChatMessageBox from "@/components/chat/ChatMessageBox.vue";
 import { Socket } from "vue-socket.io-extended";
-import { mapGetters } from "vuex";
+import { mapGetters, mapActions } from "vuex";
 
 @Component({
 	components: {
 		"chat-message-box": ChatMessageBox
 	},
 	computed: {
-		...mapGetters("users", ["userInfo"])
+		...mapGetters("users", ["userInfo"]),
+		...mapGetters("chat", ["roomid"])
+	},
+	methods: {
+		...mapActions("chat", ["joinGroupChat", "addOnlineUser"])
 	}
 })
 export default class ChatBoard extends Vue {
 	userInfo!: any;
 	userChatMsg!: string;
+	roomid!: string;
+	joinGroupChat!: Function;
+	addOnlineUser!: Function;
 
 	chatMessages = [
 		{
@@ -122,13 +129,17 @@ export default class ChatBoard extends Vue {
 
 	@Socket()
 	connect() {
-		console.log("connection established...");
-		this.chatMessages.push({
-			message: "connection established...",
-			user: "AxumHUB--",
-			date: "2:20 pm",
-			reversed: false
+		this.joinGroupChat({
+			username: this.userInfo.name,
+			userid: this.userInfo.id,
+			roomid: this.roomid
 		});
+	}
+
+	@Socket("userJoinedOnline")
+	onUserJoinedOnline(uid: string) {
+		console.log(uid, "as joined and revieved this event from server");
+		this.addOnlineUser(uid);
 	}
 
 	@Socket("getChatMsg")
@@ -148,7 +159,6 @@ export default class ChatBoard extends Vue {
 			message: this.userChatMsg,
 			user: this.userInfo
 		});
-		this.$store.dispatch("chat/chatEvent");
 		this.scrollChatBoad();
 	}
 

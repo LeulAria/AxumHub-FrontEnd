@@ -1,7 +1,9 @@
 export default {
+  roomid: '',
   project: [],
   admins: [],
   contributers: [],
   loading: false,
-  chats: []
+  chats: [],
+  onlineusers: []
 };
