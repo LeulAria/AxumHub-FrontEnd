@@ -15,7 +15,7 @@
 							<v-subheader v-if="i==0" :key="i">Groups</v-subheader>
 							<v-divider :key="i==0" inset></v-divider>
 							<div :key="i">
-								<v-list-item :key="i" ripple>
+								<v-list-item :key="i" ripple @click="openChat(project.title)" link>
 									<v-list-item-avatar>
 										<v-img
 											src="https://png.pngtree.com/png-vector/20191028/ourlarge/pngtree-men-avatar-icon-for-your-design-websites-and-projects-png-image_1888521.jpg"
@@ -61,7 +61,7 @@
 				<chat-board></chat-board>
 			</v-col>
 		</v-row>
-		<v-overlay :value="loading">
+		<v-overlay :value="loading || !$socket.connected">
 			<v-progress-circular indeterminate size="64"></v-progress-circular>
 		</v-overlay>
 	</v-main>
@@ -125,20 +125,9 @@ export default class Chat extends Vue {
 		return jp;
 	}
 
-	items = [
-		{
-			title: "Brunch this weekend?",
-			subtitle:
-				"<span class='text--primary'>Ali Connors</span> &mdash; I'll be in your neighborhood doing errands this weekend. Do you want to hang out?"
-		},
-		{ divider: true, inset: true },
-		{
-			avatar: "https://cdn.vuetifyjs.com/images/lists/2.jpg",
-			title: 'Summer BBQ <span class="grey--text text--lighten-1">4</span>',
-			subtitle:
-				"<span class='text--primary'>to Alex, Scott, Jennifer</span> &mdash; Wish I could come, but I'm out of town this weekend."
-		}
-	];
+	openChat(id: string) {
+		this.$router.push({ name: "Chat", params: { id } });
+	}
 }
 </script>
 

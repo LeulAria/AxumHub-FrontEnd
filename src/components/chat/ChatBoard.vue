@@ -87,6 +87,7 @@
 	</div>
 </template>
 
+
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
 import ChatMessageBox from "@/components/chat/ChatMessageBox.vue";
@@ -127,22 +128,24 @@ export default class ChatBoard extends Vue {
 		}
 	];
 
-	@Socket()
-	connect() {
-		this.joinGroupChat({
+	created() {
+		this.$socket.client.emit("joinRoom", {
 			username: this.userInfo.name,
 			userid: this.userInfo.id,
 			roomid: this.roomid
 		});
 	}
 
-	@Socket("userJoinedOnline")
-	onUserJoinedOnline(uid: string) {
-		console.log(uid, "as joined and revieved this event from server");
-		this.addOnlineUser(uid);
+	@Socket()
+	connect() {
+		this.$socket.client.emit("joinRoom", {
+			username: this.userInfo.name,
+			userid: this.userInfo.id,
+			roomid: this.roomid
+		});
 	}
 
-	@Socket("getChatMsg")
+	@Socket("showChat")
 	onTest(chatPayload: any) {
 		this.chatMessages.push({
 			message: chatPayload.message,
@@ -156,6 +159,7 @@ export default class ChatBoard extends Vue {
 
 	sendMessage() {
 		this.$socket.client.emit("sendChat", {
+			roomid: this.roomid,
 			message: this.userChatMsg,
 			user: this.userInfo
 		});
@@ -182,11 +186,6 @@ export default class ChatBoard extends Vue {
 			reversed: false
 		});
 		this.scrollChatBoad();
-	}
-
-	userEmit(msg: string) {
-		// this.$socket.client.emit('userEvent', msg);
-		this.$store.dispatch("emitEvent", "from user to server.................");
 	}
 
 	get userChatMessage() {
@@ -245,7 +244,7 @@ export default class ChatBoard extends Vue {
 	overflow: hidden;
 	position: relative;
 	overflow: hidden;
-  // background-size: cover;
+  background-size: cover;
 	
 	.btn-icon {
 		position: relative;
