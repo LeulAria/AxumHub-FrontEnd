@@ -115,16 +115,10 @@ export default class ChatBoard extends Vue {
 
 	chatMessages = [
 		{
-			message: "this is my text!",
+			message: "Welcome!",
 			user: "Anonymus",
 			date: "2:20 pm",
 			reversed: false
-		},
-		{
-			message: "this is my text two!",
-			user: "Anonymus",
-			date: "2:20 pm",
-			reversed: true
 		}
 	];
 
@@ -145,8 +139,13 @@ export default class ChatBoard extends Vue {
 		});
 	}
 
+	@Socket("saved_chats")
+	onSavedChats(payload: [any]) {
+		this.chatMessages = [...payload];
+	}
+
 	@Socket("showChat")
-	onTest(chatPayload: any) {
+	onShowChat(chatPayload: any) {
 		this.chatMessages.push({
 			message: chatPayload.message,
 			user: chatPayload.user,
