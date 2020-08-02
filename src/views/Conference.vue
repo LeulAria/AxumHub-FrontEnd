@@ -52,7 +52,13 @@
 		<v-row v-if="!hasJoined" align="center" justify="center">
 			<v-col cols="6" xs="12" sm="5" min-height="600px">
 				<h1 class="align-center">JOIN MEETING NOW!</h1>
-				<v-btn @click="joinMeting(id)" color="primary" class="elevation-0 mt-4" rounded>Join Meeting</v-btn>
+				<vs-button @click="joinMeting(id)">
+					JOIN MEETING
+					<i class="bx bxs-paper-plane"></i>
+				</vs-button>
+				<vs-button circle icon color="#7d33ff" relief>
+					<i class="bx bxs-video"></i>
+				</vs-button>
 			</v-col>
 		</v-row>
 		<v-container>

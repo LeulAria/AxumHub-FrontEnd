@@ -23,16 +23,25 @@ export const setRoomId = (context: any, chatName: string) => {
 }
 
 // Socket Events from server dipatched
-export const addOnlineUser = (context: any, uid: string) => {
-  context.commit('ADD_ONLINE_USER', uid)
+export const setOnlineUsers = (context: any, payload: [string]) => {
+  context.commit('SET_ONLINE_USERS', payload)
 }
 
+export const setFetchedChats = (context: any, payload: any) => {
+  context.commit('SET_CHATS', payload)
+}
+
+export const addNewChat = (context: any, payload: any) => {
+  context.commit('ADD_NEW_CHAT', payload)
+}
 
 // Socket Dispatched Actions Events
 
 // connect to chat room
 export const joinGroupChat = (context: any, payload: any) => {
-  console.log('send this: uhhh: ', payload)
-  const { username, userid, roomid } = payload;
-  vm.$socket.client.emit('joinGroupChat', { username, userid, roomid })
+  vm.$socket.client.emit('joinRoom', payload)
+}
+
+export const sendChat = (context: any, payload: any) => {
+  vm.$socket.client.emit("sendChat", payload);
 }

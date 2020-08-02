@@ -16,6 +16,9 @@ export const SET_LOADING = (state: any, loading: any) => {
 export const SET_ROOM_ID = (state: any, chatName: string) => {
   state.roomid = chatName
 }
+export const ADD_NEW_CHAT = (state: any, payload: any) => {
+  state.chats.push(payload)
+}
 
 // socket server dispatched events
 export const ADD_ONLINE_USER = (state: any, uid: string) => {

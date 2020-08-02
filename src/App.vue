@@ -1,10 +1,7 @@
 <template>
 	<v-app>
-		<v-btn v-if="$vuetify.breakpoint.xsOnly" fab small class="drawer-menu" @click="toggleDrawerSM">
-			<v-icon>mdi-menu</v-icon>
-		</v-btn>
 		<side-navbar v-if="loggedIn"></side-navbar>
-		<v-main :class="{'pa-0': loggedIn, 'nav-drawer-padding': loggedIn}" class="secondary">
+		<v-main class="secondary mt-10">
 			<router-view></router-view>
 		</v-main>
 		<v-snackbar v-model="show" bottom dark left :timeout="snackbarTimeout">

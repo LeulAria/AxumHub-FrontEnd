@@ -1,54 +1,75 @@
 <template>
-	<v-container>
-		<v-navigation-drawer
-			v-model="drawer"
-			class="secondary"
-			:expand-on-hover="expandOnHover"
-			:mini-variant="false"
-			mini-variant-width="70"
-			:right="right"
-			:permanent="permanent"
-			:src="bg"
-			gradient="to top right, rgba(0,0,0,0.8), rgba(0,0,0,.7)"
-			fixed
-			:width="200"
-		>
-			<v-list dense nav class="py-0 px-3 nav-content" dark>
-				<v-list-item two-line :class="miniVariant && 'px-0'">
-					<v-list-item-avatar class="top-avatar">
-						<img src="../assets/logo.png" alt />
-					</v-list-item-avatar>
+	<div class="hidden">
+		<vs-navbar fixed shadow square center-collapsed v-model="active">
+			<template #left>
+				<vs-button @click="activeSidebar = !activeSidebar" flat icon>
+					<i class="bx bx-menu"></i>
+				</vs-button>
+			</template>
+			<vs-navbar-item :active="active == 'guide'" id="guide">Guide</vs-navbar-item>
+			<vs-navbar-item :active="active == 'docs'" id="docs">Documents</vs-navbar-item>
+			<vs-navbar-item :active="active == 'components'" id="components">Components</vs-navbar-item>
+			<vs-navbar-item :active="active == 'license'" id="license">license</vs-navbar-item>
+			<template #right>
+				<vs-button flat circle size="small" class="px-2">Login</vs-button>
+				<vs-button>Get Started</vs-button>
+			</template>
+		</vs-navbar>
+		<vs-sidebar absolute v-model="active" :open.sync="activeSidebar" class="mxh-vh">
+			<template #logo>
+				<img src="../assets/logo.png" class="brand-logo" alt="logo" />
+				<h5 class="ml-5">AxumHUB</h5>
+			</template>
+			<template v-for="(menu, i) in menus">
+				<vs-sidebar-item :id="menu.id" :key="i" :to="menu.to" link>
+					<template #icon>
+						<i :class="`{ ${menu.icon} }`"></i>
+					</template>
+					{{menu.title}}
+				</vs-sidebar-item>
+			</template>
+			<vs-sidebar-group>
+				<template #header>
+					<vs-sidebar-item arrow>
+						<template #icon>
+							<i class="bx bx-group"></i>
+						</template>
+						Social media
+					</vs-sidebar-item>
+				</template>
 
-					<v-list-item-content v-if="userInfo.name">
-						<v-list-item-title>{{userInfo.name}}</v-list-item-title>
-						<v-list-item-subtitle>{{userInfo.email}}</v-list-item-subtitle>
-					</v-list-item-content>
-				</v-list-item>
+				<vs-sidebar-item id="Instagram">
+					<template #icon>
+						<i class="bx bxl-instagram"></i>
+					</template>
+					Instagram
+				</vs-sidebar-item>
+			</vs-sidebar-group>
 
-				<v-divider class="mb-2"></v-divider>
+			<template #footer>
+				<vs-row justify="space-between">
+					<vs-avatar>
+						<img
+							src="https://cdn4.iconfinder.com/data/icons/avatars-xmas-giveaway/128/girl_female_woman_avatar-512.png"
+							alt
+						/>
+					</vs-avatar>
+					<h5 class="mr-auto ml-2 mt-3">{{userInfo.name}}</h5>
 
-				<v-list-item v-for="item in items" :key="item.title" :to="item.to" class="hoverable" link>
-					<v-list-item-icon>
-						<v-icon class="nav-icons">{{ item.icon }}</v-icon>
-					</v-list-item-icon>
-
-					<v-list-item-content>
-						<v-list-item-title>{{ item.title }}</v-list-item-title>
-					</v-list-item-content>
-				</v-list-item>
-
-				<v-list-item @click="changeTheme()">
-					<v-list-item-icon>
-						<v-icon class="nav-icons" v-if="globalTheme">mdi-white-balance-sunny</v-icon>
-						<v-icon class="nav-icons" v-if="!globalTheme">mdi-moon-waxing-crescent</v-icon>
-					</v-list-item-icon>
-					<v-list-item-content>
-						<v-list-item-title>Change theme</v-list-item-title>
-					</v-list-item-content>
-				</v-list-item>
-			</v-list>
-		</v-navigation-drawer>
-	</v-container>
+					<vs-switch dark v-model="globaltheme" class="bshadow">
+						<template #circle>
+							<i v-if="!globaltheme" class="bx bxs-moon"></i>
+							<i v-else class="bx bxs-sun"></i>
+						</template>
+					</vs-switch>
+					<!-- <vs-avatar badge-color="danger" badge-position="top-right">
+						<i class="bx bx-bell"></i>
+						<template #badge>28</template>
+					</vs-avatar>-->
+				</vs-row>
+			</template>
+		</vs-sidebar>
+	</div>
 </template>
 
 <script lang="ts">
@@ -67,17 +88,39 @@ import { mapGetters, mapActions } from "vuex";
 export default class Navbar extends Vue {
 	globalTheme!: boolean;
 	userInfo!: any;
+	active = "home";
+	activeSidebar = false;
 
 	toggleGlobalTheme!: any;
 
-	items = [
-		{ title: "Dashboard", icon: "mdi-view-dashboard", to: "/dashboard" },
-		{ title: "Blog", icon: "mdi-compass", to: "/axum_blogs" },
-		{ title: "Q/A", icon: "mdi-comment-question", to: "/qa" },
-		{ title: "Project", icon: "mdi-folder-cog", to: "/project" },
-		{ title: "Profile", icon: "mdi-account-settings", to: "/profile" },
-		{ title: "Logout", icon: "mdi-logout-variant", to: "/logout" },
-		{ title: "Settings", icon: "mdi-cog", to: "/" }
+	menus = [
+		{
+			title: "Dashboard",
+			icon: "bx bxs-dashboard",
+			to: "/dashboard",
+			id: "dashboard"
+		},
+		{ title: "Blog", icon: "bx bxl-blogger", to: "/axum_blogs", id: "blog" },
+		{ title: "Q/A", icon: "bx bx-question-mark", to: "/qa", id: "qa" },
+		{
+			title: "Project",
+			icon: "bx bxs-folder-open",
+			to: "/project",
+			id: "project"
+		},
+		{
+			title: "Profile",
+			icon: "bx bxs-user-detail",
+			to: "/profile",
+			id: "profile"
+		},
+		{
+			title: "Logout",
+			icon: "bx bxs-log-out-circle",
+			to: "/logout",
+			id: "logout"
+		},
+		{ title: "Settings", icon: "bx bxs-cog", to: "/", id: "settings" }
 	];
 	drawer = true;
 	color = "blue";
@@ -92,39 +135,26 @@ export default class Navbar extends Vue {
 		this.$vuetify.theme.dark = this.globalTheme;
 	}
 
+	get globaltheme() {
+		return this.globalTheme;
+	}
+
+	set globaltheme(val: boolean) {
+		this.toggleGlobalTheme();
+		this.$vuetify.theme.dark = this.globalTheme;
+	}
+
 	get bg() {
 		return this.background
 			? "https://www.omenkaonline.com/wp-content/uploads/2017/08/ETH_2015_DK_154_0.jpg"
 			: undefined;
 	}
-
-	changeTheme() {
-		this.toggleGlobalTheme();
-		this.$vuetify.theme.dark = this.globalTheme;
-	}
 }
 </script>
 
 <style lang="stylus" scoped>
-.top-avatar
-	margin-left -10px !important
-	transition all 0.4s
-	&:hover
-		transform scale(1.3)
-
-.nav-icons
-	margin-left -3px !important
-	
-.nav-content
-	position relative
-	height 100%
-	&::after
-		content ''
-		position absolute
-		z-index -1
-		top 0
-		left 0
-		width 100%
-		height 100%
-		background-image linear-gradient(to bottom, rgba(0,0,30,0.6),rgba(60,0,30,0.95))
+.brand-logo
+	transform scale(1.6)
+	box-shadow 0px 2px 15px rgba(0,0,0,0.2)
+	border-radius 50%
 </style>

@@ -4,7 +4,7 @@
 		id="chat"
 	>
 		<div class="chat__conversation-board" ref="chatBoardContainer">
-			<template v-for="(chatMsg, i) in chatMessages">
+			<template v-for="(chatMsg, i) in chats">
 				<chat-message-box
 					:key="i"
 					:reversed="chatMsg.reversed"
@@ -100,30 +100,31 @@ import { mapGetters, mapActions } from "vuex";
 	},
 	computed: {
 		...mapGetters("users", ["userInfo"]),
-		...mapGetters("chat", ["roomid"])
+		...mapGetters("chat", ["roomid", "chats"])
 	},
 	methods: {
-		...mapActions("chat", ["joinGroupChat", "addOnlineUser"])
+		...mapActions("chat", [
+			"joinGroupChat",
+			"setFetchedChats",
+			"addNewChat",
+			"sendChat",
+			"setOnlineUsers"
+		])
 	}
 })
 export default class ChatBoard extends Vue {
 	userInfo!: any;
 	userChatMsg!: string;
 	roomid!: string;
+	chats!: [any];
 	joinGroupChat!: Function;
-	addOnlineUser!: Function;
-
-	chatMessages = [
-		{
-			message: "Welcome!",
-			user: "Anonymus",
-			date: "2:20 pm",
-			reversed: false
-		}
-	];
+	setFetchedChats!: Function;
+	addNewChat!: Function;
+	sendChat!: Function;
+	setOnlineUsers!: Function;
 
 	created() {
-		this.$socket.client.emit("joinRoom", {
+		this.joinGroupChat({
 			username: this.userInfo.name,
 			userid: this.userInfo.id,
 			roomid: this.roomid
@@ -141,12 +142,19 @@ export default class ChatBoard extends Vue {
 
 	@Socket("saved_chats")
 	onSavedChats(payload: [any]) {
-		this.chatMessages = [...payload];
+		this.setFetchedChats(payload);
+		this.scrollChatBoad();
+	}
+
+	@Socket("online_users")
+	onNewOnlineUser(payload: [string]) {
+		console.log("payload: ", payload);
+		this.setOnlineUsers(payload);
 	}
 
 	@Socket("showChat")
 	onShowChat(chatPayload: any) {
-		this.chatMessages.push({
+		this.addNewChat({
 			message: chatPayload.message,
 			user: chatPayload.user,
 			date: chatPayload.date,
@@ -156,18 +164,25 @@ export default class ChatBoard extends Vue {
 		this.scrollChatBoad();
 	}
 
+	// send chat to server
 	sendMessage() {
-		this.$socket.client.emit("sendChat", {
-			roomid: this.roomid,
-			message: this.userChatMsg,
-			user: this.userInfo
-		});
-		this.scrollChatBoad();
+		if (
+			this.userChatMsg &&
+			typeof this.userChatMsg == "string" &&
+			this.userChatMsg.trim().length > 0
+		) {
+			this.sendChat({
+				roomid: this.roomid,
+				message: this.userChatMsg,
+				user: this.userInfo
+			});
+			this.scrollChatBoad();
+		}
 	}
 
 	@Socket("connected")
 	onConnected(message: string) {
-		this.chatMessages.push({
+		this.addNewChat({
 			message: message,
 			user: "AxumHUB",
 			date: "2:20 pm",
@@ -178,7 +193,7 @@ export default class ChatBoard extends Vue {
 
 	@Socket("disconnected")
 	onDisconnect(message: string) {
-		this.chatMessages.push({
+		this.addNewChat({
 			message: message,
 			user: "AxumHUB",
 			date: "2:20 pm",

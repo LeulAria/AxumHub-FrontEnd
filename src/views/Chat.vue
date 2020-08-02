@@ -61,9 +61,9 @@
 				<chat-board></chat-board>
 			</v-col>
 		</v-row>
-		<v-overlay :value="loading || !$socket.connected">
+		<!-- <v-overlay :value="loading || !$socket.connected">
 			<v-progress-circular indeterminate size="64"></v-progress-circular>
-		</v-overlay>
+		</v-overlay>-->
 	</v-main>
 </template>
 
@@ -107,8 +107,12 @@ export default class Chat extends Vue {
 	setRoomId!: Function;
 
 	created() {
-		this.getProjectByChatName(this.id);
-		this.setRoomId(this.id);
+		// const loading = this.$vs.loading()
+		// setTimeout(() => {
+		// 	loading.close()
+		// }, 3000)
+		// this.getProjectByChatName(this.id);
+		// this.setRoomId(this.id);
 	}
 
 	toggleChatList() {
