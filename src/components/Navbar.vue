@@ -15,7 +15,7 @@
 				<vs-button>Get Started</vs-button>
 			</template>
 		</vs-navbar>
-		<vs-sidebar absolute v-model="active" :open.sync="activeSidebar" class="mxh-vh">
+		<vs-sidebar v-model="active" :open.sync="activeSidebar" class="mxh-vh fixed-position">
 			<template #logo>
 				<img src="../assets/logo.png" class="brand-logo" alt="logo" />
 				<h5 class="ml-5">AxumHUB</h5>
