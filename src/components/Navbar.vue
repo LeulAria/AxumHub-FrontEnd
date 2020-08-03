@@ -184,7 +184,7 @@ export default class Navbar extends Vue {
 			to: "/logout",
 			id: "logout"
 		},
-		{ title: "Settings", icon: "bx bxs-cog", to: "/", id: "settings" }
+		{ title: "Settings", icon: "bx bxs-cog", to: "/settings", id: "settings" }
 	];
 	drawer = true;
 	color = "blue";
