@@ -15,7 +15,6 @@
 						label="Search here..."
 						prepend-inner-icon="search"
 						solo-inverted
-						autofocus="off"
 					></v-text-field>
 				</v-col>
 
