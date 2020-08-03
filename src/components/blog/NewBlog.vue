@@ -83,7 +83,7 @@
 								name="blogImage"
 								show-size
 								v-model="blogImage"
-								accept="image/png, image/jpeg, image/bmp"
+								accept="image/*"
 								prepend-icon="mdi-image"
 								label="Post Image (OPTIONAL)"
 								hint="An Image Desciption for your post"
@@ -186,13 +186,8 @@ export default class UserQuestionsPost extends Vue {
 						tags: this.tags,
 						blogImage: this.blogImage
 					};
-					console.log("info: ", info);
 					const form = document.getElementById("blog-form") as HTMLFormElement;
 					const formData = new FormData(form);
-					for (const [name, value] of formData) {
-						console.log(`the value is here:   ${name} = ${value}`);
-					}
-					console.log("ok the input is valid now lets dispatch it", info);
 					this.$store
 						.dispatch("blog/createNewBlog", formData)
 						.then(res => {
