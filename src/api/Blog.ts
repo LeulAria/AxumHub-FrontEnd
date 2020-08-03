@@ -20,7 +20,6 @@ export default {
         Authorization: store.getters.accessToken
       }
     };
-    console.log(formData)
     return Api.post(
       `${route}/create`,
       formData,

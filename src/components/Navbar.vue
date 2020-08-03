@@ -1,18 +1,87 @@
 <template>
 	<div class="hidden">
-		<vs-navbar fixed shadow square center-collapsed v-model="active">
-			<template #left>
+		<vs-navbar fixed shadow square center-collapsed v-model="active" class="bg-image" dark>
+			<template #left class="items">
 				<vs-button @click="activeSidebar = !activeSidebar" flat icon>
 					<i class="bx bx-menu"></i>
 				</vs-button>
 			</template>
-			<vs-navbar-item :active="active == 'guide'" id="guide">Guide</vs-navbar-item>
-			<vs-navbar-item :active="active == 'docs'" id="docs">Documents</vs-navbar-item>
-			<vs-navbar-item :active="active == 'components'" id="components">Components</vs-navbar-item>
-			<vs-navbar-item :active="active == 'license'" id="license">license</vs-navbar-item>
-			<template #right>
-				<vs-button flat circle size="small" class="px-2">Login</vs-button>
-				<vs-button>Get Started</vs-button>
+			<vs-navbar-item :active="active == 'guide'" id="guide" class="items">Dashboard</vs-navbar-item>
+			<vs-navbar-item :active="active == 'docs'" id="docs" class="items">Projects</vs-navbar-item>
+			<vs-navbar-item :active="active == 'components'" id="components" class="items">Profie</vs-navbar-item>
+			<vs-navbar-item :active="active == 'license'" id="license" class="items">QA</vs-navbar-item>
+			<template #right class="items">
+				<vs-button flat circle size="small" class="px-2">Logout</vs-button>
+				<vs-button>Explore</vs-button>
+				<v-menu
+					v-model="menu"
+					transition="slide-y-transition"
+					:close-on-content-click="false"
+					:nudge-width="200"
+					offset-y
+				>
+					<template v-slot:activator="{ on, attrs }">
+						<vs-button
+							circle
+							upload
+							color="whatsapp"
+							icon
+							animation-type="rotate"
+							v-bind="attrs"
+							v-on="on"
+						>
+							<i class="bx bxs-bell"></i>
+							<template #animate>
+								<i class="bx bxs-bell-ring"></i>
+							</template>
+						</vs-button>
+					</template>
+
+					<v-card>
+						<v-list>
+							<v-list-item>
+								<v-list-item-avatar>
+									<img src="https://cdn.vuetifyjs.com/images/john.jpg" alt="John" />
+								</v-list-item-avatar>
+
+								<v-list-item-content>
+									<v-list-item-title>John Leider</v-list-item-title>
+									<v-list-item-subtitle>Founder of Vuetify.js</v-list-item-subtitle>
+								</v-list-item-content>
+
+								<v-list-item-action>
+									<v-btn :class="fav ? 'red--text' : ''" icon @click="fav = !fav">
+										<v-icon>mdi-heart</v-icon>
+									</v-btn>
+								</v-list-item-action>
+							</v-list-item>
+						</v-list>
+
+						<v-divider></v-divider>
+
+						<v-list>
+							<v-list-item>
+								<v-list-item-action>
+									<v-switch v-model="message" color="purple"></v-switch>
+								</v-list-item-action>
+								<v-list-item-title>Enable messages</v-list-item-title>
+							</v-list-item>
+
+							<v-list-item>
+								<v-list-item-action>
+									<v-switch v-model="hints" color="purple"></v-switch>
+								</v-list-item-action>
+								<v-list-item-title>Enable hints</v-list-item-title>
+							</v-list-item>
+						</v-list>
+
+						<v-card-actions>
+							<v-spacer></v-spacer>
+
+							<v-btn text @click="menu = false">Clear</v-btn>
+						</v-card-actions>
+					</v-card>
+				</v-menu>
 			</template>
 		</vs-navbar>
 		<vs-sidebar v-model="active" :open.sync="activeSidebar" class="mxh-vh fixed-position">
@@ -153,8 +222,24 @@ export default class Navbar extends Vue {
 </script>
 
 <style lang="stylus" scoped>
+.bg-image
+	background-image linear-gradient(to bottom, rgba(0,0,0,0.0),rgba(0,0,20,0.0)), url('https://s3.envato.com/files/248925149/Preview%20Image.jpg')
+  background-position top
+  background-size cover
+  position relative
+
+.items
+	z-index 1000
+	// color #aaa
+	
 .brand-logo
 	transform scale(1.6)
 	box-shadow 0px 2px 15px rgba(0,0,0,0.2)
 	border-radius 50%
+.v-menu__content
+	background transparent !important
+	box-shadow none !important
+	box-shadow 0px 0px 11px rgba(0,0,0,0.282) !important
+	background yellow
+	border-radius .5rem
 </style>
