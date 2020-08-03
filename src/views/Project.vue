@@ -318,15 +318,13 @@
 				</v-col>
 			</v-row>
 		</v-container>
-		<v-overlay :value="isLoading || isLoadingUser || isJoinedLoading">
-			<v-progress-circular indeterminate size="64"></v-progress-circular>
-		</v-overlay>
 	</v-main>
 </template>
 
 <script lang="ts">
 import { Component, Vue, Watch } from "vue-property-decorator";
 import { mapGetters, mapActions } from "vuex";
+import { isJoinedLoading } from "../store/modules/project/getters";
 
 @Component({
 	computed: {
@@ -359,6 +357,7 @@ export default class Project extends Vue {
 	searchJoinedProjects = "";
 	isLoading!: boolean;
 	isLoadingUser!: boolean;
+	isJoinedLoading!: boolean;
 	userInfo!: any;
 	projects!: [any];
 	userProjects!: [any];
@@ -370,6 +369,7 @@ export default class Project extends Vue {
 	applyJoin!: any;
 	acceptJoin!: any;
 	rejectJoin!: any;
+	loadingproj!: any;
 
 	tab = 1;
 
@@ -379,6 +379,14 @@ export default class Project extends Vue {
 	hints = true;
 
 	mounted() {
+		this.loadingproj = this.$vs.loading({
+			type: "circles",
+			color: "#FF6",
+			background: "#000",
+			opacity: 0.8,
+			scale: 1.3,
+			text: "Loading projects..."
+		});
 		this.getAllProjects();
 		this.getUserProjects(this.userInfo.id);
 		this.getJoinedProjects();
@@ -484,6 +492,28 @@ export default class Project extends Vue {
 					`${name}'s request has been rejected successfully for project ${title}!`
 				);
 			});
+	}
+
+	@Watch("isLoading")
+	onLoading(newVal: boolean, oldVal: boolean) {
+		// FIXME: remove on prod
+		if (!(newVal && this.isLoadingUser && this.isJoinedLoading)) {
+			setTimeout(() => this.loadingproj.close(), 1000);
+		}
+	}
+	@Watch("isLoadingUser")
+	onisLoadingUser(newVal: boolean, oldVal: boolean) {
+		// FIXME: remove on prod
+		if (!(newVal && this.isLoading && this.isJoinedLoading)) {
+			setTimeout(() => this.loadingproj.close(), 1000);
+		}
+	}
+	@Watch("isJoinedLoading")
+	onisJoinedLoading(newVal: boolean, oldVal: boolean) {
+		// FIXME: remove on prod
+		if (!(newVal && this.isLoadingUser && this.isLoading)) {
+			setTimeout(() => this.loadingproj.close(), 1000);
+		}
 	}
 }
 </script>

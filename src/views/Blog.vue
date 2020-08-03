@@ -45,8 +45,8 @@
 						:key="blog._id"
 						class="d-flex justify-center"
 					>
-						<v-card outlined class="mx-auto my-2 rounded-lg" max-width="350">
-							<v-img height="200" :src="`http://localhost:8000/axumhub/upload_medias/${blog.blogimage}`"></v-img>
+						<v-card outlined class="mx-auto my-2 rounded-lg" max-width="350" min-width="300">
+							<v-img height="200" :src="`${mediaURI}${blog.blogimage}`"></v-img>
 
 							<v-card-title>{{blog.title}}</v-card-title>
 
@@ -99,6 +99,7 @@ import { mapGetters, mapActions } from "vuex";
 
 @Component({
 	computed: {
+		...mapGetters(["mediaURI"]),
 		...mapGetters("blog", ["blogs", "userBlogs", "loading", "loadingUser"])
 	},
 	methods: {
@@ -113,6 +114,7 @@ import { mapGetters, mapActions } from "vuex";
 export default class Blog extends Vue {
 	blogs!: any;
 	userBlogs!: any;
+	mediaURI!: string;
 	loading!: boolean;
 	loadingblog!: any;
 	loadingUser!: boolean;

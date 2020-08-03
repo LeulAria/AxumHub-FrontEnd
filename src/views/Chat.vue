@@ -61,16 +61,12 @@
 				<chat-board></chat-board>
 			</v-col>
 		</v-row>
-		<!-- <v-overlay :value="loading || !$socket.connected">
-			<v-progress-circular indeterminate size="64"></v-progress-circular>
-		</v-overlay>-->
 	</v-main>
 </template>
 
 <script lang="ts">
-import { Component, Vue, Prop } from "vue-property-decorator";
+import { Component, Vue, Prop, Watch } from "vue-property-decorator";
 import ChatBoard from "@/components/chat/ChatBoard.vue";
-
 import { mapGetters, mapActions } from "vuex";
 
 @Component({
@@ -97,6 +93,7 @@ export default class Chat extends Vue {
 	chatgruplist = false;
 	joinedProjects!: [any];
 	searchGroups = "";
+	loadingchat!: any;
 
 	admins!: [any];
 	contributers!: [any];
@@ -107,12 +104,17 @@ export default class Chat extends Vue {
 	setRoomId!: Function;
 
 	created() {
-		// const loading = this.$vs.loading()
-		// setTimeout(() => {
-		// 	loading.close()
-		// }, 3000)
-		// this.getProjectByChatName(this.id);
-		// this.setRoomId(this.id);
+		this.loadingchat = this.$vs.loading({
+			type: "circles",
+			color: "#FF6",
+			background: "#000",
+			opacity: 0.8,
+			scale: 1.3,
+			text: "Loading chats..."
+		});
+
+		this.getProjectByChatName(this.id);
+		this.setRoomId(this.id);
 	}
 
 	toggleChatList() {
@@ -131,6 +133,14 @@ export default class Chat extends Vue {
 
 	openChat(id: string) {
 		this.$router.push({ name: "Chat", params: { id } });
+	}
+
+	@Watch("loading")
+	onLoadingChage(newVal: boolean, prevVal: boolean) {
+		// FIXME: remove on prod
+		if (!(newVal && !this.$socket.connected)) {
+			setTimeout(() => this.loadingchat.close(), 1000);
+		}
 	}
 }
 </script>
