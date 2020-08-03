@@ -44,16 +44,26 @@
 							</div>
 						</template>
 					</div>
-					<v-btn
-						v-if="!chatgruplist"
-						fab
-						small
-						class="elevation-0 mb-10 ml-1"
-						:to="{ name: 'Conference' }"
-						link
-					>
-						<i class="bx bxs-video icon-size-md"></i>
-					</v-btn>
+					<div class="d-flex align-content-center align-center justify-space-around">
+						<v-btn
+							v-if="!chatgruplist"
+							fab
+							small
+							class="elevation-0 ml-1"
+							:to="{ name: 'Conference' }"
+							link
+						>
+							<i class="bx bxs-video icon-size-md"></i>
+						</v-btn>
+						<vs-avatar-group max="4" v-if="!chatgruplist">
+							<vs-avatar v-for="(member,i) in members" :key="i">
+								<img
+									src="https://cdn4.iconfinder.com/data/icons/avatars-xmas-giveaway/128/girl_female_woman_avatar-512.png"
+									alt
+								/>
+							</vs-avatar>
+						</vs-avatar-group>
+					</div>
 				</v-card>
 			</v-col>
 			<v-col cols="12" xs="12" sm="9">
@@ -181,6 +191,5 @@ export default class Chat extends Vue {
 	transition all .5s
 	&:active
 		transform scale(.7)
-		
 
 </style>
