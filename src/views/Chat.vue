@@ -12,7 +12,7 @@
 
 					<div three-line class="chat-lists" v-if="chatgruplist">
 						<template v-for="(project, i) in filteredProjects">
-							<v-subheader v-if="i==0" :key="project._id">Groups</v-subheader>
+							<v-subheader v-if="i==0" :key="i">Groups</v-subheader>
 							<div
 								:key="project._id"
 								ripple
@@ -29,7 +29,7 @@
 
 					<div three-line class="chat-lists" v-if="!chatgruplist">
 						<template v-for="(member, i) in members">
-							<v-subheader v-if="i==0" :key="member.id">Group Members</v-subheader>
+							<v-subheader v-if="i==0" :key="i">Group Members</v-subheader>
 							<div :key="member.id" ripple class="chat-list d-flex align-content-center">
 								<vs-avatar
 									class="mr-3"
