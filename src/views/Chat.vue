@@ -1,7 +1,7 @@
 <template>
 	<v-main class="my-0 pa-0 chat">
 		<v-row justify="center" no-gutters class="chat-container">
-			<v-col cols="4" v-if="$vuetify.breakpoint.smAndUp" class="chat-sizebar-container">
+			<v-col cols="0" xs="0" sm="3" v-if="$vuetify.breakpoint.smAndUp" class="chat-sizebar-container">
 				<v-card max-width="420" class="mx-6 chat-sizebar" flat outlined>
 					<v-toolbar class="chat-app-bar">
 						<v-app-bar-nav-icon @click="toggleChatList()"></v-app-bar-nav-icon>
@@ -10,54 +10,53 @@
 						<v-spacer></v-spacer>
 					</v-toolbar>
 
-					<v-list three-line class="chat-lists" v-if="chatgruplist">
-						<template v-for="(project, i) in filteredJoinedProjects">
+					<div three-line class="chat-lists" v-if="chatgruplist">
+						<template v-for="(project, i) in filteredProjects">
 							<v-subheader v-if="i==0" :key="i">Groups</v-subheader>
-							<v-divider :key="i==0" inset></v-divider>
-							<div :key="i">
-								<v-list-item :key="i" ripple @click="openChat(project.title)" link>
-									<v-list-item-avatar>
-										<v-img
-											src="https://png.pngtree.com/png-vector/20191028/ourlarge/pngtree-men-avatar-icon-for-your-design-websites-and-projects-png-image_1888521.jpg"
-										></v-img>
-									</v-list-item-avatar>
-
-									<v-list-item-content>
-										<v-list-item-title>{{project&&project.title}}</v-list-item-title>
-										<v-list-item-subtitle>{{project&&project.summary.split(' ').slice(0,7).join(' ')}}</v-list-item-subtitle>
-									</v-list-item-content>
-								</v-list-item>
-								<v-divider></v-divider>
+							<div
+								:key="i"
+								ripple
+								class="chat-list d-flex align-content-center open-chat"
+								@click="openChat(project.title)"
+							>
+								<vs-avatar class="mr-3" circle link size="40">
+									<i class="bx bx-group"></i>
+								</vs-avatar>
+								<p class="chat-list-txt">{{project.title}}</p>
 							</div>
 						</template>
-					</v-list>
+					</div>
 
-					<v-list three-line class="chat-lists" v-if="!chatgruplist">
+					<div three-line class="chat-lists" v-if="!chatgruplist">
 						<template v-for="(member, i) in members">
 							<v-subheader v-if="i==0" :key="i">Group Members</v-subheader>
-							<div :key="i">
-								<v-list-item ripple>
-									<v-list-item-avatar>
-										<v-img
-											src="http://www.chicagohrs.com/wp-content/uploads/2017/05/Man-Placeholder-300x300.png"
-										></v-img>
-									</v-list-item-avatar>
-
-									<v-list-item-content>
-										<v-list-item-title>{{member.name}}</v-list-item-title>
-										<v-list-item-subtitle>{{member.isOnline?'Online....' : 'Offline...' }}</v-list-item-subtitle>
-									</v-list-item-content>
-								</v-list-item>
-								<v-divider inset></v-divider>
+							<div :key="i" ripple class="chat-list d-flex align-content-center">
+								<vs-avatar
+									class="mr-3"
+									circle
+									:badge="member.isOnline"
+									:loading="!member.isOnline"
+									size="40"
+								>
+									<i class="bx bx-user"></i>
+								</vs-avatar>
+								<p class="chat-list-txt">{{member.name}}</p>
 							</div>
 						</template>
-					</v-list>
-					<v-btn fab class="elevation-0 mb-10 ml-1" :to="{ name: 'Conference' }" link>
-						<v-icon>mdi-message-video</v-icon>
+					</div>
+					<v-btn
+						v-if="!chatgruplist"
+						fab
+						small
+						class="elevation-0 mb-10 ml-1"
+						:to="{ name: 'Conference' }"
+						link
+					>
+						<i class="bx bxs-video icon-size-md"></i>
 					</v-btn>
 				</v-card>
 			</v-col>
-			<v-col cols="12" xs="12" sm="8">
+			<v-col cols="12" xs="12" sm="9">
 				<chat-board></chat-board>
 			</v-col>
 		</v-row>
@@ -81,7 +80,7 @@ import { mapGetters, mapActions } from "vuex";
 			"chats",
 			"loading"
 		]),
-		...mapGetters("project", ["joinedProjects"])
+		...mapGetters("project", ["projects"])
 	},
 	methods: {
 		...mapActions("chat", ["getProjectByChatName", "setRoomId"])
@@ -91,9 +90,9 @@ export default class Chat extends Vue {
 	@Prop({ type: String, required: true })
 	id!: string;
 	chatgruplist = false;
-	joinedProjects!: [any];
 	searchGroups = "";
 	loadingchat!: any;
+	projects!: any;
 
 	admins!: [any];
 	contributers!: [any];
@@ -121,11 +120,11 @@ export default class Chat extends Vue {
 		this.chatgruplist = !this.chatgruplist;
 	}
 
-	set filteredJoinedProjects(val: any) {
-		this.joinedProjects = val;
+	set filteredProjects(val: any) {
+		this.projects = val;
 	}
-	get filteredJoinedProjects() {
-		const jp = this.joinedProjects.filter((project: any) => {
+	get filteredProjects() {
+		const jp = this.projects.filter((project: any) => {
 			return project.title.toLowerCase().match(this.searchGroups);
 		});
 		return jp;
@@ -148,34 +147,40 @@ export default class Chat extends Vue {
 <style lang="stylus" scoped>
 .chat
 	width 100vw
-	height 100vh
+	height calc(100vh - 40px)
 	overflow hidden
 	padding 0 !important
 	margin 0 !important
 .chat-container
 	padding 0
 .chat-sizebar-container, .chat-sizebar
-	height 100vh
-	width 100%
+	height calc(100vh - 40px)
+	max-width 100%
 	margin 0 !important
 .chat-lists, .chat-bar
-	height 80vh !important
-	min-height 80vh !important
-	max-height 80vh !important
+	height 80% !important
+	min-height 80% !important
+	max-height 80% !important
 	overflow-x hidden !important
 	overflow-y scroll !important
 	cursor pointer
 .chat-app-bar
 	box-shadow none !important
-.chat-bar
+
+.chat-list
 	width 100%
-	min-height 90vh !important
-	max-height 90vh !important
-.chat-message-input
-	position fixed
-	bottom 4vh
-	border 1px solid #999
-.chat-input
-	width 70% !important
+	padding 5px 1.3em
+	transition all .5s
+	height 50px
+	&:hover
+		transform scale(1.14)
+	.chat-list-txt
+		font-size .75em
+		line-height 40px
+.open-chat
+	transition all .5s
+	&:active
+		transform scale(.7)
+		
 
 </style>

@@ -56,9 +56,6 @@
 					JOIN MEETING
 					<i class="bx bxs-paper-plane"></i>
 				</vs-button>
-				<vs-button circle icon color="#7d33ff" relief>
-					<i class="bx bxs-video"></i>
-				</vs-button>
 			</v-col>
 		</v-row>
 		<v-container>

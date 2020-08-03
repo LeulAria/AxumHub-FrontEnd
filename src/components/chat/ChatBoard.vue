@@ -279,7 +279,7 @@ export default class ChatBoard extends Vue {
 
 	.chat__conversation-board {
 		padding: 1em 1em 0 1em;
-		height: calc(100vh - 105px);
+		height: calc(100vh - 125px);
 		overflow: auto;
 	}
 
@@ -443,9 +443,9 @@ export default class ChatBoard extends Vue {
 	.chat__conversation-panel {
 		background: var(--chat-panel-background);
 		border-radius: 12px;
-		padding: 0 1em;
+		padding: 1em;
 		height: 55px;
-		margin: 0.5em 0 0;
+		bottom: 0;
 		box-shadow: 0px 1px 10px rgba(0,0,0,0.2);
 
 		.add-file-button {
@@ -541,7 +541,7 @@ export default class ChatBoard extends Vue {
 		border-radius: 0;
 
 		.chat__conversation-board {
-			height: calc(100vh - 55px - 2em - 0.5em - 3em);
+			height: calc(100vh - 120px);
 		}
 
 		.chat__conversation-board__message__options {

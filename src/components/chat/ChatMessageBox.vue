@@ -4,7 +4,7 @@
 	>
 		<div class="chat__conversation-board__message__person">
 			<div class="chat__conversation-board__message__person__avatar">
-				<img src="https://randomuser.me/api/portraits/men/9.jpg" alt="Dennis Mikle" />
+				<img src="https://randomuser.me/api/portraits/men/9.jpg" alt />
 			</div>
 			<span class="chat__conversation-board__message__person__nickname">{{userName}}</span>
 		</div>
