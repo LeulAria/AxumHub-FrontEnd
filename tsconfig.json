@@ -4,6 +4,7 @@
     "module": "esnext",
     "strict": true,
     "jsx": "preserve",
+    "skipLibCheck": true,
     "importHelpers": true,
     "moduleResolution": "node",
     "experimentalDecorators": true,
@@ -36,5 +37,5 @@
   "exclude": [
     "node_modules"
   ],
-  "noImplicitAny": false,
+  "noImplicitAny": true,
 }
