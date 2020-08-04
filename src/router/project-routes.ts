@@ -18,6 +18,15 @@ export default [
     }
   },
   {
+    path: `${routePath}/:id`,
+    name: "ProjectDetail",
+    component: () => import('@/components/project/ProjectDetail.vue'),
+    props: true,
+    meta: {
+      requiresAuth: true
+    }
+  },
+  {
     path: `${routePath}/:id/chat/`,
     name: "Chat",
     component: () => import('@/views/Chat.vue'),

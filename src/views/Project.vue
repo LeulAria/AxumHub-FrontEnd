@@ -48,7 +48,7 @@
 										v-on="on"
 										@click="acceptJoinProject(joinNotification)"
 									>
-										<v-icon>mdi-check</v-icon>
+										<i class="bx bx-check-circle icon-size-md"></i>
 									</v-btn>
 								</template>
 								<span>Accept Join Request</span>
@@ -65,7 +65,7 @@
 										v-on="on"
 										@click="rejectJoinProject(joinNotification)"
 									>
-										<v-icon>mdi-close</v-icon>
+										<i class="bx bx-x-circle icon-size-md"></i>
 									</v-btn>
 								</template>
 								<span>Reject Join Request</span>
@@ -126,13 +126,13 @@
 										</v-tooltip>
 										<v-tooltip top>
 											<template v-slot:activator="{ on, attrs }">
-												<v-icon
+												<i
 													v-bind="attrs"
 													v-if="project.isContrib"
 													v-on="on"
 													color="info"
-													class="top-mark"
-												>mdi-account-group</v-icon>
+													class="bx bxs-quote-right icon-size-md"
+												></i>
 											</template>
 											<span>Contributer on this project</span>
 										</v-tooltip>
@@ -193,9 +193,7 @@
 									class="project-date grey--text text--darken-1 ma-0"
 								>{{project&&project.data.slice(0,10)}}</small>
 								<h4 class="ml-4 bolded">{{project.title}}</h4>
-								<v-card-subtitle
-									class="project-summary"
-								>{{project&&project.summary.split(' ').slice(0,10).join(' ')}}</v-card-subtitle>
+								<v-card-subtitle class="project-summary">{{project&&project.summary | snnipit(10) }}</v-card-subtitle>
 								<div class="project-star d-flex align-center">
 									<v-icon color="info">mdi-star-outline</v-icon>
 									<small>12</small>
@@ -206,8 +204,8 @@
 											class="menu-project"
 											v-model="project.menu"
 											:close-on-content-click="false"
-											:nudge-width="200"
-											offset-x
+											:nudge-width="90"
+											offset-y
 										>
 											<template v-slot:activator="{ on, attrs }">
 												<v-btn text fab small class="project-more-btn elevation-0" v-bind="attrs" v-on="on">
@@ -218,21 +216,21 @@
 											<v-card outlined class="rounded-lg elevation-0">
 												<v-list>
 													<v-list-item>
-														<v-list-item-action>
-															<v-btn fab small class="elevation-0" link>
-																<v-icon>mdi-eye</v-icon>
-															</v-btn>
-														</v-list-item-action>
-														<v-list-item-title>See Detail</v-list-item-title>
+														<vs-button @click="seeDetail(project._id)">
+															See Detail
+															<template #animate>
+																<i class="bx bxs-detail icon-size-md"></i>
+															</template>
+														</vs-button>
 													</v-list-item>
 
 													<v-list-item>
-														<v-list-item-action>
-															<v-btn @click="openChat(project.chatgroupname)" fab small class="elevation-0">
-																<v-icon>mdi-chat</v-icon>
-															</v-btn>
-														</v-list-item-action>
-														<v-list-item-title>Go to chat</v-list-item-title>
+														<vs-button @click="openChat(project.chatgroupname)">
+															Go to chat
+															<template #animate>
+																<i class="bx bxs-chat icon-size-md"></i>
+															</template>
+														</vs-button>
 													</v-list-item>
 												</v-list>
 											</v-card>
@@ -272,7 +270,7 @@
 							class="project-summary"
 						>{{project&&project.summary.split(' ').slice(0,10).join(' ')}}</v-card-subtitle>
 						<div class="project-star d-flex align-center">
-							<v-icon color="info">mdi-star-outline</v-icon>
+							<i class="bx bx-star"></i>
 							<small>12</small>
 						</div>
 						<v-col cols="12" sm="6" offset-sm="3">
@@ -281,8 +279,8 @@
 									class="menu-project"
 									v-model="project.menu"
 									:close-on-content-click="false"
-									:nudge-width="200"
-									offset-x
+									:nudge-width="90"
+									offset-y
 								>
 									<template v-slot:activator="{ on, attrs }">
 										<v-btn text fab small class="project-more-btn elevation-0" v-bind="attrs" v-on="on">
@@ -290,24 +288,23 @@
 										</v-btn>
 									</template>
 
-									<v-card outlined class="rounded-lg elevation-0">
+									<v-card class="rounded-lg elevation-0 bshadow">
 										<v-list>
 											<v-list-item>
-												<v-list-item-action>
-													<v-btn fab small class="elevation-0" link>
-														<v-icon>mdi-eye</v-icon>
-													</v-btn>
-												</v-list-item-action>
-												<v-list-item-title>See Detail</v-list-item-title>
+												<vs-button @click="seeDetail(project._id)">
+													See Detail
+													<template #animate>
+														<i class="bx bxs-detail icon-size-md"></i>
+													</template>
+												</vs-button>
 											</v-list-item>
-
 											<v-list-item>
-												<v-list-item-action>
-													<v-btn @click="openChat(project.chatgroupname)" fab small class="elevation-0">
-														<v-icon>mdi-chat</v-icon>
-													</v-btn>
-												</v-list-item-action>
-												<v-list-item-title>Go to chat</v-list-item-title>
+												<vs-button @click="openChat(project.chatgroupname)">
+													Go to chat
+													<template #animate>
+														<i class="bx bxs-chat icon-size-md"></i>
+													</template>
+												</vs-button>
 											</v-list-item>
 										</v-list>
 									</v-card>
@@ -324,7 +321,6 @@
 <script lang="ts">
 import { Component, Vue, Watch } from "vue-property-decorator";
 import { mapGetters, mapActions } from "vuex";
-import { isJoinedLoading } from "../store/modules/project/getters";
 
 @Component({
 	computed: {
@@ -404,8 +400,8 @@ export default class Project extends Vue {
 		this.$router.push({ name: "Chat", params: { id } });
 	}
 
-	showDetail(id: string) {
-		console.log("show project detail");
+	seeDetail(id: string) {
+		this.$router.push({ name: "ProjectDetail", params: { id } });
 	}
 
 	set filteredUserProjects(val: any) {

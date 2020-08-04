@@ -91,6 +91,19 @@ export const getJoinedProjects = (context: any, id: string) => {
   }
 }
 
+export const getSingleProject = (context: any, id: string) => {
+  context.commit('LOADING_PROJECT', true)
+  Project.getProjectById(id)
+    .then((res => {
+      context.commit('LOADING_PROJECT', false)
+      context.commit('SET_PROJECT', res.data)
+    }))
+    .catch((err) => {
+      console.log(err)
+      context.commit('LOADING_PROJECT', false)
+    })
+}
+
 export const addNewProject = (context: any, project: any) => {
   new Promise((resolve, reject) => {
     Project.createProject(project)

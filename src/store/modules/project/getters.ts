@@ -45,3 +45,10 @@ export const joinNotifications = (state: any, getters: any) => {
 
   return joinRequests
 }
+
+export const project = (state: any) => {
+  return state.project
+}
+export const loadingProject = (state: any) => {
+  return state.loadingProject
+}

@@ -1,7 +1,5 @@
 <template>
-  <v-overlay :value="overlay">
-    <v-progress-circular indeterminate width="8" size="70"></v-progress-circular>
-  </v-overlay>
+	<div></div>
 </template>
 
 <script lang="ts">
@@ -9,15 +7,23 @@ import { Vue, Component } from "vue-property-decorator";
 
 @Component
 export default class Logout extends Vue {
-  overlay = false;
+	logginout!: any;
 
-  created() {
-    this.overlay = true;
-    this.$store.dispatch("users/logOut");
-    setTimeout(() => {
-      this.$router.push({ name: "Login" });
-      this.overlay = false;
-    }, 2000);
-  }
+	created() {
+		this.logginout = this.$vs.loading({
+			type: "circles",
+			color: "#FF6",
+			background: "#000",
+			opacity: 0.8,
+			scale: 1.6,
+			text: "Loggingout"
+		});
+
+		this.$store.dispatch("users/logOut");
+		setTimeout(() => {
+			this.$router.push({ name: "Login" });
+			this.logginout.close();
+		}, 2000);
+	}
 }
 </script>
