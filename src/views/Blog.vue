@@ -33,36 +33,39 @@
 		</v-toolbar>
 
 		<v-tabs-items v-model="tabs">
+			<v-tab-item></v-tab-item>
 			<v-tab-item>
-				<v-row justify="space-around">
-					<v-col
-						cols="12"
-						xs="12"
-						sm="6"
-						md="4"
-						v-for="blog in blogs"
-						:key="blog._id"
-						class="d-flex justify-center"
-					>
-						<v-card outlined class="mx-auto my-2 rounded-lg" max-width="350" min-width="300">
-							<v-img height="200" :src="`${mediaURI}${blog.blogimage}`"></v-img>
+				<v-container fluid class="px-xs-4 px-sm-8 px-md-15">
+					<v-row>
+						<v-col
+							cols="12"
+							xs="12"
+							sm="6"
+							md="4"
+							v-for="blog in blogs"
+							:key="blog._id"
+							transition="slide-y-reverse-transition"
+						>
+							<v-card outlined class="mx-auto my-2 rounded-lg" min-height="350" max-height="350">
+								<v-img min-height="200" max-heigh="200" :src="`${mediaURI}${blog.blogimage}`"></v-img>
 
-							<v-card-title>{{blog.title}}</v-card-title>
+								<v-card-title>{{blog.title | snnipit(3) }}</v-card-title>
 
-							<v-card-text>
-								<v-row align="center" class="mx-0">
-									<v-rating :value="4.5" color="amber" dense half-increments readonly size="14"></v-rating>
+								<v-card-text>
+									<v-row align="center" class="mx-0">
+										<v-rating :value="4.5" color="amber" dense half-increments readonly size="14"></v-rating>
 
-									<div class="grey--text ml-4">4.5 (413)</div>
-								</v-row>
-								<div>{{blog.body}}</div>
-							</v-card-text>
-							<v-card-actions class="action-btn">
-								<v-btn color="deep-purple lighten-2" text>See Article</v-btn>
-							</v-card-actions>
-						</v-card>
-					</v-col>
-				</v-row>
+										<div class="grey--text ml-4">4.5 (413)</div>
+									</v-row>
+									<div>{{blog.body | snnipit(6)}}</div>
+								</v-card-text>
+								<v-card-actions class="action-btn">
+									<v-btn color="deep-purple lighten-2" text>See Article</v-btn>
+								</v-card-actions>
+							</v-card>
+						</v-col>
+					</v-row>
+				</v-container>
 			</v-tab-item>
 			<v-tab-item>
 				<v-card flat>

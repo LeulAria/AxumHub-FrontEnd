@@ -72,9 +72,9 @@
 						max-height="270"
 					>
 						<v-card-subtitle>{{question.date}}</v-card-subtitle>
-						<h4 class="ml-4 bolded">{{question.title}}</h4>
+						<h4 class="ml-4 bolded">{{question.title | snnipit(3) }}</h4>
 
-						<v-card-subtitle>{{question.description.split(' ').slice(0,25).join(' ')}}</v-card-subtitle>
+						<v-card-subtitle>{{question.description | snnipit(20) }}</v-card-subtitle>
 
 						<v-card-actions class="d-flex">
 							<v-btn fab small text class="mr-1" @click="likePostedQuestion(question._id)">
