@@ -82,7 +82,7 @@
 		<vs-sidebar v-model="active" :open.sync="activeSidebar" class="mxh-vh fixed-position">
 			<template #logo>
 				<img src="../assets/logo.png" class="brand-logo" alt="logo" />
-				<h5 class="ml-5">AxumHUB</h5>
+				<h5 class="ml-5">{{ $t('appName') }}</h5>
 			</template>
 			<template v-for="(menu, i) in menus">
 				<vs-sidebar-item :id="menu.id" :key="i" :to="menu.to" link>
