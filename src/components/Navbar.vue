@@ -92,8 +92,8 @@
 					{{menu.title}}
 				</vs-sidebar-item>
 			</template>
-			<vs-sidebar-group>
-				<template #header>
+			<!--	<vs-sidebar-group>
+				 <template #header>
 					<vs-sidebar-item arrow>
 						<template #icon>
 							<i class="bx bx-group"></i>
@@ -108,7 +108,7 @@
 					</template>
 					Instagram
 				</vs-sidebar-item>
-			</vs-sidebar-group>
+			</vs-sidebar-group>-->
 
 			<template #footer>
 				<vs-row justify="space-between">
@@ -126,10 +126,10 @@
 							<i v-else class="bx bxs-sun"></i>
 						</template>
 					</vs-switch>
-					<!-- <vs-avatar badge-color="danger" badge-position="top-right">
+					<vs-avatar badge-color="danger" badge-position="top-right">
 						<i class="bx bx-bell"></i>
 						<template #badge>28</template>
-					</vs-avatar>-->
+					</vs-avatar>
 				</vs-row>
 			</template>
 		</vs-sidebar>
