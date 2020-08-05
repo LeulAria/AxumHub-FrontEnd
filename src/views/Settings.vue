@@ -1,13 +1,22 @@
 <template>
-  <v-main>
-    <h1>App Settings</h1>
-  </v-main>
+	<v-main>
+		<v-row class="mt-12" justify="center">
+			<v-col cols="6" class="d-flex justify-center">
+				<localization-component></localization-component>
+			</v-col>
+		</v-row>
+	</v-main>
 </template>
 
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
+import Localization from "@/components/Localization.vue";
 
-@Component
+@Component({
+	components: {
+		"localization-component": Localization
+	}
+})
 export default class Settings extends Vue {}
 </script>
 
