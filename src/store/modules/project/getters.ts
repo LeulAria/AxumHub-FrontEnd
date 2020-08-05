@@ -46,8 +46,12 @@ export const joinNotifications = (state: any, getters: any) => {
   return joinRequests
 }
 
+//project detail
 export const project = (state: any) => {
   return state.project
+}
+export const contributers = (state: any) => {
+  return state.project?.contributers
 }
 export const loadingProject = (state: any) => {
   return state.loadingProject
