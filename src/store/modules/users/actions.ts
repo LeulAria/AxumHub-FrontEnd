@@ -35,3 +35,12 @@ export const logOut = (context: any) => {
   context.commit('LOGOUT_USER');
   context.commit('REMOVE_TOKEN', null, { root: true });
 }
+
+export const uploadAvatar = (context: any, avatarForm: FormData) => {
+  User.uploadAvatar(avatarForm).then((res) => {
+    context.commit('UPDATE_USER_AVATAR', res.data)
+  })
+    .catch((err) => {
+      console.log(err)
+    })
+}

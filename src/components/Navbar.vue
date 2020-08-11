@@ -112,11 +112,8 @@
 
 			<template #footer>
 				<vs-row justify="space-between">
-					<vs-avatar>
-						<img
-							src="https://cdn4.iconfinder.com/data/icons/avatars-xmas-giveaway/128/girl_female_woman_avatar-512.png"
-							alt
-						/>
+					<vs-avatar @click="avatarModal=true" max-width="30px" max-height="30px">
+						<img :src="`${mediaURI}/${userAvatar}`" alt />
 					</vs-avatar>
 					<h5 class="mr-auto ml-2 mt-3">{{userInfo.name}}</h5>
 
@@ -126,6 +123,28 @@
 							<i v-else class="bx bxs-sun"></i>
 						</template>
 					</vs-switch>
+
+					<vs-dialog not-close width="300px" not-center v-model="avatarModal">
+						<template #header>
+							<h4 class="not-margin d-flex justify-center">
+								Change Your
+								Avatar
+							</h4>
+						</template>
+						<div class="con-content d-flex justify-center">
+							<form id="avatar-form">
+								<vs-input loading type="file" name="avatar"></vs-input>
+							</form>
+						</div>
+
+						<template #footer>
+							<div class="con-footer d-flex justify-center">
+								<vs-button @click="submit()" transparent>Change</vs-button>
+								<vs-button @click="avatarModal=false" dark transparent>Cancel</vs-button>
+							</div>
+						</template>
+					</vs-dialog>
+					<p>{{userAvatar}}</p>
 					<!-- <vs-avatar badge-color="danger" badge-position="top-right">
 						<i class="bx bx-bell"></i>
 						<template #badge>28</template>
@@ -142,11 +161,12 @@ import { mapGetters, mapActions } from "vuex";
 
 @Component({
 	computed: {
-		...mapGetters(["globalTheme"]),
-		...mapGetters("users", ["userInfo"])
+		...mapGetters(["globalTheme", "mediaURI"]),
+		...mapGetters("users", ["userInfo", "userAvatar"])
 	},
 	methods: {
-		...mapActions(["toggleGlobalTheme"])
+		...mapActions(["toggleGlobalTheme"]),
+		...mapActions("users", ["uploadAvatar"])
 	}
 })
 export default class Navbar extends Vue {
@@ -154,6 +174,10 @@ export default class Navbar extends Vue {
 	userInfo!: any;
 	active = "home";
 	activeSidebar = false;
+	avatarModal = false;
+	mediaURI!: string;
+	userAvatar!: string;
+	uploadAvatar!: Function;
 
 	toggleGlobalTheme!: any;
 
@@ -212,6 +236,13 @@ export default class Navbar extends Vue {
 		return this.background
 			? "https://www.omenkaonline.com/wp-content/uploads/2017/08/ETH_2015_DK_154_0.jpg"
 			: undefined;
+	}
+
+	submit() {
+		alert(13);
+		const form = document.getElementById("avatar-form") as HTMLFormElement;
+		const formData = new FormData(form);
+		this.uploadAvatar(formData);
 	}
 }
 </script>

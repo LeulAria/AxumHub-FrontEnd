@@ -11,5 +11,8 @@ export default {
   },
   currentUser() {
     return Api.get(`${route}/current`);
+  },
+  uploadAvatar(avatarPic: FormData) {
+    return Api.post(`${route}/avatar`, avatarPic);
   }
 }
