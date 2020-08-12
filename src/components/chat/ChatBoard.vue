@@ -9,6 +9,7 @@
 					:key="i"
 					:reversed="chatMsg.reversed"
 					:userName="chatMsg.user"
+					:avatar="chatMsg.avatar"
 					:message="chatMsg.message"
 					:chatTime="chatMsg.date"
 				></chat-message-box>
@@ -158,6 +159,7 @@ export default class ChatBoard extends Vue {
 			message: chatPayload.message,
 			user: chatPayload.user,
 			date: chatPayload.date,
+			avatar: chatPayload.avatar,
 			reversed: chatPayload.id == this.userInfo.id
 		});
 

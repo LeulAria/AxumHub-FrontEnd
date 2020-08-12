@@ -112,8 +112,8 @@
 
 			<template #footer>
 				<vs-row justify="space-between">
-					<vs-avatar @click="avatarModal=true" max-width="30px" max-height="30px">
-						<img :src="`${mediaURI}/${userAvatar}`" alt />
+					<vs-avatar @click="avatarModal=true">
+						<img :src="userAvatar" alt class="user-avatar" />
 					</vs-avatar>
 					<h5 class="mr-auto ml-2 mt-3">{{userInfo.name}}</h5>
 
@@ -144,7 +144,6 @@
 							</div>
 						</template>
 					</vs-dialog>
-					<p>{{userAvatar}}</p>
 					<!-- <vs-avatar badge-color="danger" badge-position="top-right">
 						<i class="bx bx-bell"></i>
 						<template #badge>28</template>
@@ -161,7 +160,7 @@ import { mapGetters, mapActions } from "vuex";
 
 @Component({
 	computed: {
-		...mapGetters(["globalTheme", "mediaURI"]),
+		...mapGetters(["globalTheme"]),
 		...mapGetters("users", ["userInfo", "userAvatar"])
 	},
 	methods: {
@@ -239,7 +238,6 @@ export default class Navbar extends Vue {
 	}
 
 	submit() {
-		alert(13);
 		const form = document.getElementById("avatar-form") as HTMLFormElement;
 		const formData = new FormData(form);
 		this.uploadAvatar(formData);
@@ -268,4 +266,10 @@ export default class Navbar extends Vue {
 	box-shadow 0px 0px 11px rgba(0,0,0,0.282) !important
 	background yellow
 	border-radius .5rem
+.user-avatar
+	background-size cover
+	width 100%
+	height 100%
+
+
 </style>

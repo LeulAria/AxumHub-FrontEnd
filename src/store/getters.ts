@@ -10,7 +10,6 @@ export const globalTheme = (state: any) => {
 export const accessToken = (state: any) => {
   return state.token
 }
-
 export const loggedIn = (state: any) => {
   return (
     state.token !== null &&

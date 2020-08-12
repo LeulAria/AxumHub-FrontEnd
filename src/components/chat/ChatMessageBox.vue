@@ -4,7 +4,7 @@
 	>
 		<div class="chat__conversation-board__message__person">
 			<div class="chat__conversation-board__message__person__avatar">
-				<img src="https://randomuser.me/api/portraits/men/9.jpg" alt />
+				<img :src="avatar" />
 			</div>
 			<span class="chat__conversation-board__message__person__nickname">{{userName}}</span>
 		</div>
@@ -73,10 +73,23 @@ export default class ChatMessageBox extends Vue {
 	reversed!: boolean;
 	@Prop({ type: String, default: "Anonymus" })
 	userName!: string;
+	@Prop({ type: String })
+	avatar!: string;
 	@Prop({ type: String, required: true })
 	message!: string;
 	@Prop({ type: String, required: true })
 	chatTime!: string;
+
+	created() {
+		console.log(
+			"SHOW THIS: ",
+			this.avatar,
+			this.userName,
+			this.reversed,
+			this.message,
+			this.chatTime
+		);
+	}
 }
 </script>
 
