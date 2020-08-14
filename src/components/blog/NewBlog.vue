@@ -190,7 +190,7 @@ export default class UserQuestionsPost extends Vue {
 					};
 					const form = document.getElementById("blog-form") as HTMLFormElement;
 					const formData = new FormData(form);
-					formData.append('postType', this.postType);
+					formData.append("postType", this.postType);
 					this.$store
 						.dispatch("blog/createNewBlog", formData)
 						.then(res => {
