@@ -1,8 +1,10 @@
 import Profile from '@/api/Profile'
 
 export const getUserProfile = (context: any, id: string) => {
+  console.log('hay now get the users profile data', id)
   Profile.getById(id)
     .then(res => {
+      console.log('yay what was happening...')
       context.commit('SET_USER_PROFILE', res.data)
     })
     .catch((err) => {

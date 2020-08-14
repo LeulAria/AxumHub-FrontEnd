@@ -10,6 +10,7 @@ export default {
     return Api.get(`${route}/handle/${handle}`)
   },
   getById(id: string) {
+    console.log('get user by id: ', id)
     return Api.get(`${route}/user/${id}`)
   },
   updateProfile(profile: any) {

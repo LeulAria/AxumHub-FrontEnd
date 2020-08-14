@@ -235,14 +235,16 @@ export default class Profile extends Vue {
 	skills!: any;
 	experiance!: any;
 	education!: any;
-	getUserProfile!: any;
-	deleteExperiance!: any;
-	deleteEducation!: any;
+	getUserProfile!: Function;
+	deleteExperiance!: Function;
+	deleteEducation!: Function;
 
 	loadingExpDel = false;
 	loadingEduDel = false;
 
 	created() {
+		console.log("fetch users profile data please please!!!");
+		console.log("thisi s the user id: ", this.userInfo.id, this.userInfo);
 		this.getUserProfile(this.userInfo.id);
 	}
 

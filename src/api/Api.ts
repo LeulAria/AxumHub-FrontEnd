@@ -1,5 +1,4 @@
 import axios from 'axios'
-import store from '@/store'
 
 // deveopment env base url
 // export const baseURL = "http://localhost:8000/api"

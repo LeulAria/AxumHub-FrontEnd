@@ -43,7 +43,7 @@
 									alt
 									class="circle not-found-image mb-2"
 								/>
-								<h1 class="grey-text text-center font-weight-regular">No Article Posts Yet!</h1>
+								<h2 class="grey-text text-center font-weight-medium">No Article Posts Yet!</h2>
 							</v-col>
 						</template>
 						<template v-for="blog in blogs">
@@ -57,7 +57,7 @@
 								v-if="blog.postType=='article'"
 							>
 								<v-card outlined class="mx-auto my-2 rounded-lg" min-height="350" max-height="380">
-									<v-img min-height="200" max-heigh="200" :src="`${mediaURI}${blog.blogimage}`"></v-img>
+									<v-img min-height="200" max-height="200" :src="`${mediaURI}${blog.blogimage}`"></v-img>
 
 									<v-card-title>{{blog.title | snnipit(3) }}</v-card-title>
 
@@ -89,7 +89,7 @@
 									alt
 									class="circle not-found-image mb-2"
 								/>
-								<h1 class="grey-text text-center font-weight-regular">No News Feed Posts Yet!</h1>
+								<h2 class="grey-text text-center font-weight-medium">No News Feed Posts Yet!</h2>
 							</v-col>
 						</template>
 						<template v-for="blog in blogs">
@@ -103,7 +103,7 @@
 								v-if="blog.postType=='news'"
 							>
 								<v-card outlined class="mx-auto my-2 rounded-lg" min-height="350" max-height="380">
-									<v-img min-height="200" max-heigh="200" :src="`${mediaURI}${blog.blogimage}`"></v-img>
+									<v-img min-height="200" max-height="200" :src="`${mediaURI}${blog.blogimage}`"></v-img>
 
 									<v-card-title>{{blog.title | snnipit(3) }}</v-card-title>
 
@@ -135,7 +135,7 @@
 									alt
 									class="circle not-found-image mb-2"
 								/>
-								<h1 class="grey-text text-center font-weight-regular">No Job Posts Yet!</h1>
+								<h2 class="grey-text text-center font-weight-medium">No Job Posts Yet!</h2>
 							</v-col>
 						</template>
 						<template v-for="blog in blogs">
@@ -149,7 +149,7 @@
 								v-if="blog.postType=='job'"
 							>
 								<v-card outlined class="mx-auto my-2 rounded-lg" min-height="350" max-height="380">
-									<v-img min-height="200" max-heigh="200" :src="`${mediaURI}${blog.blogimage}`"></v-img>
+									<v-img min-height="200" max-height="200" :src="`${mediaURI}${blog.blogimage}`"></v-img>
 
 									<v-card-title>{{blog.title | snnipit(3) }}</v-card-title>
 
@@ -181,7 +181,7 @@
 									alt
 									class="circle not-found-image mb-2"
 								/>
-								<h1 class="grey-text text-center font-weight-regular">No Job Posts Yet!</h1>
+								<h2 class="grey-text text-center font-weight-medium">No Job Posts Yet!</h2>
 							</v-col>
 						</template>
 						<template v-for="blog in blogs">
@@ -303,7 +303,7 @@ export default class Blog extends Vue {
 .circle
 	border-radius 50%
 .not-found-image
-	width 400px
+	width 300px
 .tab-container
 	min-height 100vh
 </style>
