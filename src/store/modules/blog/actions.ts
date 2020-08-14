@@ -41,7 +41,6 @@ export const getUserPostedBlogsById = (context: any, id: string) => {
 
 export const createNewBlog = (context: any, blogData: FormData) => {
   new Promise((resolve, reject) => {
-    console.log(blogData)
     Blog.ceateNewBlog(blogData)
       .then((res) => {
         console.log(res)

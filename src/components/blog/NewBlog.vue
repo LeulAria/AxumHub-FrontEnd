@@ -166,6 +166,7 @@ export default class UserQuestionsPost extends Vue {
 		this.slug = "";
 		this.tags = "";
 		this.blogImage = "";
+		this.postType = "blog";
 		(this.$refs.createQuestionObserver as Vue & {
 			reset: () => boolean;
 		}).reset();
@@ -184,10 +185,12 @@ export default class UserQuestionsPost extends Vue {
 						body: this.body,
 						slug: this.slug,
 						tags: this.tags,
+						postType: this.postType,
 						blogImage: this.blogImage
 					};
 					const form = document.getElementById("blog-form") as HTMLFormElement;
 					const formData = new FormData(form);
+					formData.append('postType', this.postType);
 					this.$store
 						.dispatch("blog/createNewBlog", formData)
 						.then(res => {
