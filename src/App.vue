@@ -1,0 +1,68 @@
+<template>
+	<v-app>
+		<side-navbar v-if="loggedIn"></side-navbar>
+		<v-main class="secondary mt-10">
+			<router-view></router-view>
+		</v-main>
+		<v-snackbar v-model="show" bottom dark left :timeout="snackbarTimeout">
+			{{snackbarText}}
+			<template v-slot:action="{ attrs }">
+				<v-btn color="pink lighten-3" text v-bind="attrs" @click="closeHideSnackbar()">Close</v-btn>
+			</template>
+		</v-snackbar>
+	</v-app>
+</template>
+
+<script lang="ts">
+// transition: slide-y-reverse-transition
+import { Component, Vue, Watch } from "vue-property-decorator";
+import { mapGetters, mapActions } from "vuex";
+
+import Navbar from "@/components/Navbar.vue";
+
+@Component({
+	components: {
+		"side-navbar": Navbar
+	},
+	computed: {
+		...mapGetters([
+			"loggedIn",
+			"snackbarText",
+			"snackbarShow",
+			"snackbarTimeout"
+		])
+	},
+	methods: {
+		...mapActions(["hideSnackbar"])
+	}
+})
+export default class App extends Vue {
+	loaggedIn!: any;
+	hideSnackbar!: any;
+	snackbarText!: string;
+	snackbarShow!: boolean;
+	snackbarTimeout!: number;
+
+	set show(val) {
+		this.hideSnackbar();
+	}
+	get show() {
+		return this.snackbarShow;
+	}
+	closeHideSnackbar() {
+		this.hideSnackbar();
+	}
+}
+</script>
+
+<style lang="stylus" scoped>
+.container
+  padding 0 !important
+.drawer-menu 
+	position fixed
+	z-index 1000
+	right 10px
+	top 10px
+.nav-drawer-padding
+	margin-left 70px
+</style>
