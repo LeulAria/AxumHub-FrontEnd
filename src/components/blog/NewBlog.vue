@@ -24,50 +24,176 @@
 		<v-divider class="mb-2"></v-divider>
 		<v-row justify="center" class="question_form_container">
 			<v-col cols="12" sm="10" md="5">
-				<h3 class="form-header text-center">Create New {{postType}}</h3>
+				<h3 class="form-header text-center mb-2">Create New {{postType}}</h3>
 				<v-card elevation="0" class="pa-6 rounded-lg">
 					<ValidationObserver ref="createQuestionObserver">
 						<form id="blog-form" @submit.prevent="submit">
-							<ValidationProvider v-slot="{ errors }" name="title" rules="required|min:3|max:30">
+							<ValidationProvider
+								v-slot="{ errors }"
+								name="title"
+								rules="required|min:3|max:30"
+								v-if="postType!=='job'"
+							>
 								<v-text-field
 									name="title"
 									v-model="title"
 									prepend-icon="mdi-pencil-circle-outline"
 									:counter="30"
 									:error-messages="errors"
-									label="Titel"
+									label="Title"
 									required
 									hint="Question title character between 3-30"
 								></v-text-field>
 							</ValidationProvider>
 
-							<ValidationProvider v-slot="{ errors }" name="slug" rules="required|min:3|max:30">
+							<!-- Job post -->
+							<ValidationProvider
+								v-slot="{ errors }"
+								name="jobtitle"
+								rules="required|min:3|max:30"
+								v-if="postType=='job'"
+							>
 								<v-text-field
-									name="slug"
-									v-model="slug"
-									prepend-icon="mdi-tag-text-outline"
+									name="jobtitle"
+									v-model="jobtitle"
+									prepend-icon="mdi-pencil-circle-outline"
 									:counter="30"
 									:error-messages="errors"
-									label="Slug"
+									label="Job Title"
 									required
-									hint="A slug for your post (dont incude space and specil characters)"
+									hint="The Job Position Title name"
 								></v-text-field>
 							</ValidationProvider>
 
-							<ValidationProvider v-slot="{ errors }" name="body" rules="required">
+							<ValidationProvider
+								v-slot="{ errors }"
+								name="company"
+								rules="required|min:3|max:30"
+								v-if="postType=='job'"
+							>
 								<v-text-field
-									name="body"
-									v-model="body"
+									name="company"
+									v-model="company"
+									prepend-icon="mdi-office-building"
+									:counter="30"
+									:error-messages="errors"
+									label="Company"
+									required
+									hint="The Compay name posting the job"
+								></v-text-field>
+							</ValidationProvider>
+
+							<ValidationProvider
+								v-slot="{ errors }"
+								name="jobtype"
+								rules="required|min:3|max:30"
+								v-if="postType=='job'"
+							>
+								<v-text-field
+									name="jobtype"
+									v-model="jobtype"
+									prepend-icon="mdi-account-details-outline"
+									:counter="30"
+									:error-messages="errors"
+									label="Job Type"
+									required
+									hint="The Job Type eg: fulltime, contractual..."
+								></v-text-field>
+							</ValidationProvider>
+
+							<ValidationProvider
+								v-slot="{ errors }"
+								name="phonenumber"
+								rules="min:3|max:30|required"
+								v-if="postType=='job'"
+							>
+								<v-text-field
+									name="phonenumber"
+									v-model="phonenumber"
+									prepend-icon="mdi-phone"
+									:counter="30"
+									:error-messages="errors"
+									label="Phone Number"
+									required
+									hint="Phone number of contact..."
+								></v-text-field>
+							</ValidationProvider>
+
+							<ValidationProvider
+								v-slot="{ errors }"
+								name="email"
+								rules="max:30|email|required"
+								v-if="postType=='job'"
+							>
+								<v-text-field
+									name="email"
+									v-model="email"
+									prepend-icon="mdi-email-edit-outline"
+									:counter="30"
+									:error-messages="errors"
+									label="Email"
+									required
+									hint="Email of contact..."
+								></v-text-field>
+							</ValidationProvider>
+
+							<ValidationProvider
+								v-slot="{ errors }"
+								name="adress"
+								rules="required|min:2|max:30"
+								v-if="postType=='job'"
+							>
+								<v-text-field
+									name="adress"
+									v-model="adress"
+									prepend-icon="mdi-map-marker"
+									:counter="30"
+									:error-messages="errors"
+									label="Job Place"
+									required
+									hint="Adress of the company Optional..."
+								></v-text-field>
+							</ValidationProvider>
+
+							<ValidationProvider
+								v-slot="{ errors }"
+								name="description"
+								rules="required"
+								v-if="postType=='job'"
+							>
+								<v-textarea
+									name="description"
+									v-model="desciption"
 									:error-messages="errors"
 									prepend-icon="mdi-subtitles-outline"
-									label="Body"
+									label="Description"
 									required
-									:count="60"
-									hint="Blog Description"
+									:count="500"
+									hint="Job Description"
+								></v-textarea>
+							</ValidationProvider>
+
+							<ValidationProvider
+								v-slot="{ errors }"
+								name="Other "
+								rules="min:3|max:60"
+								v-if="postType=='job'"
+							>
+								<v-text-field
+									name="other"
+									v-model="other"
+									prepend-icon="mdi-more"
+									:counter="60"
+									:error-messages="errors"
+									label="Other"
+									required
+									hint="Other contact detail or ps informations..."
 								></v-text-field>
 							</ValidationProvider>
 
-							<ValidationProvider v-slot="{ errors }" name="tags" rules="required">
+							<!-- job post -->
+
+							<ValidationProvider v-slot="{ errors }" name="tags" rules="required" v-if="postType!=='job'">
 								<v-text-field
 									name="tags"
 									v-model="tags"
@@ -79,19 +205,35 @@
 								></v-text-field>
 							</ValidationProvider>
 
-							<v-file-input
-								name="blogImage"
-								show-size
-								v-model="blogImage"
-								accept="image/*"
-								prepend-icon="mdi-image"
-								label="Post Image (OPTIONAL)"
-								hint="An Image Desciption for your post"
-							>
-								<template v-slot:selection="{ text }">
-									<v-chip small label color="primary">{{ text }}</v-chip>
-								</template>
-							</v-file-input>
+							<ValidationProvider v-slot="{ errors }" name="body" rules="required" v-if="postType!=='job'">
+								<v-textarea
+									name="body"
+									v-model="body"
+									:error-messages="errors"
+									prepend-icon="mdi-subtitles-outline"
+									label="Body"
+									required
+									:count="255"
+									hint="Blog Description"
+								></v-textarea>
+							</ValidationProvider>
+
+							<ValidationProvider v-slot="{ errors }" name="blogImage" rules>
+								<v-file-input
+									name="blogImage"
+									show-size
+									v-model="blogImage"
+									:error-messages="errors"
+									accept="image/*"
+									prepend-icon="mdi-image"
+									label="Post Image (OPTIONAL)"
+									hint="An Image Desciption for your post"
+								>
+									<template v-slot:selection="{ text }">
+										<v-chip small label color="primary">{{ text }}</v-chip>
+									</template>
+								</v-file-input>
+							</ValidationProvider>
 
 							<v-card-actions class="mt-4">
 								<v-btn
@@ -141,6 +283,14 @@ export default class UserQuestionsPost extends Vue {
 	blogImage = "";
 	loading = false;
 	postType = "blog";
+	jobtitle = "";
+	company = "";
+	jobtype = "";
+	phonenumber = "";
+	email = "";
+	adress = "";
+	desciption = "";
+	other = "";
 
 	instructions = [
 		{
@@ -167,6 +317,14 @@ export default class UserQuestionsPost extends Vue {
 		this.tags = "";
 		this.blogImage = "";
 		this.postType = "blog";
+		this.jobtitle = "";
+		this.company = "";
+		this.jobtype = "";
+		this.phonenumber = "";
+		this.email = "";
+		this.adress = "";
+		this.desciption = "";
+		this.other = "";
 		(this.$refs.createQuestionObserver as Vue & {
 			reset: () => boolean;
 		}).reset();
@@ -180,14 +338,6 @@ export default class UserQuestionsPost extends Vue {
 			.validate()
 			.then((isValid: boolean) => {
 				if (isValid) {
-					const info: any = {
-						title: this.title,
-						body: this.body,
-						slug: this.slug,
-						tags: this.tags,
-						postType: this.postType,
-						blogImage: this.blogImage
-					};
 					const form = document.getElementById("blog-form") as HTMLFormElement;
 					const formData = new FormData(form);
 					formData.append("postType", this.postType);
