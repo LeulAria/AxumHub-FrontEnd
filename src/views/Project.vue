@@ -390,6 +390,9 @@ export default class Project extends Vue {
 
 	toggleTab(tab: number) {
 		this.tab = tab;
+		this.getAllProjects();
+		this.getUserProjects(this.userInfo.id);
+		this.getJoinedProjects();
 	}
 
 	isTab(tab: number) {
