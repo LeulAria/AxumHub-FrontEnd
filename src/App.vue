@@ -1,7 +1,7 @@
 <template>
 	<v-app>
-		<side-navbar v-if="loggedIn"></side-navbar>
-		<v-main class="secondary mt-10">
+		<side-navbar v-if="loggedIn && navbar"></side-navbar>
+		<v-main :class="{'pa-0': loggedIn, 'nav-drawer-padding': loggedIn}" class="secondary">
 			<router-view></router-view>
 		</v-main>
 		<v-snackbar v-model="show" bottom dark left :timeout="snackbarTimeout">
@@ -29,7 +29,8 @@ import Navbar from "@/components/Navbar.vue";
 			"loggedIn",
 			"snackbarText",
 			"snackbarShow",
-			"snackbarTimeout"
+			"snackbarTimeout",
+			"navbar"
 		])
 	},
 	methods: {

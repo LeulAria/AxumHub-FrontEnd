@@ -5,5 +5,6 @@ export default {
     text: '',
     show: true,
     timeout: 6000
-  }
+  },
+  navbar: false
 }

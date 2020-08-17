@@ -1,6 +1,6 @@
 export const mediaURI = (state: any) => {
-  // return 'http://localhost:8000/axumhub/upload_medias/'
-  return 'https://axumhub.herokuapp.com/axumhub/upload_medias/'
+  return 'http://localhost:8000/axumhub/upload_medias/'
+  // return 'https://axumhub.herokuapp.com/axumhub/upload_medias/'
 }
 
 export const globalTheme = (state: any) => {
@@ -9,6 +9,9 @@ export const globalTheme = (state: any) => {
 
 export const accessToken = (state: any) => {
   return state.token
+}
+export const navbar = (state: any) => {
+  return state.navbar
 }
 export const loggedIn = (state: any) => {
   return (

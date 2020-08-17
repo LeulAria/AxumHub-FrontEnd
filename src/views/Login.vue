@@ -1,9 +1,9 @@
 <template>
-	<v-container>
-		<v-row justify="center" class="mt-10">
-			<v-col cols="12" sm="6">
-				<h1 class="form-header text-center">Login</h1>
-				<v-card elevation="0" class="pa-6 rounded-lg">
+	<v-container class="bg-img">
+		<v-row justify="center" class="mt-14">
+			<v-col cols="10" sm="6" md="5" class="auth-form-container mt-5">
+				<h1 class="form-header text-center mt-8">Login</h1>
+				<v-card elevation="0" dark class="pa-6 form-container">
 					<ValidationObserver ref="loginObserver">
 						<form>
 							<ValidationProvider v-slot="{ errors }" name="E-mail" rules="required|min:2">
@@ -77,6 +77,10 @@ export default class Login extends Vue {
 	loginpassword = false;
 	loadingLogin = false;
 
+	created() {
+		this.$store.dispatch("navbar", false);
+	}
+
 	submit() {
 		this.loadingLogin = true;
 		(this.$refs.loginObserver as Vue & {
@@ -92,11 +96,9 @@ export default class Login extends Vue {
 						info.email = this.email;
 					else info.name = this.email;
 
-					console.log("preparing to unleash the beast");
 					this.$store
 						.dispatch("users/loginUser", info)
 						.then(res => {
-							console.log("alrity mighty");
 							this.loadingLogin = false;
 							console.log(
 								"the pofile obj: ",
@@ -104,10 +106,27 @@ export default class Login extends Vue {
 							);
 							if (Object.keys(this.userProfile).length)
 								this.$router.push({ name: "ProfileInfo" });
+
+							this.$store.dispatch("navbar", true);
 							this.$router.push({ name: "Dashboard" });
+
+							this.$vs.notification({
+								icon: "<i class='bx bx-bell' ></i>",
+								color: "primary",
+								position: "top-right",
+								title: "Welcome",
+								text: `Error: Welcome again ${this.userProfile.name} to axumhb`
+							});
 						})
-						.catch(err => {
-							console.log(err);
+						.catch((err: string) => {
+							setTimeout(() => (this.loadingLogin = false), 2000);
+							this.$vs.notification({
+								icon: "<i class='bx bxs-bug' ></i>",
+								color: "danger",
+								position: "top-right",
+								title: "Login Error",
+								text: `Error: ${err}`
+							});
 						});
 				} else {
 					setTimeout(() => (this.loadingLogin = false), 2000);
@@ -115,8 +134,45 @@ export default class Login extends Vue {
 			})
 			.catch((error: any) => {
 				setTimeout(() => (this.loadingLogin = false), 2000);
-				console.log("catch: ", error);
 			});
 	}
 }
 </script>
+
+<style lang="stylus" scoped>
+.bg-img
+	position relative
+	overflow-x hidden
+	overflow-y auto
+	min-height 100vh
+	min-width 100vw
+	background-image linear-gradient(to bottom, rgba(0,0,0,0.86),rgba(0,0,20,0.96)), url('https://www.omenkaonline.com/wp-content/uploads/2017/08/ETH_2015_DK_154_0.jpg')
+	background-position center
+	background-attachment cover
+.auth-form-container
+	position relative
+	max-width 360px !important
+	min-height 390px !important
+	background rgba(0,0,5,.8)
+	box-shadow 0 0 15px rgba(0,0,20,0.8)
+	overflow hidden
+	&::after
+		content ''
+		z-index 1
+		position absolute
+		top -60% 
+		left 10px
+		width 100%
+		height 100%
+		background rgba(0,0,5,.9)
+		transform rotate(55deg)
+
+.form-header
+	padding 5px 0;
+	color: #fff
+	position relative
+	z-index 3 !important
+.form-container
+	background #fff0
+	z-index 2
+</style>

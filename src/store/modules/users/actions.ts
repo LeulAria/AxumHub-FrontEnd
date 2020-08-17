@@ -23,8 +23,8 @@ export const loginUser = (context: any, user: any) => {
         context.commit('SET_TOKEN', res.data.token, { root: true })
         resolve(res)
       })
-      .catch((err) => {
-        reject(err)
+      .catch((err: any) => {
+        reject(err.response.data.error)
       })
   })
 }

@@ -19,3 +19,6 @@ export const TOGGLE_SNACKBAR = (state: any, text: string, timeout?: number) => {
 export const CLOSE_SNACKBAR = (state: any) => {
   state.snackbar.show = false;
 }
+export const TOGGLE_NAV_SHOW = (state: any, show: boolean) => {
+  state.navbar = show;
+}
