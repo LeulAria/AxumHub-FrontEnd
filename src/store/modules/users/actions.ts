@@ -2,15 +2,18 @@ import User from '../../../api/User'
 
 
 export const registerUser = (context: any, user: any) => {
+  console.log('register the user...', user)
   return new Promise((resolve: any, reject: any) => {
     User.register(user)
       .then((res: any) => {
+        console.log("ther user has been registered...", res)
         context.commit('SET_USER', res.user)
         context.commit('SET_TOKEN', res.token, { root: true })
         resolve(res)
       })
       .catch((err) => {
-        reject(err);
+        console.log('nop their is some error lets see', err.response)
+        reject(err.response.data);
       })
   })
 }

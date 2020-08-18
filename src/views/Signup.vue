@@ -1,9 +1,9 @@
 <template>
-	<v-container>
-		<v-row justify="center" class="mt-10">
-			<v-col cols="12" sm="6">
+	<v-container class="bg-img">
+		<v-row justify="center">
+			<v-col cols="10" sm="6" md="5" class="auth-form-container">
 				<h1 class="form-header text-center">Signup</h1>
-				<v-card class="pa-6 rounded-lg elevation-0">
+				<v-card elevation="0" dark class="pa-6 form-container">
 					<ValidationObserver ref="singupObserver">
 						<form>
 							<ValidationProvider v-slot="{ errors }" name="username" rules="required|min:2|max:150">
@@ -124,30 +124,104 @@ export default class Signup extends Vue {
 						password2: this.password2
 					};
 
+					console.log("send this.....", info);
 					this.$store
 						.dispatch("users/registerUser", info)
 						.then(res => {
-							console.log(res);
+							console.log("show this result: ", res);
 							this.loadingSignup = false;
+							this.$vs.notification({
+								icon: "<i class='bx bx-bell' ></i>",
+								color: "primary",
+								position: "top-right",
+								title: "Success",
+								text: `Accout created successfully for ${info.name}`
+							});
 							this.$router.push({ name: "Login" });
 						})
 						.catch(err => {
-							setTimeout(() => (this.loadingSignup = false), 2000);
+							this.$vs.notification({
+								icon: "<i class='bx bxs-bug' ></i>",
+								color: "danger",
+								position: "top-right",
+								title: "Signup Error",
+								text: `Error: ${err.error ? err.error : err.email ? err.email : err.password2 ? err.password2 : 'Some thing went wrong!'}`
+							});
+							setTimeout(() => (this.loadingSignup = false), 1000);
 							console.log(err);
 						});
 				} else {
 					setTimeout(() => (this.loadingSignup = false), 2000);
 				}
 			})
-			.catch((error: any) => {
-				setTimeout(() => (this.loadingSignup = false), 2000);
-				console.log(error);
+			.catch((err: any) => {
+				console.log("show this error: ", err);
+				this.$vs.notification({
+					icon: "<i class='bx bxs-bug' ></i>",
+					color: "danger",
+					position: "top-right",
+					title: "Signup Error",
+					text: `Error: ${err}`
+				});
+				setTimeout(() => (this.loadingSignup = false), 1000);
 			});
 	}
 }
 </script>
 
 <style lang="stylus" scoped>
-.v-text-field
-  font-family Montserrat
+.bg-img
+	position relative
+	overflow-x hidden
+	overflow-y auto
+	top 0
+	left 0
+	min-height 100vh
+	min-width 100vw
+	display flex
+	align-items center
+	justify-content center
+	background-image linear-gradient(to bottom, rgba(0,0,0,0.86),rgba(0,0,20,0.96)), url('https://www.omenkaonline.com/wp-content/uploads/2017/08/ETH_2015_DK_154_0.jpg')
+	background-position center
+	background-attachment cover
+.auth-form-container
+	position relative
+	max-width 360px !important
+	min-height 390px !important
+	background rgba(0,0,5,.7)
+	box-shadow 0 0 15px rgba(0,0,20,0.8)
+	overflow hidden
+	&::after
+		content ''
+		z-index 1
+		position absolute
+		top -60% 
+		left 10px
+		width 100%
+		height 100%
+		background rgba(0,0,5,.97)
+		transform rotate(0deg)
+		border-top-left-radius 450px
+		border-top-right-radius 560px
+		border-bottom-left-radius 700px
+		border-bottom-right-radius 400px
+		animation rfa 10s linear alternate infinite
+
+		@keyframes rfa {
+			from {
+				transform rotate(0deg)
+			}
+			to {
+				transform rotate(560deg)
+			}
+		}
+
+.form-header
+	padding 5px 0;
+	color: #fff
+	position relative
+	z-index 3 !important
+.form-container
+	background #fff0
+	z-index 2
 </style>
