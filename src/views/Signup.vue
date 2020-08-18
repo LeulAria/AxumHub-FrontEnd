@@ -124,11 +124,9 @@ export default class Signup extends Vue {
 						password2: this.password2
 					};
 
-					console.log("send this.....", info);
 					this.$store
 						.dispatch("users/registerUser", info)
 						.then(res => {
-							console.log("show this result: ", res);
 							this.loadingSignup = false;
 							this.$vs.notification({
 								icon: "<i class='bx bx-bell' ></i>",
@@ -145,17 +143,23 @@ export default class Signup extends Vue {
 								color: "danger",
 								position: "top-right",
 								title: "Signup Error",
-								text: `Error: ${err.error ? err.error : err.email ? err.email : err.password2 ? err.password2 : 'Some thing went wrong!'}`
+								text: `Error: ${
+									err.error
+										? err.error
+										: err.email
+										? err.email
+										: err.password2
+										? err.password2
+										: "Some thing went wrong!"
+								}`
 							});
 							setTimeout(() => (this.loadingSignup = false), 1000);
-							console.log(err);
 						});
 				} else {
 					setTimeout(() => (this.loadingSignup = false), 2000);
 				}
 			})
 			.catch((err: any) => {
-				console.log("show this error: ", err);
 				this.$vs.notification({
 					icon: "<i class='bx bxs-bug' ></i>",
 					color: "danger",
@@ -195,7 +199,7 @@ export default class Signup extends Vue {
 		content ''
 		z-index 1
 		position absolute
-		top -60% 
+		top -60%
 		left 10px
 		width 100%
 		height 100%
