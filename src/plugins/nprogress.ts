@@ -1,12 +1,12 @@
-import Vue from 'vue'
-import NProgress from 'vue-nprogress'
+// import Vue from 'vue'
+// import NProgress from 'vue-nprogress'
 
-const options = {
-  latencyThreshold: 200, // Number of ms before progressbar starts showing, default: 100,
-  router: true, // Show progressbar when navigating routes, default: true
-  http: false // Show progressbar when doing Vue.http, default: true
-};
+// const options = {
+//   latencyThreshold: 200, // Number of ms before progressbar starts showing, default: 100,
+//   router: true, // Show progressbar when navigating routes, default: true
+//   http: false // Show progressbar when doing Vue.http, default: true
+// };
 
-Vue.use(NProgress, options)
+// Vue.use(NProgress, options)
 
-export default new NProgress({ parent: '.nprogress-container' })
+// export default new NProgress({ parent: '.nprogress-container' })
