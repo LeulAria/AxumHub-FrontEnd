@@ -4,7 +4,28 @@
 			<v-col cols="12" class="d-flex mt-5">
 				<div>
 					<h3>{{project && project.title}}</h3>
-					<small>{{project && project.description}}</small>
+					<small>{{project && project.summary}}</small>
+					<br />
+					<small>{{project && project.licence}}</small>
+					<br />
+					<small>{{project && project.version}}</small>
+					<br />
+					<small>{{project && project.developmentmodel}}</small>
+					<br />
+					<small>{{project && project.website}}</small>
+					<br />
+					<small>{{project && project.githubrepolink}}</small>
+					<br />
+					<small>{{project && project.chatgroupname}}</small>
+					<br />
+					<small>{{project && project.author}}</small>
+					<br />
+					<small>{{project && project.contributers}}</small>
+					<br />
+					<small>{{project && project.chatgroupname}}</small>
+					<br />
+					<br />
+					<small>{{project}}</small>
 				</div>
 				<div class="ml-auto d-flex">
 					<v-tooltip bottom>

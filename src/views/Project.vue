@@ -85,69 +85,80 @@
 					<i class="bx bx-search-alt mr-1"></i>Explore Projects
 				</v-btn>
 			</v-row>
-			<v-row>
-				<h3 v-if="!filteredUserProjects.length" class="mt-14 text-center">No Projects Yet!</h3>
-				<v-col cols="12" xs="10" sm="6" md="4" v-for="project in filteredProjects" :key="project._id">
-					<v-card
-						outlined
-						class="project-card rounded-lg pa-2 py-5 my-3 overflow-hidden"
-						min-height="150"
-						max-height="160"
+
+			<v-row justify="start">
+				<v-col cols="12" xs="12">
+					<h3 v-if="!filteredUserProjects.length" class="mt-14 text-center">No Projects Yet!</h3>
+				</v-col>
+				<template v-for="project in filteredProjects">
+					<v-col
+						cols="12"
+						xs="10"
+						sm="6"
+						md="4"
+						:key="project._id"
 						v-if="project.isOwn || project.isContrib"
 					>
-						<small class="user-projet-type">{{ project.isOwn ? 'owner' : 'member' }}</small>
-						<small
-							class="project-date grey--text text--darken-1 ma-0"
-						>{{project&&project.data.slice(0,10)}}</small>
-						<h4 class="mt-3 ml-4 bolded project-link" @click="seeDetail(project._id)">{{project.title}}</h4>
-						<v-card-subtitle
-							class="project-summary"
-						>{{project&&project.summary.split(' ').slice(0,10).join(' ')}}</v-card-subtitle>
-						<div class="project-star d-flex align-center">
-							<i class="bx bx-star"></i>
-							<small>12</small>
-						</div>
-
-						<v-col cols="12" sm="6" offset-sm="3">
-							<div class="text-center">
-								<v-menu
-									class="menu-project"
-									v-model="project.menu"
-									:close-on-content-click="false"
-									:nudge-width="90"
-									offset-y
-								>
-									<template v-slot:activator="{ on, attrs }">
-										<v-btn text fab small class="project-more-btn elevation-0" v-bind="attrs" v-on="on">
-											<v-icon>mdi-dots-vertical</v-icon>
-										</v-btn>
-									</template>
-
-									<v-card class="rounded-lg elevation-0 bshadow">
-										<v-list>
-											<v-list-item>
-												<vs-button @click="seeDetail(project._id)">
-													See Detail
-													<template #animate>
-														<i class="bx bxs-detail icon-size-md"></i>
-													</template>
-												</vs-button>
-											</v-list-item>
-											<v-list-item>
-												<vs-button @click="openChat(project.chatgroupname)">
-													Go to chat
-													<template #animate>
-														<i class="bx bxs-chat icon-size-md"></i>
-													</template>
-												</vs-button>
-											</v-list-item>
-										</v-list>
-									</v-card>
-								</v-menu>
+						<v-card
+							outlined
+							class="project-card rounded-lg pa-2 py-5 my-3 overflow-hidden"
+							min-height="150"
+							max-height="160"
+						>
+							<small class="user-projet-type">{{ project.isOwn ? 'owner' : 'member' }}</small>
+							<small
+								class="project-date grey--text text--darken-1 ma-0"
+							>{{project&&project.data.slice(0,10)}}</small>
+							<h4 class="mt-3 ml-4 bolded project-link" @click="seeDetail(project._id)">{{project.title}}</h4>
+							<v-card-subtitle
+								class="project-summary"
+							>{{project&&project.summary.split(' ').slice(0,10).join(' ')}}</v-card-subtitle>
+							<div class="project-star d-flex align-center">
+								<i class="bx bx-star"></i>
+								<small>12</small>
 							</div>
-						</v-col>
-					</v-card>
-				</v-col>
+
+							<v-col cols="12" sm="6" offset-sm="3">
+								<div class="text-center">
+									<v-menu
+										class="menu-project"
+										v-model="project.menu"
+										:close-on-content-click="false"
+										:nudge-width="90"
+										offset-y
+									>
+										<template v-slot:activator="{ on, attrs }">
+											<v-btn text fab small class="project-more-btn elevation-0" v-bind="attrs" v-on="on">
+												<v-icon>mdi-dots-vertical</v-icon>
+											</v-btn>
+										</template>
+
+										<v-card class="rounded-lg elevation-0 bshadow">
+											<v-list>
+												<v-list-item>
+													<vs-button @click="seeDetail(project._id)">
+														See Detail
+														<template #animate>
+															<i class="bx bxs-detail icon-size-md"></i>
+														</template>
+													</vs-button>
+												</v-list-item>
+												<v-list-item>
+													<vs-button @click="openChat(project.chatgroupname)">
+														Go to chat
+														<template #animate>
+															<i class="bx bxs-chat icon-size-md"></i>
+														</template>
+													</vs-button>
+												</v-list-item>
+											</v-list>
+										</v-card>
+									</v-menu>
+								</div>
+							</v-col>
+						</v-card>
+					</v-col>
+				</template>
 			</v-row>
 		</v-container>
 	</v-main>
