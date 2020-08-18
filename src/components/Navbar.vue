@@ -163,7 +163,7 @@ export default class Navbar extends Vue {
 		{ title: "Q/A", icon: "mdi-comment-question", to: "/qa" },
 		{ title: "Project", icon: "mdi-folder-cog", to: "/project" },
 		{ title: "Profile", icon: "mdi-account-settings", to: "/profile" },
-		{ title: "Settings", icon: "mdi-cog", to: "/setting" }
+		{ title: "Settings", icon: "mdi-cog", to: "/settings" }
 	];
 	drawer = true;
 	menu = false;

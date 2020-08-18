@@ -21,6 +21,24 @@ export const userProjects = (state: any) => {
     return project
   })
 }
+export const explorableProjects = (state: any, getter: any, rootState: any) => {
+  if (state.projects.length > 0) {
+    const userId = rootState.users.user.id
+    const projects = [...state.projects];
+
+    const notUserProjects: any[] = [];
+    projects.forEach((project: any) => {
+      const isOwner = (project.author == userId);
+      const isContrib = project.contributers.some((contributer: any) => contributer._id == userId);
+
+      if (!isOwner && !isContrib) {
+        notUserProjects.push(project)
+      }
+    });
+    return notUserProjects
+  }
+  else return []
+}
 export const isLoadingUser = (state: any) => {
   return state.isLoading
 }

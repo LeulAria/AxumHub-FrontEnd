@@ -18,9 +18,26 @@ export default [
     }
   },
   {
+    path: `${routePath}/explore_projects`,
+    name: "ExploreProjects",
+    component: () => import('@/components/project/ExploreProjects.vue'),
+    meta: {
+      requiresAuth: true
+    }
+  },
+  {
     path: `${routePath}/:id`,
     name: "ProjectDetail",
     component: () => import('@/components/project/ProjectDetail.vue'),
+    props: true,
+    meta: {
+      requiresAuth: true
+    }
+  },
+  {
+    path: `${routePath}/explore_projects/:id`,
+    name: "ProjectExploreDetail",
+    component: () => import('@/components/project/ProjectExploreDetail.vue'),
     props: true,
     meta: {
       requiresAuth: true
