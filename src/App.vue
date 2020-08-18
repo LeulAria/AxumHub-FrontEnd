@@ -1,7 +1,9 @@
 <template>
 	<v-app>
 		<side-navbar v-if="loggedIn && navbar"></side-navbar>
-		<v-main :class="{'pa-0': loggedIn, 'nav-drawer-padding': loggedIn}" class="secondary">
+		<v-main
+			:class="{'pa-0': loggedIn, 'mt-app-bar': loggedIn, 'nav-drawer-padding': !$vuetify.breakpoint.xsOnly && loggedIn}"
+		>
 			<router-view></router-view>
 		</v-main>
 		<v-snackbar v-model="show" bottom dark left :timeout="snackbarTimeout">
@@ -66,4 +68,6 @@ export default class App extends Vue {
 	top 10px
 .nav-drawer-padding
 	margin-left 70px
+.mt-app-bar
+	margin-top 48px
 </style>

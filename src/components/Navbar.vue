@@ -1,7 +1,12 @@
 
 <template>
 	<div>
-		<v-app-bar color="deep-purple accent-4 ml-16" dense dark>
+		<v-app-bar
+			:class="{ 'deep-purple': true, 'accent-4': true, 'ml-app-bar': !$vuetify.breakpoint.xsOnly }"
+			dense
+			dark
+			fixed
+		>
 			<v-app-bar-nav-icon v-if="$vuetify.breakpoint.xsOnly"></v-app-bar-nav-icon>
 			<v-toolbar-title class="ml-4">Dashbaord</v-toolbar-title>
 			<v-spacer></v-spacer>
@@ -74,21 +79,21 @@
 
 						<v-list-item>
 							<v-list-item-action>
-								<v-btn icon>
-									<i class="bx bx-log-out-circle icon-size-md"></i>
-								</v-btn>
-							</v-list-item-action>
-							<v-list-item-title>Logout</v-list-item-title>
-						</v-list-item>
-
-						<v-list-item>
-							<v-list-item-action>
 								<v-btn icon @click="changeTheme()">
 									<i v-if="globalTheme" class="bx bx-sun icon-size-md"></i>
 									<i v-if="!globalTheme" class="bx bx-moon icon-size-md"></i>
 								</v-btn>
 							</v-list-item-action>
 							<v-list-item-title>change theme</v-list-item-title>
+						</v-list-item>
+
+						<v-list-item>
+							<v-list-item-action>
+								<v-btn icon link :to="{ name: 'Logout' }">
+									<i class="bx bx-log-out-circle icon-size-md"></i>
+								</v-btn>
+							</v-list-item-action>
+							<v-list-item-title link>Logout</v-list-item-title>
 						</v-list-item>
 					</v-list>
 				</v-card>
@@ -98,12 +103,12 @@
 		<v-navigation-drawer
 			v-model="drawer"
 			class="secondary"
-			:expand-on-hover="expandOnHover"
-			:mini-variant="false"
+			:expand-on-hover="$vuetify.breakpoint.smAndUp"
+			:mini-variant="$vuetify.breakpoint.smAndUp"
 			mini-variant-width="70"
 			:right="right"
-			:permanent="permanent"
-			:src="bg"
+			:permanent="$vuetify.breakpoint.smAndUp"
+			src="https://www.omenkaonline.com/wp-content/uploads/2017/08/ETH_2015_DK_154_0.jpg"
 			gradient="to top right, rgba(0,0,0,0.8), rgba(0,0,0,.7)"
 			fixed
 			:width="200"
@@ -115,8 +120,8 @@
 					</v-list-item-avatar>
 
 					<v-list-item-content v-if="userInfo.name">
-						<v-list-item-title>{{userInfo.name}}</v-list-item-title>
-						<v-list-item-subtitle>{{userInfo.email}}</v-list-item-subtitle>
+						<v-list-item-title>AxumHUB</v-list-item-title>
+						<v-list-item-subtitle>group communication, colaboration</v-list-item-subtitle>
 					</v-list-item-content>
 				</v-list-item>
 
@@ -166,17 +171,9 @@ export default class Navbar extends Vue {
 	color = "blue";
 	colors = ["primary", "blue", "success", "red", "teal"];
 	right = false;
-	permanent = true;
 	miniVariant = true;
-	expandOnHover = true;
-	background = true;
 	created() {
 		this.$vuetify.theme.dark = this.globalTheme;
-	}
-	get bg() {
-		return this.background
-			? "https://www.omenkaonline.com/wp-content/uploads/2017/08/ETH_2015_DK_154_0.jpg"
-			: undefined;
 	}
 	changeTheme() {
 		this.toggleGlobalTheme();
@@ -206,6 +203,8 @@ export default class Navbar extends Vue {
 		width 100%
 		height 100%
 		background-image linear-gradient(to bottom, rgba(0,0,30,0.6),rgba(60,0,30,0.95))
+.ml-app-bar
+	margin-left 70px
 </style>
 
 	// submit() {

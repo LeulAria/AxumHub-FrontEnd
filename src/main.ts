@@ -5,6 +5,7 @@ import router from "./router";
 import store from "./store";
 import vuetify from "./plugins/vuetify";
 import i18n from './plugins/i18'
+// import nprogress from './plugins/nprogress'
 import "./plugins/vuesax";
 import './sockets/config';
 import './utils/filters'

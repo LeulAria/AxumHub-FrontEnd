@@ -1,7 +1,7 @@
 <template>
 	<v-container class="bg-img">
-		<v-row justify="center" class="mt-14">
-			<v-col cols="10" sm="6" md="5" class="auth-form-container mt-5">
+		<v-row justify="center">
+			<v-col cols="10" sm="6" md="5" class="auth-form-container">
 				<h1 class="form-header text-center mt-8">Login</h1>
 				<v-card elevation="0" dark class="pa-6 form-container">
 					<ValidationObserver ref="loginObserver">
@@ -144,8 +144,13 @@ export default class Login extends Vue {
 	position relative
 	overflow-x hidden
 	overflow-y auto
+	top 0
+	left 0
 	min-height 100vh
 	min-width 100vw
+	display flex
+	align-items center
+	justify-content center
 	background-image linear-gradient(to bottom, rgba(0,0,0,0.86),rgba(0,0,20,0.96)), url('https://www.omenkaonline.com/wp-content/uploads/2017/08/ETH_2015_DK_154_0.jpg')
 	background-position center
 	background-attachment cover
@@ -153,7 +158,7 @@ export default class Login extends Vue {
 	position relative
 	max-width 360px !important
 	min-height 390px !important
-	background rgba(0,0,5,.8)
+	background rgba(0,0,5,.7)
 	box-shadow 0 0 15px rgba(0,0,20,0.8)
 	overflow hidden
 	&::after
@@ -164,8 +169,22 @@ export default class Login extends Vue {
 		left 10px
 		width 100%
 		height 100%
-		background rgba(0,0,5,.9)
-		transform rotate(55deg)
+		background rgba(0,0,5,.97)
+		transform rotate(0deg)
+		border-top-left-radius 450px
+		border-top-right-radius 560px
+		border-bottom-left-radius 700px
+		border-bottom-right-radius 400px
+		animation rfa 10s linear alternate infinite
+
+		@keyframes rfa {
+			from {
+				transform rotate(0deg)
+			}
+			to {
+				transform rotate(560deg)
+			}
+		}
 
 .form-header
 	padding 5px 0;
