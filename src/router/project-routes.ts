@@ -26,6 +26,22 @@ export default [
     }
   },
   {
+    path: `${routePath}/schedule`,
+    name: "Schedule",
+    component: () => import('@/components/project/Schedule.vue'),
+    meta: {
+      requiresAuth: true
+    }
+  },
+  {
+    path: `${routePath}/uploads`,
+    name: "Uploads",
+    component: () => import('@/components/project/Uploads.vue'),
+    meta: {
+      requiresAuth: true
+    }
+  },
+  {
     path: `${routePath}/:id`,
     name: "ProjectDetail",
     component: () => import('@/components/project/ProjectDetail.vue'),
