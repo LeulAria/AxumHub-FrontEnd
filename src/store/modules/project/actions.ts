@@ -166,3 +166,16 @@ export const rejectJoin = (context: any, ids: any) => {
       })
   })
 }
+
+export const sendInvitationEmail = (commit: any, paylaod: any) => {
+  console.log('this is the payload: payload')
+  Project.sendInvitationEmail(payload)
+    .then((res) => {
+      alert('email sent.....wohoo...')
+      console.log('result: ', res)
+    })
+    .catch((err) => {
+      console.log(err)
+      console.log('error: ', err.response)
+    })
+}

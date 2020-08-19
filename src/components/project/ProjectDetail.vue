@@ -44,10 +44,10 @@
 									<i class="bx bx-user-plus icon-size-md"></i>
 								</v-btn>
 							</template>
-							<v-card>
-								<v-text-field class="mx-4" placeholder="Email Adress..."></v-text-field>
-								<v-divider></v-divider>
-								<v-card-title>Or Send email invitation to</v-card-title>
+							<v-card class="pa-5">
+								<p>Send invitation using email adress type in the input the email.</p>
+								<v-text-field class="mx-4" v-model="email" placeholder="Email..."></v-text-field>
+								<p class="mt-5">Or Send email invitation to</p>
 								<v-divider></v-divider>
 								<v-card-text style="height: 400px;">
 									<v-checkbox-group v-model="dialogm1" column>
@@ -59,15 +59,6 @@
 										<v-checkbox label="Belgium" value="belgium"></v-checkbox>
 										<v-checkbox label="Belize" value="belize"></v-checkbox>
 										<v-checkbox label="Benin" value="benin"></v-checkbox>
-										<v-checkbox label="Bhutan" value="bhutan"></v-checkbox>
-										<v-checkbox label="Bolivia" value="bolivia"></v-checkbox>
-										<v-checkbox label="Bosnia and Herzegovina" value="bosnia"></v-checkbox>
-										<v-checkbox label="Botswana" value="botswana"></v-checkbox>
-										<v-checkbox label="Brazil" value="brazil"></v-checkbox>
-										<v-checkbox label="Brunei" value="brunei"></v-checkbox>
-										<v-checkbox label="Bulgaria" value="bulgaria"></v-checkbox>
-										<v-checkbox label="Burkina Faso" value="burkina"></v-checkbox>
-										<v-checkbox label="Burma" value="burma"></v-checkbox>
 										<v-checkbox label="Burundi" value="burundi"></v-checkbox>
 									</v-checkbox-group>
 								</v-card-text>
@@ -121,17 +112,20 @@ import { mapGetters, mapActions } from "vuex";
 
 @Component({
 	computed: {
+		...mapGetters("user", ["userInfo"]),
 		...mapGetters("project", ["project", "contributers", "loadingProject"])
 	},
 	methods: {
-		...mapActions("project", ["getSingleProject"])
+		...mapActions("project", ["getSingleProject", "sendInvitationEmail"])
 	}
 })
 export default class ProjectDetail extends Vue {
 	@Prop({ type: String, required: true })
 	id!: string;
+	userInfo!: any;
 	project!: any;
 	getSingleProject!: Function;
+	sendInvitationEmail!: Function;
 	loadingProject!: boolean;
 	loadingproj!: any;
 	contributers!: any;
@@ -153,26 +147,21 @@ export default class ProjectDetail extends Vue {
 	];
 
 	created() {
-		this.loadingproj = this.$vs.loading({
-			type: "circles",
-			color: "#FF6",
-			background: "#000",
-			opacity: 0.8,
-			scale: 1.3,
-			text: "Loading Project Details..."
-		});
 		this.getSingleProject(this.id);
 	}
 
 	sendEmail() {
-		alert("send email...");
-	}
-
-	@Watch("loadingProject")
-	onLoadingProject(newVal: boolean, oldVal: boolean) {
-		if (!newVal) {
-			this.loadingproj.close();
-		}
+		console.log("send this: ", {
+			projectname: this.project.name,
+			destination: this.email,
+			sender: this.userInfo
+		});
+		alert("send invitation email..." + this.email);
+		this.sendInvitationEmail({
+			projectname: this.project.name,
+			destination: this.email,
+			sender: this.userInfo.email
+		});
 	}
 }
 </script>

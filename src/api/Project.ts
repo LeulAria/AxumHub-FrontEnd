@@ -44,5 +44,8 @@ export default {
   },
   rejectApplicant(id: string, userId: string) {
     return Api.post(`${route}/${id}/user/${userId}/reject`)
+  },
+  sendInvitationEmail(payload: any) {
+    return Api.post(`email/sendJoinRequest`, payload)
   }
 }
