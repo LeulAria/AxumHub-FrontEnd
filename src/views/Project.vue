@@ -68,7 +68,7 @@
 
 		<v-container fluid class="px-xs-4 px-sm-8 px-md-15 py-0">
 			<v-text-field
-				v-model="searchUserProjects"
+				v-model="search"
 				cache-items
 				prepend-inner-icon="mdi-magnify"
 				class="auto-complete mx-4 mx-md-13 mt-sm-5"
