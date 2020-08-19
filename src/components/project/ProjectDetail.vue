@@ -93,7 +93,7 @@
 					<v-data-table
 						v-model="selected"
 						:headers="headers"
-						:items="contributers"
+						:items="mm"
 						sort-by="name"
 						:search="search"
 						item-key="name"
@@ -136,6 +136,18 @@ export default class ProjectDetail extends Vue {
 
 	search = "";
 	selected = [];
+	mm = [
+		{
+			_id: "1",
+			name: "Ali",
+			group: "hay doods"
+		},
+		{
+			_id: "1",
+			name: "Ali",
+			group: "hay doods"
+		}
+	];
 	headers = [
 		{
 			text: "ID",
