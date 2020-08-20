@@ -7,7 +7,7 @@
 			dark
 			fixed
 		>
-			<v-app-bar-nav-icon v-if="$vuetify.breakpoint.xsOnly"></v-app-bar-nav-icon>
+			<v-app-bar-nav-icon @click="drawer = !drawer" v-if="$vuetify.breakpoint.xsOnly"></v-app-bar-nav-icon>
 			<v-toolbar-title class="ml-4">Dashbaord</v-toolbar-title>
 			<v-spacer></v-spacer>
 
