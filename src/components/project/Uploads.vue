@@ -25,7 +25,7 @@
 				</v-card>
 			</v-dialog>
 
-			<v-dialog v-model="upload" hide-overlay persistent width="300">
+			<v-dialog v-model="loadingFileUpload" hide-overlay persistent width="300">
 				<v-card color="primary" dark class="pt-2">
 					<v-card-text>
 						Please stand by
@@ -98,7 +98,11 @@ import { mapGetters, mapActions } from "vuex";
 		...mapGetters("project", ["project", "contributers", "loadingProject"])
 	},
 	methods: {
-		...mapActions("project", ["getSingleProject", "sendInvitationEmail"])
+		...mapActions("project", [
+			"getSingleProject",
+			"sendInvitationEmail",
+			"uploadFileProject"
+		])
 	}
 })
 export default class Uploads extends Vue {
@@ -107,7 +111,7 @@ export default class Uploads extends Vue {
 	userInfo!: any;
 	project!: any;
 	getSingleProject!: Function;
-	sendInvitationEmail!: Function;
+	uploadFileProject!: Function;
 	loadingProject!: boolean;
 	contributers!: any;
 	email!: string;
@@ -116,6 +120,7 @@ export default class Uploads extends Vue {
 	dialog = false;
 	upload = false;
 	file!: any;
+	loadingFileUpload = false;
 
 	searchadmin = "";
 	searchcontrib = "";
@@ -134,11 +139,16 @@ export default class Uploads extends Vue {
 
 	created() {
 		this.getSingleProject(this.id);
-		// console.log(any)
 	}
 
 	uploadFile() {
-		alert("now upload!");
+		this.dialog = false;
+		this.loadingFileUpload = true;
+		const form = document.getElementById("upload") as HTMLFormElement;
+		const formData = new FormData(form);
+		this.uploadFileProject({ id: this.id, data: formData });
+		setTimeout(() => (this.loadingFileUpload = false), 1300);
+		this.getSingleProject(this.id);
 	}
 }
 </script>

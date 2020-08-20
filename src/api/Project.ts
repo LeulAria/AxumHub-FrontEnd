@@ -47,5 +47,11 @@ export default {
   },
   sendInvitationEmail(payload: any) {
     return Api.post(`email/sendJoinRequest`, payload)
+  },
+  uploadFile(id: string, uploadData: any) {
+    return Api.post(`${route}/${id}/uploads`, uploadData)
+  },
+  deleteUploadFile(id: string, uploadId: string) {
+    return Api.delete(`${route}/${id}/uploads/${uploadId}`)
   }
 }

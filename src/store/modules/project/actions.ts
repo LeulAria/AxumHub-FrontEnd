@@ -179,3 +179,15 @@ export const sendInvitationEmail = (commit: any, payload: any) => {
       console.log('error: ', err.response)
     })
 }
+
+export const uploadFileProject = (commit: any, payload: any) => {
+  Project.uploadFile(payload.id, payload.data)
+    .then((res) => {
+      console.log('result: ', res)
+    })
+    .catch((err) => {
+      console.log(err)
+      console.log('error: ', err.response)
+    })
+}
+
