@@ -191,3 +191,14 @@ export const uploadFileProject = (commit: any, payload: any) => {
     })
 }
 
+export const deleteFileProject = (commit: any, payload: any) => {
+  Project.deleteUploadFile(payload.id, payload.uploadId)
+    .then((res) => {
+      console.log('result: ', res)
+    })
+    .catch((err) => {
+      console.log(err)
+      console.log('error: ', err.response)
+    })
+}
+

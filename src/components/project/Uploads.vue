@@ -76,9 +76,14 @@
 										class="caption"
 									>file/{{upload.filename.split('.')[upload.filename.split('.').length-1]}}</div>
 								</div>
-								<v-btn icon class="ml-auto">
-									<v-icon>mdi-cloud-download-outline</v-icon>
-								</v-btn>
+								<div class="ml-auto">
+									<v-btn icon>
+										<v-icon>mdi-cloud-download-outline</v-icon>
+									</v-btn>
+									<v-btn icon v-if="upload.userid._id==userInfo.id" @click="deleteFileUpload(upload._id)">
+										<v-icon>mdi-delete-sweep-outline</v-icon>
+									</v-btn>
+								</div>
 							</v-card>
 						</v-col>
 					</v-row>
@@ -94,14 +99,15 @@ import { mapGetters, mapActions } from "vuex";
 
 @Component({
 	computed: {
-		...mapGetters("user", ["userInfo"]),
+		...mapGetters("users", ["userInfo"]),
 		...mapGetters("project", ["project", "contributers", "loadingProject"])
 	},
 	methods: {
 		...mapActions("project", [
 			"getSingleProject",
 			"sendInvitationEmail",
-			"uploadFileProject"
+			"uploadFileProject",
+			"deleteFileProject"
 		])
 	}
 })
@@ -112,6 +118,7 @@ export default class Uploads extends Vue {
 	project!: any;
 	getSingleProject!: Function;
 	uploadFileProject!: Function;
+	deleteFileProject!: Function;
 	loadingProject!: boolean;
 	contributers!: any;
 	email!: string;
@@ -149,6 +156,13 @@ export default class Uploads extends Vue {
 		this.uploadFileProject({ id: this.id, data: formData });
 		setTimeout(() => (this.loadingFileUpload = false), 1300);
 		this.getSingleProject(this.id);
+	}
+
+	deleteFileUpload(id: string) {
+		this.loadingFileUpload = true;
+		setTimeout(() => (this.loadingFileUpload = false), 1300);
+		this.getSingleProject(this.id);
+		this.deleteFileProject({ id: this.id, uploadId: id });
 	}
 }
 </script>
