@@ -1,32 +1,175 @@
 <template>
-	<v-container>
+	<div>
+		<v-row no-gutters>
+			<v-col cols="12" xs="12">
+				<v-parallax
+					dark
+					height="300"
+					src="https://www.deque.com/wp-content/uploads/2019/04/A11y-in-agile-team-practices.png"
+					class="parallex-overlay fill-height repeating-gradient"
+				>
+					<v-row align="center" justify="center" class="content-parallex">
+						<v-col class="text-center content-parallex" cols="12">
+							<h1 class="display-1 font-weight-bold mb-4">{{project.title}}</h1>
+							<h4 class="subheading">{{project.summary}}</h4>
+						</v-col>
+					</v-row>
+					<div class="overlay"></div>
+				</v-parallax>
+			</v-col>
+		</v-row>
+
+		<v-row class="project-detail-container">
+			<v-col cols="12" xs="12">
+				<v-card flat>
+					<v-toolbar color="primary" dark extended flat></v-toolbar>
+
+					<v-card class="mx-auto" max-width="900" style="margin-top: -64px;">
+						<v-toolbar flat>
+							<v-toolbar-title>{{project.title}}</v-toolbar-title>
+
+							<v-spacer></v-spacer>
+
+							<v-btn icon>
+								<v-icon>mdi-magnify</v-icon>
+							</v-btn>
+
+							<v-btn icon>
+								<v-icon>mdi-apps</v-icon>
+							</v-btn>
+
+							<v-btn icon>
+								<v-icon>mdi-dots-vertical</v-icon>
+							</v-btn>
+						</v-toolbar>
+
+						<v-divider></v-divider>
+
+						<v-card-text class="pa-5">
+							<v-row justify="space-between">
+								<v-col cols="12" xs="12" sm="12" md="6">
+									<p class="grey--text text--darken-2">admins and memebers</p>
+
+									<v-card outlined class="rounded-lg">
+										<v-card-title>
+											Admins
+											<v-spacer></v-spacer>
+											<v-text-field
+												v-model="searchadmin"
+												append-icon="mdi-magnify"
+												label="Search"
+												single-line
+												hide-details
+											></v-text-field>
+										</v-card-title>
+										<v-data-table
+											dense
+											itemsPerPage="5"
+											v-model="selectedadmin"
+											:headers="headers"
+											:items="project.admins"
+											sort-by="name"
+											:search="searchadmin"
+											item-key="name"
+											show-select
+										></v-data-table>
+									</v-card>
+
+									<v-card outlined class="rounded-lg mt-5">
+										<v-card-title>
+											Members
+											<v-spacer></v-spacer>
+											<v-text-field
+												v-model="searchcontrib"
+												append-icon="mdi-magnify"
+												label="Search"
+												single-line
+												hide-details
+											></v-text-field>
+										</v-card-title>
+										<v-data-table
+											dense
+											itemsPerPage="5"
+											v-model="selectedcontrib"
+											:headers="headers"
+											:items="project.contributers"
+											sort-by="name"
+											:search="searchcontrib"
+											item-key="name"
+											show-select
+										></v-data-table>
+									</v-card>
+								</v-col>
+
+								<v-col cols="12" xs="12" sm="12" md="5">
+									<v-card outlined class="mx-auto" max-width="400">
+										<v-toolbar color="purple" dark>
+											<v-toolbar-title>Project Info</v-toolbar-title>
+										</v-toolbar>
+
+										<v-list subheader three-line>
+											<v-subheader>Details</v-subheader>
+
+											<v-list-item>
+												<v-list-item-content>
+													<v-list-item-title>Project Title</v-list-item-title>
+													<v-list-item-subtitle>{{project.title}}</v-list-item-subtitle>
+												</v-list-item-content>
+											</v-list-item>
+
+											<v-list-item>
+												<v-list-item-content>
+													<v-list-item-title>Project Summary</v-list-item-title>
+													<v-list-item-subtitle>{{project.summary}}</v-list-item-subtitle>
+												</v-list-item-content>
+											</v-list-item>
+
+											<v-list-item>
+												<v-list-item-content>
+													<v-list-item-title>Project License</v-list-item-title>
+													<v-list-item-subtitle>
+														<b>{{project.developmentmodel}}</b>
+													</v-list-item-subtitle>
+												</v-list-item-content>
+											</v-list-item>
+
+											<v-list-item>
+												<v-list-item-content>
+													<v-list-item-title>Project Chat</v-list-item-title>
+													<v-list-item-subtitle>{{project.chatgroupname}}</v-list-item-subtitle>
+												</v-list-item-content>
+											</v-list-item>
+
+											<v-list-item>
+												<v-list-item-content>
+													<v-list-item-title>Stars</v-list-item-title>
+													<v-list-item-subtitle>{{project.stars}}</v-list-item-subtitle>
+												</v-list-item-content>
+											</v-list-item>
+											<v-list-item v-if="project.website">
+												<v-list-item-content>
+													<v-list-item-title>Project Website</v-list-item-title>
+													<v-list-item-subtitle>{{project.website}}</v-list-item-subtitle>
+												</v-list-item-content>
+											</v-list-item>
+											<v-list-item v-if="project.githubrepolink">
+												<v-list-item-content>
+													<v-list-item-title>Github Repolink</v-list-item-title>
+													<v-list-item-subtitle>{{project.githubrepolink}}</v-list-item-subtitle>
+												</v-list-item-content>
+											</v-list-item>
+										</v-list>
+									</v-card>
+								</v-col>
+							</v-row>
+						</v-card-text>
+					</v-card>
+				</v-card>
+			</v-col>
+		</v-row>
+
 		<v-row>
 			<v-col cols="12" class="d-flex mt-5">
-				<div>
-					<h3>{{project && project.title}}</h3>
-					<small>{{project && project.summary}}</small>
-					<br />
-					<small>{{project && project.licence}}</small>
-					<br />
-					<small>{{project && project.version}}</small>
-					<br />
-					<small>{{project && project.developmentmodel}}</small>
-					<br />
-					<small>{{project && project.website}}</small>
-					<br />
-					<small>{{project && project.githubrepolink}}</small>
-					<br />
-					<small>{{project && project.chatgroupname}}</small>
-					<br />
-					<small>{{project && project.author}}</small>
-					<br />
-					<small>{{project && project.contributers}}</small>
-					<br />
-					<small>{{project && project.chatgroupname}}</small>
-					<br />
-					<br />
-					<small>{{project}}</small>
-				</div>
 				<div class="ml-auto d-flex">
 					<v-tooltip bottom>
 						<template v-slot:activator="{ on, attrs }">
@@ -52,14 +195,7 @@
 								<v-card-text style="height: 400px;">
 									<v-checkbox-group v-model="dialogm1" column>
 										<v-checkbox label="Bahamas, The" value="bahamas"></v-checkbox>
-										<v-checkbox label="Bahrain" value="bahrain"></v-checkbox>
 										<v-checkbox label="Bangladesh" value="bangladesh"></v-checkbox>
-										<v-checkbox label="Barbados" value="barbados"></v-checkbox>
-										<v-checkbox label="Belarus" value="belarus"></v-checkbox>
-										<v-checkbox label="Belgium" value="belgium"></v-checkbox>
-										<v-checkbox label="Belize" value="belize"></v-checkbox>
-										<v-checkbox label="Benin" value="benin"></v-checkbox>
-										<v-checkbox label="Burundi" value="burundi"></v-checkbox>
 									</v-checkbox-group>
 								</v-card-text>
 								<v-divider></v-divider>
@@ -73,37 +209,7 @@
 				</div>
 			</v-col>
 		</v-row>
-
-		<v-divider></v-divider>
-
-		<v-row>
-			<v-col>
-				<v-card outlined class="rounded-lg">
-					<v-card-title>
-						Members
-						<v-spacer></v-spacer>
-						<v-text-field
-							v-model="search"
-							append-icon="mdi-magnify"
-							label="Search"
-							single-line
-							hide-details
-						></v-text-field>
-					</v-card-title>
-					<v-data-table
-						v-model="selected"
-						:headers="headers"
-						:items="mm"
-						sort-by="name"
-						:search="search"
-						item-key="name"
-						show-select
-					></v-data-table>
-				</v-card>
-			</v-col>
-			<v-col></v-col>
-		</v-row>
-	</v-container>
+	</div>
 </template>
 
 <script lang="ts">
@@ -134,28 +240,19 @@ export default class ProjectDetail extends Vue {
 	dialogm1 = "";
 	dialog = false;
 
-	search = "";
-	selected = [];
-	mm = [
-		{
-			_id: "1",
-			name: "Ali",
-			group: "hay doods"
-		},
-		{
-			_id: "1",
-			name: "Ali",
-			group: "hay doods"
-		}
-	];
+	searchadmin = "";
+	searchcontrib = "";
+	selectedadmin = [];
+	selectedcontrib = [];
 	headers = [
 		{
-			text: "ID",
+			text: "UserName",
 			align: "start",
-			value: "_id"
+			filterable: true,
+			value: "name"
 		},
-		{ text: "Name", value: "name" },
-		{ text: "Group", value: "group", default: this.project.title }
+		{ text: "UserType", value: "name" },
+		{ text: "Email", value: "email" }
 	];
 
 	created() {
@@ -179,48 +276,21 @@ export default class ProjectDetail extends Vue {
 </script>
 
 <style lang="stylus" scoped>
-getColor(vsColor, alpha = 1)
-	unquote("rgba(var(--vs-"+vsColor+"), "+alpha+")")
-getVar(var)
-	unquote("var(--vs-"+var+")")
-.not-margin
-	margin 0px
-	font-weight normal
-	padding 10px
-.con-form
+.parallex-overlay
 	width 100%
-	.flex
-		display flex
-		align-items center
-		justify-content space-between
-		a
-			font-size .8rem
-			opacity .7
-			&:hover
-				opacity 1
-	.vs-checkbox-label
-		font-size .8rem
-	.vs-input-content
-		margin 10px 0px
-		width calc(100%)
-		.vs-input
-			width 100%
-.footer-dialog
-	display flex
-	align-items center
-	justify-content center
-	flex-direction column
-	width calc(100%)
-	.new
-		margin 0px
-		margin-top 20px
-		padding: 0px
-		font-size .7rem
-		a
-			color getColor('primary') !important
-			margin-left 6px
-			&:hover
-				text-decoration underline
-	.vs-button
-		margin 0px
+	position relative
+.overlay
+		content ''
+		background linear-gradient(to bottom, rgba(0,0,0,0.6),rgba(0,0,0,0.95))
+		width 100%
+		height 100%
+		position absolute
+		top 0
+		left 0
+		z-index 3
+.content-parallex
+	position relative
+	z-index 4
+.project-detail-container
+	margin-top -1em
 </style>
