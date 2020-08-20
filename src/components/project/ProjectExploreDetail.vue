@@ -1,16 +1,116 @@
 <template>
-	<v-container>
-		<v-row justify="center">
-			<v-col cols="12" xs="10" sm="8" md="6" class="d-flex mt-5">
-				<v-card outlined class="rounded-lg pa-5">
-					<div>
-						<h2>{{project && project.title}}</h2>
-						<small>{{project}}</small>
-					</div>
+	<div>
+		<v-row no-gutters>
+			<v-col cols="12" xs="12">
+				<v-parallax
+					dark
+					height="300"
+					src="https://image.freepik.com/free-vector/people-using-digital-devices-modern-office_1262-19462.jpg"
+					class="parallex-overlay fill-height repeating-gradient"
+				>
+					<v-row align="center" justify="center" class="content-parallex">
+						<v-col class="text-center content-parallex" cols="12">
+							<h1 class="display-1 font-weight-bold mb-4">{{project && project.title}}</h1>
+							<h4 class="subheading">{{project && project.summary}}</h4>
+						</v-col>
+					</v-row>
+					<div class="overlay"></div>
+				</v-parallax>
+			</v-col>
+		</v-row>
+
+		<v-row class="project-detail-container">
+			<v-col cols="12" xs="12">
+				<v-card flat>
+					<v-toolbar color="primary" dark extended flat></v-toolbar>
+
+					<v-card class="mx-auto" max-width="900" style="margin-top: -64px;">
+						<v-toolbar flat>
+							<v-toolbar-title>{{project && project.title}}</v-toolbar-title>
+
+							<v-spacer></v-spacer>
+
+							<v-tooltip bottom>
+								<template v-slot:activator="{ on, attrs }">
+									<v-btn v-bind="attrs" v-on="on" icon @click="sendJoinRequest()" :disabled="jreqbtn">
+										<v-icon>mdi-send-circle-outline</v-icon>
+									</v-btn>
+								</template>
+								<span>Send Join request {{jreqbtn}}</span>
+							</v-tooltip>
+						</v-toolbar>
+
+						<v-divider></v-divider>
+
+						<v-card-text class="pa-5">
+							<v-row justify="space-between">
+								<v-col cols="12" xs="12" sm="12">
+									<v-card outlined class="mx-auto" max-width="700">
+										<v-toolbar color="purple" dark>
+											<v-toolbar-title>Project Info</v-toolbar-title>
+										</v-toolbar>
+
+										<v-list subheader three-line>
+											<v-subheader>Details</v-subheader>
+
+											<v-list-item>
+												<v-list-item-content>
+													<v-list-item-title>Project Title</v-list-item-title>
+													<v-list-item-subtitle>{{project.title}}</v-list-item-subtitle>
+												</v-list-item-content>
+											</v-list-item>
+
+											<v-list-item>
+												<v-list-item-content>
+													<v-list-item-title>Project Summary</v-list-item-title>
+													<v-list-item-subtitle>{{project.summary}}</v-list-item-subtitle>
+												</v-list-item-content>
+											</v-list-item>
+
+											<v-list-item>
+												<v-list-item-content>
+													<v-list-item-title>Project License</v-list-item-title>
+													<v-list-item-subtitle>
+														<b>{{project.developmentmodel}}</b>
+													</v-list-item-subtitle>
+												</v-list-item-content>
+											</v-list-item>
+
+											<v-list-item>
+												<v-list-item-content>
+													<v-list-item-title>Project Chat</v-list-item-title>
+													<v-list-item-subtitle>{{project.chatgroupname}}</v-list-item-subtitle>
+												</v-list-item-content>
+											</v-list-item>
+
+											<v-list-item>
+												<v-list-item-content>
+													<v-list-item-title>Stars</v-list-item-title>
+													<v-list-item-subtitle>{{project.stars}}</v-list-item-subtitle>
+												</v-list-item-content>
+											</v-list-item>
+											<v-list-item v-if="project.website">
+												<v-list-item-content>
+													<v-list-item-title>Project Website</v-list-item-title>
+													<v-list-item-subtitle>{{project.website}}</v-list-item-subtitle>
+												</v-list-item-content>
+											</v-list-item>
+											<v-list-item v-if="project.githubrepolink">
+												<v-list-item-content>
+													<v-list-item-title>Github Repolink</v-list-item-title>
+													<v-list-item-subtitle>{{project.githubrepolink}}</v-list-item-subtitle>
+												</v-list-item-content>
+											</v-list-item>
+										</v-list>
+									</v-card>
+								</v-col>
+							</v-row>
+						</v-card-text>
+					</v-card>
 				</v-card>
 			</v-col>
 		</v-row>
-	</v-container>
+	</div>
 </template>
 
 <script lang="ts">
@@ -19,105 +119,68 @@ import { mapGetters, mapActions } from "vuex";
 
 @Component({
 	computed: {
+		...mapGetters("users", ["userInfo"]),
 		...mapGetters("project", ["project", "contributers", "loadingProject"])
 	},
 	methods: {
-		...mapActions("project", ["getSingleProject"])
+		...mapActions("project", [
+			"getSingleProject",
+			"sendInvitationEmail",
+			"applyJoin"
+		])
 	}
 })
 export default class ProjectDetail extends Vue {
 	@Prop({ type: String, required: true })
 	id!: string;
+	userInfo!: any;
 	project!: any;
 	getSingleProject!: Function;
-	loadingProject!: boolean;
-	loadingproj!: any;
-	contributers!: any;
-	email!: string;
+	applyJoin!: Function;
+	jreqbtn = false;
 
 	dialogm1 = "";
 	dialog = false;
 
-	search = "";
-	selected = [];
-	headers = [
-		{
-			text: "ID",
-			align: "start",
-			value: "_id"
-		},
-		{ text: "Name", value: "name" },
-		{ text: "Group", value: "group", default: this.project.title }
-	];
-
 	created() {
-		this.loadingproj = this.$vs.loading({
-			type: "circles",
-			color: "#FF6",
-			background: "#000",
-			opacity: 0.8,
-			scale: 1.3,
-			text: "Loading Project Details..."
-		});
 		this.getSingleProject(this.id);
 	}
 
-	sendEmail() {
-		alert("send email...");
-	}
-
-	@Watch("loadingProject")
-	onLoadingProject(newVal: boolean, oldVal: boolean) {
-		if (!newVal) {
-			this.loadingproj.close();
-		}
+	sendJoinRequest() {
+		this.applyJoin(this.id)
+			.then(() => {
+				this.$vs.notification({
+					icon: "<i class='bx bx-mail-send'></i>",
+					color: "success",
+					position: "top-right",
+					title: "Email sent",
+					text: `Join request send successfully`
+				});
+				this.jreqbtn = true;
+			})
+			.catch((err: any) => {
+				console.log(err);
+			});
 	}
 }
 </script>
 
 <style lang="stylus" scoped>
-getColor(vsColor, alpha = 1)
-	unquote("rgba(var(--vs-"+vsColor+"), "+alpha+")")
-getVar(var)
-	unquote("var(--vs-"+var+")")
-.not-margin
-	margin 0px
-	font-weight normal
-	padding 10px
-.con-form
+.parallex-overlay
 	width 100%
-	.flex
-		display flex
-		align-items center
-		justify-content space-between
-		a
-			font-size .8rem
-			opacity .7
-			&:hover
-				opacity 1
-	.vs-checkbox-label
-		font-size .8rem
-	.vs-input-content
-		margin 10px 0px
-		width calc(100%)
-		.vs-input
-			width 100%
-.footer-dialog
-	display flex
-	align-items center
-	justify-content center
-	flex-direction column
-	width calc(100%)
-	.new
-		margin 0px
-		margin-top 20px
-		padding: 0px
-		font-size .7rem
-		a
-			color getColor('primary') !important
-			margin-left 6px
-			&:hover
-				text-decoration underline
-	.vs-button
-		margin 0px
+	position relative
+.overlay
+		content ''
+		background linear-gradient(to bottom, rgba(0,0,0,0.4),rgba(0,0,0,0.85))
+		width 100%
+		height 100%
+		position absolute
+		top 0
+		left 0
+		z-index 3
+.content-parallex
+	position relative
+	z-index 4
+.project-detail-container
+	margin-top -1em
 </style>

@@ -10,8 +10,8 @@
 				>
 					<v-row align="center" justify="center" class="content-parallex">
 						<v-col class="text-center content-parallex" cols="12">
-							<h1 class="display-1 font-weight-bold mb-4">{{project.title}}</h1>
-							<h4 class="subheading">{{project.summary}}</h4>
+							<h1 class="display-1 font-weight-bold mb-4">{{project && project.title}}</h1>
+							<h4 class="subheading">{{project && project.summary}}</h4>
 						</v-col>
 					</v-row>
 					<div class="overlay"></div>
@@ -26,9 +26,35 @@
 
 					<v-card class="mx-auto" max-width="900" style="margin-top: -64px;">
 						<v-toolbar flat>
-							<v-toolbar-title>{{project.title}}</v-toolbar-title>
+							<v-toolbar-title>{{project && project.title}}</v-toolbar-title>
 
 							<v-spacer></v-spacer>
+
+							<v-dialog v-model="dialog" scrollable max-width="600px">
+								<template v-slot:activator="{ on, attrs }">
+									<v-btn icon class="mr-5" v-bind="attrs" v-on="on">
+										<i class="bx bx-user-plus icon-size-md"></i>
+									</v-btn>
+								</template>
+								<v-card class="pa-5">
+									<p>Send invitation using email adress type in the input the email.</p>
+
+									<v-text-field class="mx-4" v-model="email" placeholder="Email..."></v-text-field>
+
+									<v-card-actions>
+										<v-btn color="blue darken-1" text @click="dialog = false">Close</v-btn>
+										<v-btn color="blue darken-1" text @click="sendEmail()">Send</v-btn>
+									</v-card-actions>
+								</v-card>
+							</v-dialog>
+
+							<!-- <v-btn icon link :to="{ name: 'TaskList' }" class="mr-5" v-bind="attrs" v-on="on">
+								<i class="bx bx-list-check icon-size-md"></i>
+							</v-btn>-->
+
+							<v-btn icon>
+								<i class="bx bx-video icon-size-md"></i>
+							</v-btn>
 
 							<v-btn icon>
 								<i class="bx bx-video icon-size-md"></i>
@@ -64,7 +90,7 @@
 										</v-card-title>
 										<v-data-table
 											dense
-											itemsPerPage="5"
+											:itemsPerPage="itemsPerPage"
 											v-model="selectedadmin"
 											:headers="headers"
 											:items="project.admins"
@@ -89,7 +115,7 @@
 										</v-card-title>
 										<v-data-table
 											dense
-											itemsPerPage="5"
+											:itemsPerPage="itemsPerPage"
 											v-model="selectedcontrib"
 											:headers="headers"
 											:items="project.contributers"
@@ -167,48 +193,6 @@
 				</v-card>
 			</v-col>
 		</v-row>
-
-		<v-row>
-			<v-col cols="12" class="d-flex mt-5">
-				<div class="ml-auto d-flex">
-					<v-tooltip bottom>
-						<template v-slot:activator="{ on, attrs }">
-							<v-btn icon link :to="{ name: 'TaskList' }" class="mr-5" v-bind="attrs" v-on="on">
-								<i class="bx bx-list-check icon-size-md"></i>
-							</v-btn>
-						</template>
-						<span>See Project Task</span>
-					</v-tooltip>
-
-					<v-row justify="center">
-						<v-dialog v-model="dialog" scrollable max-width="600px">
-							<template v-slot:activator="{ on, attrs }">
-								<v-btn icon class="mr-5" v-bind="attrs" v-on="on">
-									<i class="bx bx-user-plus icon-size-md"></i>
-								</v-btn>
-							</template>
-							<v-card class="pa-5">
-								<p>Send invitation using email adress type in the input the email.</p>
-								<v-text-field class="mx-4" v-model="email" placeholder="Email..."></v-text-field>
-								<p class="mt-5">Or Send email invitation to</p>
-								<v-divider></v-divider>
-								<v-card-text style="height: 400px;">
-									<v-checkbox-group v-model="dialogm1" column>
-										<v-checkbox label="Bahamas, The" value="bahamas"></v-checkbox>
-										<v-checkbox label="Bangladesh" value="bangladesh"></v-checkbox>
-									</v-checkbox-group>
-								</v-card-text>
-								<v-divider></v-divider>
-								<v-card-actions>
-									<v-btn color="blue darken-1" text @click="dialog = false">Close</v-btn>
-									<v-btn color="blue darken-1" text @click="sendEmail()">Send</v-btn>
-								</v-card-actions>
-							</v-card>
-						</v-dialog>
-					</v-row>
-				</div>
-			</v-col>
-		</v-row>
 	</div>
 </template>
 
@@ -218,7 +202,7 @@ import { mapGetters, mapActions } from "vuex";
 
 @Component({
 	computed: {
-		...mapGetters("user", ["userInfo"]),
+		...mapGetters("users", ["userInfo"]),
 		...mapGetters("project", ["project", "contributers", "loadingProject"])
 	},
 	methods: {
@@ -235,7 +219,8 @@ export default class ProjectDetail extends Vue {
 	loadingProject!: boolean;
 	loadingproj!: any;
 	contributers!: any;
-	email!: string;
+	email = "";
+	itemsPerPage = 5;
 
 	dialogm1 = "";
 	dialog = false;
@@ -260,17 +245,21 @@ export default class ProjectDetail extends Vue {
 	}
 
 	sendEmail() {
-		console.log("send this: ", {
-			projectname: this.project.name,
-			destination: this.email,
-			sender: this.userInfo
+		this.$vs.notification({
+			icon: "<i class='bx bx-mail-send'></i>",
+			color: "success",
+			position: "top-right",
+			title: "Email sent",
+			text: `Email sent successfully for ${this.email}`
 		});
-		alert("send invitation email..." + this.email);
+
+		this.dialog = false;
 		this.sendInvitationEmail({
-			projectname: this.project.name,
+			projectname: this.project.title,
 			destination: this.email,
 			sender: this.userInfo.email
 		});
+		this.email = "";
 	}
 }
 </script>

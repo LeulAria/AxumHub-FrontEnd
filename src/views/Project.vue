@@ -90,6 +90,9 @@
 				<v-col cols="12" xs="12">
 					<h3 v-if="!filteredUserProjects.length" class="mt-14 text-center">No Projects Yet!</h3>
 				</v-col>
+				<v-col v-if="isLoading" cols="12" xs="12" class="d-flex align-center justify-center mt-10">
+					<v-progress-circular :size="70" :width="7" color="purple" indeterminate></v-progress-circular>
+				</v-col>
 				<template v-for="project in filteredProjects">
 					<v-col
 						cols="12"

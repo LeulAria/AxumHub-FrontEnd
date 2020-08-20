@@ -14,7 +14,11 @@
 				<v-col cols="12" xs="12">
 					<v-row>
 						<div class="d-flex">
-							<v-btn small class="elevation-0 mx-1 indigo white--text">Projects</v-btn>
+							<v-btn
+								small
+								class="elevation-0 mx-1 indigo white--text link"
+								:to="{ name: 'Project' }"
+							>Projects</v-btn>
 						</div>
 						<v-col cols="12" xs="12">
 							<v-row justify="center">
@@ -32,6 +36,9 @@
 								</v-col>
 							</v-row>
 							<v-row>
+								<v-col v-if="isLoading" cols="12" xs="12" class="d-flex align-center justify-center mt-10">
+									<v-progress-circular :size="60" :width="5" color="purple" indeterminate></v-progress-circular>
+								</v-col>
 								<v-col
 									cols="12"
 									xs="12"
