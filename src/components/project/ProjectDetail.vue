@@ -31,15 +31,15 @@
 							<v-spacer></v-spacer>
 
 							<v-btn icon>
-								<v-icon>mdi-magnify</v-icon>
+								<i class="bx bx-video icon-size-md"></i>
 							</v-btn>
 
 							<v-btn icon>
-								<v-icon>mdi-apps</v-icon>
+								<v-icon>mdi-chat-processing-outline</v-icon>
 							</v-btn>
 
-							<v-btn icon>
-								<v-icon>mdi-dots-vertical</v-icon>
+							<v-btn icon link :to="{ name: 'Uploads', params: { id: project._id } }">
+								<v-icon>mdi-cloud-check-outline</v-icon>
 							</v-btn>
 						</v-toolbar>
 

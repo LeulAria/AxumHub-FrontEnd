@@ -34,9 +34,10 @@ export default [
     }
   },
   {
-    path: `${routePath}/uploads`,
+    path: `${routePath}/:id/uploads`,
     name: "Uploads",
     component: () => import('@/components/project/Uploads.vue'),
+    props: true,
     meta: {
       requiresAuth: true
     }
