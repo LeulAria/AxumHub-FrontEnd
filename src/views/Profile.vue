@@ -15,18 +15,35 @@
 						</v-col>
 					</v-row>
 					<div class="overlay"></div>
-					<v-btn
-						fab
-						dark
-						color="pink darken3"
-						class="action-btn"
-						bottom
-						left
-						absolute
-						@click="dialog = !dialog"
-					>
-						<v-icon>mdi-plus</v-icon>
-					</v-btn>
+					<v-menu offset-y>
+						<template v-slot:activator="{ on, attrs }">
+							<v-btn
+								fab
+								primary
+								dark
+								v-bind="attrs"
+								v-on="on"
+								color="pink darken3"
+								class="action-btn"
+								bottom
+								left
+								absolute
+							>
+								<v-icon>mdi-plus</v-icon>
+							</v-btn>
+						</template>
+						<v-list>
+							<v-list-item class="ma-2 rounded-lg" :to="{ name: 'ProfileInfo' }" link>
+								<v-list-item-title>{{$t("message.editProfileInfos")}}</v-list-item-title>
+							</v-list-item>
+							<v-list-item class="ma- 2rounded-lg" :to="{ name: 'ProfileExperiance' }" link>
+								<v-list-item-title>{{$t("message.addExperianceField")}}</v-list-item-title>
+							</v-list-item>
+							<v-list-item class="ma-2rounded-lg" :to="{ name: 'ProfileEducation' }" link>
+								<v-list-item-title>{{$t("message.addEducationField")}}</v-list-item-title>
+							</v-list-item>
+						</v-list>
+					</v-menu>
 				</v-parallax>
 				<div class="d-flex justify-center user-avatar">
 					<v-hover>
@@ -67,81 +84,47 @@
 				</div>
 			</v-col>
 		</v-row>
+
 		<v-row no-gutters>
 			<v-col cols="12" xs="12" class="d-flex justify-center align-center flex-column">
 				<h1>{{userInfo&&userInfo.name}}</h1>
 				<p class="grey--text">{{userInfo&&userInfo.email}}</p>
 			</v-col>
-		</v-row>
-
-		<v-row no-gutters class="my-2 mb-1">
-			<v-col cols="10" sm="10" class="mx-5 mb-2 d-flex align-center">
-				<h3 class="grey--text text--darken-2 mr-auto">{{$t("message.profileDetail")}}</h3>
-				<div class="d-flex justify-lg-space-between justify-sm-center">
-					<v-btn
-						small
-						depressed
-						color="primary ma-2"
-						:to="{ name: 'ProfileInfo' }"
-						link
-					>{{$t("message.editProfileInfos")}}</v-btn>
-					<v-btn
-						small
-						depressed
-						color="primary ma-2"
-						:to="{ name: 'ProfileExperiance' }"
-						link
-					>{{$t("message.addExperianceField")}}</v-btn>
-					<v-btn
-						small
-						depressed
-						color="primary ma-2"
-						:to="{ name: 'ProfileEducation' }"
-						link
-					>{{$t("message.addEducationField")}}</v-btn>
-				</div>
+			<v-col cols="12" xs="12" class="d-flex justify-center align-center flex-column">
+				<template v-for="(link, i) in socialLinksDispaly">
+					<div :key="i" class="d-flex justify-center align-center">
+						<v-tooltip bottom>
+							<template v-slot:activator="{ on, attrs }">
+								<v-btn fav v-bind="attrs" v-on="on" icon class="mx-4" small :to="link.link" link>
+									<v-icon>{{link.icon}}</v-icon>
+								</v-btn>
+							</template>
+							<span>{{link.link}}</span>
+						</v-tooltip>
+					</div>
+				</template>
 			</v-col>
 		</v-row>
 
 		<v-row justify="center" class="mt-6">
-			<v-col cols="12" sm="6" md="4">
-				<div class="d-flex justify-center"></div>
-				<v-row align="center" justify="center">
-					<v-col class="d-flex flex-column align-center" col="12" sm="12">
-						<h2>{{userInfo&&userInfo.name}}</h2>
-						<span class="grey--text h5">({{userProfile&&userProfile.handle}})</span>
-						<p class="grey--text">{{userProfile&&userProfile.location}}</p>
-					</v-col>
-					<v-col class="social-links d-flex flex-column align-center" col="12" sm="5">
-						<div class="d-flex">
-							<template v-for="(link, i) in socialLinksDispaly">
-								<div :key="i">
-									<v-btn class="mx-4" fab small :to="link.link" link>
-										<v-icon>{{link.icon}}</v-icon>
-									</v-btn>
-								</div>
-							</template>
-						</div>
-						<v-subheader
-							class="center text-center"
-						>{{userProfile&&userProfile.bio || 'no profile detail!'}}</v-subheader>
-					</v-col>
-				</v-row>
-			</v-col>
-
-			<v-col cols="12" xs="12" sm="6" md="4">
-				<v-card outlined class="pa-5">
-					<v-subheader>{{$t("message.bio")}}</v-subheader>
-					<p class="ml-4">{{ userProfile&&(userProfile.bio||'No user bio found...') }}</p>
-					<v-subheader>{{$t("message.githubusername")}}</v-subheader>
-					<div class="d-flex align-baseline ml-4">
+			<v-col cols="12" sm="8">
+				<div class="d-flex flex-column justify-start"></div>
+				<div>
+					<p>{{$t("message.location")}}: {{userProfile&&userProfile.location}}</p>
+					<p>{{$t("message.bio")}}: {{userProfile&&userProfile.bio || 'no profile detail!'}}</p>
+					<div class="d-flex">
 						<v-icon class="mr-3">mdi-github</v-icon>
 						<p>{{userProfile&&(userProfile.githubusername||'Git hub user name has\'t been set')}}</p>
 					</div>
-				</v-card>
+					<div>{{$t("message.skills")}}</div>
+					<div class="d-flex">
+						<div v-for="(skill, i) in skills" :key="i">{{skill}},</div>
+					</div>
+				</div>
 			</v-col>
 		</v-row>
 
+		<!-- edu exp -->
 		<v-container>
 			<v-row>
 				<v-col cols="12" xs="12" sm="6">
@@ -243,30 +226,6 @@
 			</v-row>
 		</v-container>
 
-		<v-container>
-			<v-row>
-				<v-col cols="12" xs="12" sm="6">
-					<v-card outlined class="rounded-lg">
-						<v-subheader>{{$t("message.skills")}}</v-subheader>
-						<v-card class="mx-auto my-3 elevation-0" max-width="300" tile>
-							<v-list dense>
-								<v-list-item-group color="primary">
-									<v-list-item v-for="(skill, i) in skills" :key="i">
-										<v-list-item-icon>
-											<v-icon>mdi-format-quote-close-outline</v-icon>
-										</v-list-item-icon>
-										<v-list-item-content>
-											<v-list-item-title v-text="skill"></v-list-item-title>
-										</v-list-item-content>
-									</v-list-item>
-								</v-list-item-group>
-							</v-list>
-						</v-card>
-					</v-card>
-				</v-col>
-			</v-row>
-		</v-container>
-
 		<v-divider class="my-5" inset></v-divider>
 
 		<v-container>
@@ -347,10 +306,10 @@ export default class Profile extends Vue {
 				instagram
 			} = this.socialLinks;
 			if (youtube) links.push({ link: youtube, icon: "mdi-youtube" });
-			if (facebook) links.push({ link: youtube, icon: "mdi-facebook" });
-			if (twitter) links.push({ link: youtube, icon: "mdi-twitter" });
-			if (linkedin) links.push({ link: youtube, icon: "mdi-linkedin" });
-			if (instagram) links.push({ link: youtube, icon: "mdi-instagram" });
+			if (facebook) links.push({ link: facebook, icon: "mdi-facebook" });
+			if (twitter) links.push({ link: twitter, icon: "mdi-twitter" });
+			if (linkedin) links.push({ link: linkedin, icon: "mdi-linkedin" });
+			if (instagram) links.push({ link: instagram, icon: "mdi-instagram" });
 			return links;
 		}
 		return [];

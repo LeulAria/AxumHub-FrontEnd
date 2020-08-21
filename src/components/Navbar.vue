@@ -33,7 +33,7 @@
 							<v-list-item-action>
 								<v-tooltip top>
 									<template v-slot:activator="{ on, attrs }">
-										<v-btn icon v-bind="attrs" v-on="on">
+										<v-btn fab icon v-bind="attrs" v-on="on">
 											<v-icon>mdi-image-edit-outline</v-icon>
 										</v-btn>
 									</template>
@@ -180,7 +180,7 @@ export default class Navbar extends Vue {
 		left 0
 		width 100%
 		height 100%
-		background-image linear-gradient(to bottom, rgba(0,0,30,0.6),rgba(60,0,30,0.95))
+		background-image linear-gradient(to bottom, rgba(0,0,5,0.88),rgba(0,0,5,1))
 .ml-app-bar
 	margin-left 70px
 .navigation-drawer

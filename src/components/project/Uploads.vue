@@ -81,7 +81,7 @@
 									>file/{{upload.filename.split('.')[upload.filename.split('.').length-1]}}</div>
 								</div>
 								<div class="ml-auto">
-									<v-btn icon>
+									<v-btn icon @click="downloadUploadedFile(upload._id)">
 										<v-icon>mdi-cloud-download-outline</v-icon>
 									</v-btn>
 									<v-btn icon v-if="upload.userid._id==userInfo.id" @click="deleteFileUpload(upload._id)">
@@ -161,6 +161,28 @@ export default class Uploads extends Vue {
 			title: "Refresh Data",
 			text: `fetching requried datas...`
 		});
+	}
+
+	downloadUploadedFile(id: string) {
+		alert("upload now..." + id);
+		console.log(this.project.uploads);
+		const uploadFile = this.project.uploads.filter(
+			(upload: any) => upload._id == id
+		)[0];
+		const fileLink = document.createElement("a");
+
+		fileLink.href = uploadFile.fileuir;
+		const uploadFileName = uploadFile.fileuir.split("/")[
+			uploadFile.fileuir.split("/").length - 1
+		];
+
+		console.log(uploadFile.fileuir);
+		fileLink.setAttribute("download", uploadFileName);
+		document.body.appendChild(fileLink);
+
+		// console.log(uploadFileName);
+
+		fileLink.click();
 	}
 
 	uploadFile() {

@@ -56,7 +56,7 @@
 								<v-icon>mdi-chat-processing-outline</v-icon>
 							</v-btn>
 
-							<v-btn icon link :to="{ name: 'Uploads', params: { id: project.title } }">
+							<v-btn icon link :to="{ name: 'Uploads', params: { id: project._id } }">
 								<v-icon>mdi-cloud-check-outline</v-icon>
 							</v-btn>
 						</v-toolbar>
