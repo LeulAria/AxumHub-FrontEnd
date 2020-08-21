@@ -1,5 +1,79 @@
 <template>
 	<v-main>
+		<v-row no-gutters>
+			<v-col cols="12" xs="12">
+				<v-parallax
+					dark
+					height="300"
+					src="https://i.imgur.com/kS2WW8e.png"
+					class="parallex-overlay fill-height repeating-gradient"
+				>
+					<v-row align="center" justify="center" class="content-parallex">
+						<v-col class="text-center content-parallex" cols="12">
+							<h1 class="display-1 font-weight-bold mb-4"></h1>
+							<h4 class="subheading"></h4>
+						</v-col>
+					</v-row>
+					<div class="overlay"></div>
+					<v-btn
+						fab
+						dark
+						color="pink darken3"
+						class="action-btn"
+						bottom
+						left
+						absolute
+						@click="dialog = !dialog"
+					>
+						<v-icon>mdi-plus</v-icon>
+					</v-btn>
+				</v-parallax>
+				<div class="d-flex justify-center user-avatar">
+					<v-hover>
+						<template v-slot:default="{ hover }">
+							<v-avatar rounded="true" color="pink" class="avatar" size="200">
+								<v-img :src="userInfo.avatar"></v-img>
+
+								<v-fade-transition>
+									<v-overlay v-if="hover" absolute color="#036358">
+										<v-btn dark fab @click="profileEditDialog = true">
+											<i class="bx bx-edit-alt icon-size-md"></i>
+										</v-btn>
+									</v-overlay>
+								</v-fade-transition>
+							</v-avatar>
+						</template>
+					</v-hover>
+
+					<v-dialog v-model="profileEditDialog" persistent max-width="350">
+						<v-card class="pa-5">
+							<v-card-title class="h1">Change your avatar.</v-card-title>
+							<form id="profile-pic">
+								<v-file-input
+									accept="image/jpg, image/png, image/jpeg, image/gif"
+									multiple
+									name="avatar"
+									label="File input"
+								></v-file-input>
+							</form>
+
+							<v-card-actions>
+								<v-spacer></v-spacer>
+								<v-btn color="green darken-1" text @click="profileEditDialog = false">Disagree</v-btn>
+								<v-btn color="green darken-1" text @click="uploadProfileAvatar()">Agree</v-btn>
+							</v-card-actions>
+						</v-card>
+					</v-dialog>
+				</div>
+			</v-col>
+		</v-row>
+		<v-row no-gutters>
+			<v-col cols="12" xs="12" class="d-flex justify-center align-center flex-column">
+				<h1>{{userInfo&&userInfo.name}}</h1>
+				<p class="grey--text">{{userInfo&&userInfo.email}}</p>
+			</v-col>
+		</v-row>
+
 		<v-row no-gutters class="my-2 mb-1">
 			<v-col cols="10" sm="10" class="mx-5 mb-2 d-flex align-center">
 				<h3 class="grey--text text--darken-2 mr-auto">{{$t("message.profileDetail")}}</h3>
@@ -31,16 +105,11 @@
 
 		<v-row justify="center" class="mt-6">
 			<v-col cols="12" sm="6" md="4">
-				<div class="d-flex justify-center">
-					<v-avatar rounded="true" color="indigo" size="200" class>
-						<v-img :src="userInfo.avatar"></v-img>
-					</v-avatar>
-				</div>
+				<div class="d-flex justify-center"></div>
 				<v-row align="center" justify="center">
 					<v-col class="d-flex flex-column align-center" col="12" sm="12">
 						<h2>{{userInfo&&userInfo.name}}</h2>
 						<span class="grey--text h5">({{userProfile&&userProfile.handle}})</span>
-						<p class="grey--text">{{userInfo&&userInfo.email}}</p>
 						<p class="grey--text">{{userProfile&&userProfile.location}}</p>
 					</v-col>
 					<v-col class="social-links d-flex flex-column align-center" col="12" sm="5">
@@ -229,6 +298,7 @@ import { mapGetters, mapActions } from "vuex";
 		])
 	},
 	methods: {
+		...mapActions("users", ["uploadAvatar"]),
 		...mapActions("profile", [
 			"getUserProfile",
 			"deleteExperiance",
@@ -243,9 +313,11 @@ export default class Profile extends Vue {
 	skills!: any;
 	experiance!: any;
 	education!: any;
+	profileEditDialog = false;
 	getUserProfile!: Function;
 	deleteExperiance!: Function;
 	deleteEducation!: Function;
+	uploadAvatar!: Function;
 
 	loadingExpDel = false;
 	loadingEduDel = false;
@@ -254,6 +326,14 @@ export default class Profile extends Vue {
 		console.log("fetch users profile data please please!!!");
 		console.log("thisi s the user id: ", this.userInfo.id, this.userInfo);
 		this.getUserProfile(this.userInfo.id);
+	}
+
+	uploadProfileAvatar() {
+		const form = document.getElementById("profile-pic") as HTMLFormElement;
+		const formData = new FormData(form);
+		this.uploadAvatar(formData);
+		this.getUserProfile(this.userInfo.id);
+		this.profileEditDialog = false;
 	}
 
 	get socialLinksDispaly() {
@@ -316,4 +396,28 @@ export default class Profile extends Vue {
 	position absolute
 	top 40px
 	right 10px
+
+
+.parallex-overlay
+	width 100%
+	position relative
+	background-position center right
+.overlay
+		content ''
+		background linear-gradient(to bottom, rgba(0,0,0,0.1),rgba(0,0,0,0.55))
+		width 100%
+		height 100%
+		position absolute
+		top 0
+		left 0
+		z-index 3
+.user-avatar
+	margin-top -4em
+	.avatar
+		// border 8px solid #121212 !important
+		box-shadow 0px 1px 15px rgba(0,0,0,0.5)
+.action-btn
+	position absolute
+	top 200px
+	left 50px
 </style>
