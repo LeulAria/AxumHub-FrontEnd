@@ -20,7 +20,7 @@
 
 				<v-col cols="12" xs="12" sm="5" md="4">
 					<v-card-title class="text-center justify-center py-6">
-						<h3 class="font-weight-bold basil--text">AxumHUB Blogs</h3>
+						<h3 class="font-weight-bold basil--text">{{$t("message.axumHUBBlogs")}}</h3>
 					</v-card-title>
 				</v-col>
 			</v-row>
@@ -43,7 +43,7 @@
 									alt
 									class="circle not-found-image mb-2"
 								/>
-								<h2 class="grey-text text-center font-weight-medium">No Article Posts Yet!</h2>
+								<h2 class="grey-text text-center font-weight-medium">{{$t("message.noArticlePostsYet")}}!</h2>
 							</v-col>
 						</template>
 						<template v-for="blog in blogs">
@@ -70,7 +70,7 @@
 										<div>{{blog.body | snnipit(6)}}</div>
 									</v-card-text>
 									<v-card-actions class="action-btn">
-										<v-btn color="deep-purple lighten-2" text>See Article</v-btn>
+										<v-btn color="deep-purple lighten-2" text>{{$t("message.seeArticle")}}</v-btn>
 									</v-card-actions>
 								</v-card>
 							</v-col>
@@ -89,7 +89,7 @@
 									alt
 									class="circle not-found-image mb-2"
 								/>
-								<h2 class="grey-text text-center font-weight-medium">No News Feed Posts Yet!</h2>
+								<h2 class="grey-text text-center font-weight-medium">{{$t("message.noNewsFeedPostsYet")}}!</h2>
 							</v-col>
 						</template>
 						<template v-for="blog in blogs">
@@ -116,7 +116,7 @@
 										<div>{{blog.body | snnipit(6)}}</div>
 									</v-card-text>
 									<v-card-actions class="action-btn">
-										<v-btn color="deep-purple lighten-2" text>See Article</v-btn>
+										<v-btn color="deep-purple lighten-2" text>{{$t("message.seeArticle")}}</v-btn>
 									</v-card-actions>
 								</v-card>
 							</v-col>
@@ -135,7 +135,7 @@
 									alt
 									class="circle not-found-image mb-2"
 								/>
-								<h2 class="grey-text text-center font-weight-medium">No Job Posts Yet!</h2>
+								<h2 class="grey-text text-center font-weight-medium">{{$t("message.noJobPostsYet")}}!</h2>
 							</v-col>
 						</template>
 						<template v-for="blog in blogs">
@@ -162,7 +162,7 @@
 										<div>{{blog.body | snnipit(6)}}</div>
 									</v-card-text>
 									<v-card-actions class="action-btn">
-										<v-btn color="deep-purple lighten-2" text>See Article</v-btn>
+										<v-btn color="deep-purple lighten-2" text>{{$t("message.seeArticle")}}</v-btn>
 									</v-card-actions>
 								</v-card>
 							</v-col>
@@ -181,7 +181,7 @@
 									alt
 									class="circle not-found-image mb-2"
 								/>
-								<h2 class="grey-text text-center font-weight-medium">No Job Posts Yet!</h2>
+								<h2 class="grey-text text-center font-weight-medium">{{$t("message.noJobPostsYet")}}!</h2>
 							</v-col>
 						</template>
 						<template v-for="blog in blogs">
@@ -208,7 +208,7 @@
 										<div>{{blog.body | snnipit(6)}}</div>
 									</v-card-text>
 									<v-card-actions class="action-btn">
-										<v-btn color="deep-purple lighten-2" text>See Article</v-btn>
+										<v-btn color="deep-purple lighten-2" text>{{$t("message.seeArticle")}}</v-btn>
 									</v-card-actions>
 								</v-card>
 							</v-col>

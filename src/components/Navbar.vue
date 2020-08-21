@@ -8,13 +8,13 @@
 			fixed
 		>
 			<v-app-bar-nav-icon @click="drawer = !drawer" v-if="$vuetify.breakpoint.xsOnly"></v-app-bar-nav-icon>
-			<v-toolbar-title class="ml-4">Dashbaord</v-toolbar-title>
+			<v-toolbar-title class="ml-4">{{ $t("message.appName") }}</v-toolbar-title>
 			<v-spacer></v-spacer>
 
 			<v-menu v-model="menu" :close-on-content-click="false" :nudge-width="200" offset-y>
 				<template v-slot:activator="{ on, attrs }">
 					<v-avatar color="indigo" size="36" v-bind="attrs" v-on="on">
-						<img src="https://cdn.vuetifyjs.com/images/john.jpg" />
+						<img :src="userInfo.avatar" />
 					</v-avatar>
 				</template>
 
@@ -22,7 +22,7 @@
 					<v-list>
 						<v-list-item>
 							<v-list-item-avatar>
-								<img src="https://cdn.vuetifyjs.com/images/john.jpg" alt="John" />
+								<img :src="userInfo.avatar" alt="Avatar" />
 							</v-list-item-avatar>
 
 							<v-list-item-content>
@@ -37,7 +37,7 @@
 											<v-icon>mdi-image-edit-outline</v-icon>
 										</v-btn>
 									</template>
-									<span>Change avatar</span>
+									<span>{{ $t("message.changeAvatar") }}</span>
 								</v-tooltip>
 							</v-list-item-action>
 						</v-list-item>
@@ -48,11 +48,11 @@
 					<v-list>
 						<v-list-item>
 							<v-list-item-action>
-								<v-btn icon>
+								<v-btn icon link :to="{ name: 'Profile' }">
 									<i class="bx bx-user-circle icon-size-md"></i>
 								</v-btn>
 							</v-list-item-action>
-							<v-list-item-title>Profile</v-list-item-title>
+							<v-list-item-title>{{ $t("message.profile") }}</v-list-item-title>
 						</v-list-item>
 
 						<v-list-item>
@@ -62,7 +62,7 @@
 									<i v-if="!globalTheme" class="bx bx-moon icon-size-md"></i>
 								</v-btn>
 							</v-list-item-action>
-							<v-list-item-title>change theme</v-list-item-title>
+							<v-list-item-title>{{$t("message.chenageTheme")}}</v-list-item-title>
 						</v-list-item>
 
 						<v-list-item>
@@ -71,7 +71,7 @@
 									<i class="bx bx-log-out-circle icon-size-md"></i>
 								</v-btn>
 							</v-list-item-action>
-							<v-list-item-title link>Logout</v-list-item-title>
+							<v-list-item-title link>{{ $t("message.logout") }}</v-list-item-title>
 						</v-list-item>
 					</v-list>
 				</v-card>
@@ -80,7 +80,7 @@
 
 		<v-navigation-drawer
 			v-model="drawer"
-			class="secondary"
+			class="secondary navigation-drawer"
 			:expand-on-hover="$vuetify.breakpoint.smAndUp"
 			:mini-variant="$vuetify.breakpoint.smAndUp"
 			mini-variant-width="70"
@@ -98,8 +98,8 @@
 					</v-list-item-avatar>
 
 					<v-list-item-content v-if="userInfo.name">
-						<v-list-item-title>AxumHUB</v-list-item-title>
-						<v-list-item-subtitle>group communication, colaboration</v-list-item-subtitle>
+						<v-list-item-title>{{ $t("message.AxumHUB") }}</v-list-item-title>
+						<v-list-item-subtitle>{{ $t("message.community") }} {{new Date().getYear()}}</v-list-item-subtitle>
 					</v-list-item-content>
 				</v-list-item>
 
@@ -183,10 +183,6 @@ export default class Navbar extends Vue {
 		background-image linear-gradient(to bottom, rgba(0,0,30,0.6),rgba(60,0,30,0.95))
 .ml-app-bar
 	margin-left 70px
+.navigation-drawer
+	z-index 10000
 </style>
-
-	// submit() {
-	// 	const form = document.getElementById("avatar-form") as HTMLFormElement;
-	// 	const formData = new FormData(form);
-	// 	this.uploadAvatar(formData);
-	// }

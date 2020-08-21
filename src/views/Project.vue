@@ -4,7 +4,8 @@
 			<v-col cols="10" sm="10" class="mx-5 mb-2 d-flex align-center">
 				<h3 class="grey--text text--darken-2 mr-4">All projects</h3>
 				<v-btn small :to="{ name: 'NewProject' }" link class="elevation-0 mx-1 info white--text">
-					<i class="bx bx-plus"></i>Add Project
+					<i class="bx bx-plus"></i>
+					{{$t("message.addProject")}}
 				</v-btn>
 				<v-spacer></v-spacer>
 
@@ -22,7 +23,7 @@
 
 					<v-list v-for="(joinNotification, i) in joinNotifications" :key="i">
 						<div v-if="i==0">
-							<v-subheader>Join Requests</v-subheader>
+							<v-subheader>{{$t("message.joinRequests")}}</v-subheader>
 							<v-divider inset></v-divider>
 						</div>
 						<v-list-item>
@@ -41,7 +42,7 @@
 										<i class="bx bx-check-circle icon-size-md"></i>
 									</v-btn>
 								</template>
-								<span>Accept Join Request</span>
+								<span>{{$t("message.acceptJoinRequest")}}</span>
 							</v-tooltip>
 							<v-tooltip top>
 								<template v-slot:activator="{ on, attrs }">
@@ -50,7 +51,7 @@
 										small
 										fab
 										color="error"
-										class="elevation-0 mx-3"
+										class="mx-3"
 										v-bind="attrs"
 										v-on="on"
 										@click="rejectJoinProject(joinNotification)"
@@ -58,11 +59,14 @@
 										<i class="bx bx-x-circle icon-size-md"></i>
 									</v-btn>
 								</template>
-								<span>Reject Join Request</span>
+								<span>{{$t("message.rejectJoinRequest")}}</span>
 							</v-tooltip>
 						</v-list-item>
 					</v-list>
 				</v-menu>
+				<v-btn icon fab small @click="refreshProject()">
+					<v-icon>mdi-refresh</v-icon>
+				</v-btn>
 			</v-col>
 		</v-row>
 
@@ -79,16 +83,20 @@
 				v-if="projects"
 			></v-text-field>
 			<v-row>
-				<v-subheader>Your Projects</v-subheader>
+				<v-subheader>{{$t("message.yourProjects")}}</v-subheader>
 				<v-spacer></v-spacer>
 				<v-btn :to="{ name: 'ExploreProjects' }" text small link class="elevation-0 info mx-1">
-					<i class="bx bx-search-alt mr-1"></i>Explore Projects
+					<i class="bx bx-search-alt mr-1"></i>
+					{{$t("message.exploreProjects")}}
 				</v-btn>
 			</v-row>
 
 			<v-row justify="start">
 				<v-col cols="12" xs="12">
-					<h3 v-if="!filteredUserProjects.length" class="mt-14 text-center">No Projects Yet!</h3>
+					<h3
+						v-if="!filteredUserProjects.length"
+						class="mt-14 text-center"
+					>{{$t("message.noProjectsYet")}}!</h3>
 				</v-col>
 				<v-col v-if="isLoading" cols="12" xs="12" class="d-flex align-center justify-center mt-10">
 					<v-progress-circular :size="70" :width="7" color="purple" indeterminate></v-progress-circular>
@@ -140,7 +148,7 @@
 											<v-list>
 												<v-list-item>
 													<vs-button @click="seeDetail(project._id)">
-														See Detail
+														{{$t("message.seeDetail")}}
 														<template #animate>
 															<i class="bx bxs-detail icon-size-md"></i>
 														</template>
@@ -148,7 +156,7 @@
 												</v-list-item>
 												<v-list-item>
 													<vs-button @click="openChat(project.chatgroupname)">
-														Go to chat
+														{{$t("message.gotochat")}}
 														<template #animate>
 															<i class="bx bxs-chat icon-size-md"></i>
 														</template>
@@ -227,6 +235,19 @@ export default class Project extends Vue {
 		this.getAllProjects();
 		this.getUserProjects(this.userInfo.id);
 		this.getJoinedProjects();
+	}
+
+	refreshProject() {
+		this.getAllProjects();
+		this.getUserProjects(this.userInfo.id);
+		this.getJoinedProjects();
+		this.$vs.notification({
+			icon: "<i class='bx bx-refresh'></i>",
+			color: "primary",
+			position: "bottom-right",
+			title: "Refresh Data",
+			text: `fetching requried datas...`
+		});
 	}
 
 	toggleTab(tab: number) {

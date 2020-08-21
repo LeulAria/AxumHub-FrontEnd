@@ -5,14 +5,14 @@
 				<v-card max-width="420" class="mx-6 chat-sizebar" flat outlined>
 					<v-toolbar class="chat-app-bar">
 						<v-app-bar-nav-icon @click="toggleChatList()"></v-app-bar-nav-icon>
-						<h5 class="grey--text" v-if="chatgruplist">Available Groups</h5>
-						<h5 class="grey--text" v-if="!chatgruplist">{{id}} project Group</h5>
+						<h5 class="grey--text" v-if="chatgruplist">{{$t("message.availableGroup")}}</h5>
+						<h5 class="grey--text" v-if="!chatgruplist">{{id}} {{$t("message.projectGroup")}}</h5>
 						<v-spacer></v-spacer>
 					</v-toolbar>
 
 					<div three-line class="chat-lists" v-if="chatgruplist">
 						<template v-for="(project, i) in filteredProjects">
-							<v-subheader v-if="i==0" :key="i">Groups</v-subheader>
+							<v-subheader v-if="i==0" :key="i">{{$t("message.groups")}}</v-subheader>
 							<div
 								:key="project._id"
 								ripple
@@ -29,7 +29,7 @@
 
 					<div three-line class="chat-lists" v-if="!chatgruplist">
 						<template v-for="(member, i) in members">
-							<v-subheader v-if="i==0" :key="i">Group Members</v-subheader>
+							<v-subheader v-if="i==0" :key="i">{{$t("message.groupMembers")}}</v-subheader>
 							<div :key="member.id" ripple class="chat-list d-flex align-content-center">
 								<vs-avatar
 									class="mr-3"

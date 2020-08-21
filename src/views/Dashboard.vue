@@ -20,8 +20,10 @@
 								max-width="80px"
 							></v-img>
 						</v-row>
-						<h2 class="user-welcome-txt text-center text">Welcome {{userInfo.name | snnipword(4)}}</h2>
-						<h3 contenteditable="true" class="text-center">What is your main focus today?</h3>
+						<h2
+							class="user-welcome-txt text-center text"
+						>{{$t("message.welcome")}} {{userInfo.name | snnipword(4)}}</h2>
+						<h3 contenteditable="true" class="text-center">{{$t("message.focus")}}?</h3>
 						<p class="text-center">{{(hour>12)?hour-12:hour}} : {{minute}} : {{second}}</p>
 					</div>
 				</v-card>

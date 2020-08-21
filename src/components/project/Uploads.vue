@@ -7,7 +7,7 @@
 
 			<v-dialog v-model="dialog" max-width="290">
 				<v-card>
-					<v-card-title class="headline">Upload file to group</v-card-title>
+					<v-card-title class="headline">{{$t("message.uploadfiletogroup")}}</v-card-title>
 
 					<v-card-text>
 						<form id="upload">
@@ -18,9 +18,9 @@
 					<v-card-actions>
 						<v-spacer></v-spacer>
 
-						<v-btn color="green darken-1" text @click="dialog = false">Cancel</v-btn>
+						<v-btn color="green darken-1" text @click="dialog = false">{{$t("message.cancel")}}</v-btn>
 
-						<v-btn color="green darken-1" text @click="uploadFile()">Upload</v-btn>
+						<v-btn color="green darken-1" text @click="uploadFile()">{{$t("message.upload")}}</v-btn>
 					</v-card-actions>
 				</v-card>
 			</v-dialog>
@@ -28,7 +28,7 @@
 			<v-dialog v-model="loadingFileUpload" hide-overlay persistent width="300">
 				<v-card color="primary" dark class="pt-2">
 					<v-card-text>
-						Please stand by
+						{{$t("message.pleasestandby")}}
 						<v-progress-linear indeterminate color="white" class="mb-0 mt-2"></v-progress-linear>
 					</v-card-text>
 				</v-card>
@@ -37,14 +37,18 @@
 			<v-img
 				src="https://cdn.vuetifyjs.com/images/cards/forest.jpg"
 				gradient="to top, rgba(0,0,0,.44), rgba(0,0,0,.44)"
+				class="image-container"
 			>
 				<v-container class="fill-height">
 					<v-row align="center">
-						<v-toolbar-title class="ml-4">axumhub</v-toolbar-title>
+						<v-toolbar-title class="ml-4">{{project && project.title}}</v-toolbar-title>
 						<br />
-						<h1 class="display-4 thin font-weight-thin mr-6 ml-2">Uploads</h1>
+						<h1 class="display-4 thin font-weight-thin mr-6 ml-2">{{$t("message.uploads")}}</h1>
 					</v-row>
 				</v-container>
+				<v-btn class="refresh-btn" icon fab small @click="refreshProjectUploads()">
+					<v-icon>mdi-refresh</v-icon>
+				</v-btn>
 			</v-img>
 		</v-card>
 		<v-card-text class="py-0">
@@ -148,14 +152,26 @@ export default class Uploads extends Vue {
 		this.getSingleProject(this.id);
 	}
 
+	refreshProjectUploads() {
+		this.getSingleProject(this.id);
+		this.$vs.notification({
+			icon: "<i class='bx bx-refresh'></i>",
+			color: "primary",
+			position: "bottom-right",
+			title: "Refresh Data",
+			text: `fetching requried datas...`
+		});
+	}
+
 	uploadFile() {
 		this.dialog = false;
 		this.loadingFileUpload = true;
 		const form = document.getElementById("upload") as HTMLFormElement;
 		const formData = new FormData(form);
 		this.uploadFileProject({ id: this.id, data: formData });
-		setTimeout(() => (this.loadingFileUpload = false), 1300);
 		this.getSingleProject(this.id);
+		setTimeout(() => (this.loadingFileUpload = false), 1300);
+		this.refreshProjectUploads();
 	}
 
 	deleteFileUpload(id: string) {
@@ -168,5 +184,10 @@ export default class Uploads extends Vue {
 </script>
 
 <style lang="stylus" scoped>
-
+.image-container
+	position relative
+.refresh-btn
+	position absolute
+	bottom 10px
+	left 10px
 </style>

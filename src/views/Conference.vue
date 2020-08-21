@@ -2,7 +2,7 @@
 	<v-container>
 		<v-row no-gutters class="my-2 mb-1">
 			<v-col cols="10" sm="10" class="mx-5 mb-2 d-flex align-center">
-				<h3 class="grey--text text--darken-2 mr-auto">AxumHUB Meet ( {{id}} Team )</h3>
+				<h3 class="grey--text text--darken-2 mr-auto">{{$t("message.axumHUBMeet")}} ( {{id}} Team )</h3>
 				<v-menu transition="scroll-y-reverse-transition" class="ml-auto" offset-y>
 					<template v-slot:activator="{ on, attrs }">
 						<v-btn class="ma-2 elevation-0" fab small v-bind="attrs" v-on="on">
@@ -11,16 +11,16 @@
 					</template>
 					<v-list>
 						<v-list-item @click="joinMeting(id)">
-							<v-list-item-title>Join Meeting</v-list-item-title>
+							<v-list-item-title>{{$t("message.joinMeeting")}}</v-list-item-title>
 						</v-list-item>
 						<v-list-item @click="shareScreen(id)">
-							<v-list-item-title>Share Screen</v-list-item-title>
+							<v-list-item-title>{{$t("message.shareScreen")}}</v-list-item-title>
 						</v-list-item>
 						<v-list-item @click="capture(id)">
-							<v-list-item-title>Capture Image</v-list-item-title>
+							<v-list-item-title>{{$t("message.captureImage ")}}</v-list-item-title>
 						</v-list-item>
 						<v-list-item @click="leaveMeting(id)">
-							<v-list-item-title>Leave Meeting</v-list-item-title>
+							<v-list-item-title>{{$t("message.leaveMeeting")}}</v-list-item-title>
 						</v-list-item>
 					</v-list>
 				</v-menu>
@@ -31,7 +31,7 @@
 				<div class="d-flex">
 					<div class="ml-auto">
 						<v-btn @click="shareScreen(id)" dark small color="info" class="elevation-0" v-if="hasJoined">
-							share screen
+							{{$t("message.sharescreen")}}
 							<v-icon class="ml-2">mdi-monitor-screenshot</v-icon>
 						</v-btn>
 						<v-btn
@@ -42,7 +42,7 @@
 							class="elevation-0 ml-4"
 							v-if="hasJoined"
 						>
-							capture image
+							{{$t("message.captureimage")}}
 							<v-icon class="ml-2">mdi-camera-enhance</v-icon>
 						</v-btn>
 					</div>
@@ -51,9 +51,9 @@
 		</v-row>
 		<v-row v-if="!hasJoined" align="center" justify="center">
 			<v-col cols="6" xs="12" sm="5" min-height="600px">
-				<h1 class="align-center">JOIN MEETING NOW!</h1>
+				<h1 class="align-center">{{$t("message.joinNow")}}!</h1>
 				<vs-button @click="joinMeting(id)">
-					JOIN MEETING
+					{{$t("message.joinMeetingCap")}}
 					<i class="bx bxs-paper-plane"></i>
 				</vs-button>
 			</v-col>

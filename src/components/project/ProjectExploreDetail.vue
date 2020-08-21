@@ -36,7 +36,7 @@
 										<v-icon>mdi-send-circle-outline</v-icon>
 									</v-btn>
 								</template>
-								<span>Send Join request {{jreqbtn}}</span>
+								<span>{{$t("message.sendjoinrequest")}} {{jreqbtn}}</span>
 							</v-tooltip>
 						</v-toolbar>
 
@@ -47,29 +47,29 @@
 								<v-col cols="12" xs="12" sm="12">
 									<v-card outlined class="mx-auto" max-width="700">
 										<v-toolbar color="purple" dark>
-											<v-toolbar-title>Project Info</v-toolbar-title>
+											<v-toolbar-title>{{$t("message.projectInfo")}}</v-toolbar-title>
 										</v-toolbar>
 
 										<v-list subheader three-line>
-											<v-subheader>Details</v-subheader>
+											<v-subheader>{{$t("message.details")}}</v-subheader>
 
 											<v-list-item>
 												<v-list-item-content>
-													<v-list-item-title>Project Title</v-list-item-title>
+													<v-list-item-title>{{$t("message.projectTitle")}}</v-list-item-title>
 													<v-list-item-subtitle>{{project.title}}</v-list-item-subtitle>
 												</v-list-item-content>
 											</v-list-item>
 
 											<v-list-item>
 												<v-list-item-content>
-													<v-list-item-title>Project Summary</v-list-item-title>
+													<v-list-item-title>{{$t("message.projectSummary")}}</v-list-item-title>
 													<v-list-item-subtitle>{{project.summary}}</v-list-item-subtitle>
 												</v-list-item-content>
 											</v-list-item>
 
 											<v-list-item>
 												<v-list-item-content>
-													<v-list-item-title>Project License</v-list-item-title>
+													<v-list-item-title>{{$t("message.projectLicense")}}</v-list-item-title>
 													<v-list-item-subtitle>
 														<b>{{project.developmentmodel}}</b>
 													</v-list-item-subtitle>
@@ -78,26 +78,26 @@
 
 											<v-list-item>
 												<v-list-item-content>
-													<v-list-item-title>Project Chat</v-list-item-title>
+													<v-list-item-title>{{$t("message.projectChat")}}Project Chat</v-list-item-title>
 													<v-list-item-subtitle>{{project.chatgroupname}}</v-list-item-subtitle>
 												</v-list-item-content>
 											</v-list-item>
 
 											<v-list-item>
 												<v-list-item-content>
-													<v-list-item-title>Stars</v-list-item-title>
+													<v-list-item-title>{{$t("message.stars")}}</v-list-item-title>
 													<v-list-item-subtitle>{{project.stars}}</v-list-item-subtitle>
 												</v-list-item-content>
 											</v-list-item>
 											<v-list-item v-if="project.website">
 												<v-list-item-content>
-													<v-list-item-title>Project Website</v-list-item-title>
+													<v-list-item-title>{{$t("message.projectWebsite")}}</v-list-item-title>
 													<v-list-item-subtitle>{{project.website}}</v-list-item-subtitle>
 												</v-list-item-content>
 											</v-list-item>
 											<v-list-item v-if="project.githubrepolink">
 												<v-list-item-content>
-													<v-list-item-title>Github Repolink</v-list-item-title>
+													<v-list-item-title>{{$t("message.githubRepolink")}}</v-list-item-title>
 													<v-list-item-subtitle>{{project.githubrepolink}}</v-list-item-subtitle>
 												</v-list-item-content>
 											</v-list-item>

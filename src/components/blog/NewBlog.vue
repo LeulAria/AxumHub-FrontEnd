@@ -2,13 +2,13 @@
 	<v-container class="mt-8 blog-container">
 		<v-row no-gutters class="my-2 mb-1" justify="center">
 			<v-col cols="10" sm="6" md="4" class="mx-5 mb-2 d-flex align-center">
-				<h3 class="grey--text text--darken-2 mr-auto">Create New Post</h3>
+				<h3 class="grey--text text--darken-2 mr-auto">{{$t("message.createNewPost")}}</h3>
 			</v-col>
 			<v-col cols="10" sm="6" md="7">
 				<div class="ml-auto d-flex align-center justify-end justify-sm-center">
 					<v-row align="center">
 						<v-col cols="12" sm="12" md="6">
-							<p class="mr-5 sm-col-12 text-sm-center">(choose post type!)</p>
+							<p class="mr-5 sm-col-12 text-sm-center">{{$t("message.chooseposttype")}}</p>
 						</v-col>
 						<v-col cols="12" sm="12" md="6">
 							<v-radio-group v-model="postType" :mandatory="true" class="d-flex">
@@ -24,7 +24,7 @@
 		<v-divider class="mb-2"></v-divider>
 		<v-row justify="center" class="question_form_container">
 			<v-col cols="12" sm="10" md="5">
-				<h3 class="form-header text-center mb-2">Create New {{postType}}</h3>
+				<h3 class="form-header text-center mb-2">{{$t("message.createNew")}} {{postType}}</h3>
 				<v-card elevation="0" class="pa-6 rounded-lg">
 					<ValidationObserver ref="createQuestionObserver">
 						<form id="blog-form" @submit.prevent="submit">
@@ -244,10 +244,10 @@
 									small
 									type="submit"
 								>
-									<span v-show="!loading">Submit</span>
+									<span v-show="!loading">{{$t("message.submit")}}</span>
 									<v-icon class="px-4" dark v-show="loading">mdi-cloud-upload</v-icon>
 								</v-btn>
-								<v-btn depressed small @click="clear">clear</v-btn>
+								<v-btn depressed small @click="clear">{{$t("message.clear")}}</v-btn>
 							</v-card-actions>
 						</form>
 					</ValidationObserver>
@@ -255,7 +255,7 @@
 			</v-col>
 			<v-col cols="12" sm="10" md="5">
 				<v-expansion-panels popout>
-					<v-subheader class="ml-5 my-6">What are the dfferent kinds of post i can create?</v-subheader>
+					<v-subheader class="ml-5 my-6">{{$t("message.postType")}}?</v-subheader>
 					<v-expansion-panel v-for="(instruction,i) in instructions" :key="i">
 						<v-expansion-panel-header>{{instruction.title}}</v-expansion-panel-header>
 						<v-expansion-panel-content>{{instruction.body}}</v-expansion-panel-content>

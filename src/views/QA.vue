@@ -11,20 +11,14 @@
 					</template>
 					<v-list>
 						<v-list-item :to="{ name: 'CreateQuestion' }" link>
-							<v-list-item-title>Create New Question</v-list-item-title>
-						</v-list-item>
-						<v-list-item :to="{ name: 'UserPosts' }" link>
-							<v-list-item-title>See Your Questions</v-list-item-title>
-						</v-list-item>
-						<v-list-item link>
-							<v-list-item-title>Delete a Question</v-list-item-title>
+							<v-list-item-title>{{$t("message.createNewQuestion")}}</v-list-item-title>
 						</v-list-item>
 					</v-list>
 				</v-menu>
 			</v-col>
 		</v-row>
 		<v-row no-gutters class="my-2 my-4">
-			<v-subheader>All Questions</v-subheader>
+			<v-subheader>{{$t("message.allQuestions")}}</v-subheader>
 			<v-col cols="12" xs="12">
 				<v-text-field
 					v-model="search"
@@ -80,7 +74,7 @@
 							<v-btn fab small text class="mr-1" @click="likePostedQuestion(question._id)">
 								<v-icon>mdi-heart</v-icon>
 							</v-btn>
-							<span class="subheading mr-2">{{question.likes.length}} likes</span>
+							<span class="subheading mr-2">{{question.likes.length}} {{t("message.likes")}}</span>
 							<span class="mr-1">·</span>
 							<v-btn fab small class="ml-auto" text @click="showDetail(question._id)">
 								<v-icon>mdi-eye</v-icon>

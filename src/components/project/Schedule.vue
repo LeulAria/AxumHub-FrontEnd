@@ -11,7 +11,7 @@
 						</template>
 
 						<v-card class="py-5 px-10">
-							<h3 class="mb-3">Customize calender view format</h3>
+							<h3 class="mb-3">{{$t("message.customizecalenderviewformat")}}</h3>
 
 							<v-select
 								class="my-8"
@@ -106,8 +106,8 @@
 								</template>
 								<v-date-picker v-model="now" no-title scrollable>
 									<v-spacer></v-spacer>
-									<v-btn text color="primary" @click="nowMenu = false">Cancel</v-btn>
-									<v-btn text color="primary" @click="$refs.nowMenu.save(now)">OK</v-btn>
+									<v-btn text color="primary" @click="nowMenu = false">{{$t("message.cancel")}}</v-btn>
+									<v-btn text color="primary" @click="$refs.nowMenu.save(now)">{{$t("message.ok")}}</v-btn>
 								</v-date-picker>
 							</v-menu>
 							<v-select

@@ -2,7 +2,7 @@
 	<v-container>
 		<v-row no-gutters class="my-2">
 			<v-col cols="10" sm="10" class="mx-5 d-flex align-center">
-				<h3 class="grey--text text--darken-2 mr-auto">Axum HUB Q&A</h3>
+				<h3 class="grey--text text--darken-2 mr-auto">{{$t("message.qna")}}</h3>
 			</v-col>
 		</v-row>
 		<v-divider></v-divider>

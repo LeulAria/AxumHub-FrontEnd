@@ -2,7 +2,7 @@
 	<v-container>
 		<v-row justify="center" class="mt-10">
 			<v-col cols="12" sm="6">
-				<h2 class="form-header text-center">Add Education Profile</h2>
+				<h2 class="form-header text-center">{{$t("message.addEducationProfile")}}</h2>
 				<v-card elevation="0" class="pa-6 rounded-lg">
 					<ValidationObserver ref="singupObserver">
 						<form>
@@ -119,10 +119,10 @@
 									small
 									@click="submit"
 								>
-									<span v-show="!loadingEducation">Submit</span>
+									<span v-show="!loadingEducation">{{$t("message.submit")}}</span>
 									<v-icon class="px-4" dark v-show="loadingEducation">mdi-cloud-upload</v-icon>
 								</v-btn>
-								<v-btn depressed small @click="clear">clear</v-btn>
+								<v-btn depressed small @click="clear">{{$t("message.clear")}}</v-btn>
 							</v-card-actions>
 						</form>
 					</ValidationObserver>

@@ -2,7 +2,7 @@
 	<v-main>
 		<v-row no-gutters class="my-2 mb-1">
 			<v-col cols="10" sm="10" class="mx-5 mb-2 d-flex align-center">
-				<h3 class="grey--text text--darken-2 mr-auto">Explore Project</h3>
+				<h3 class="grey--text text--darken-2 mr-auto">{{$t("message.exploreProject")}}</h3>
 				<v-btn icon link :to="{ name: 'Project' }">
 					<i class="bx bx-home-circle icon-size-md"></i>
 				</v-btn>
@@ -65,8 +65,8 @@
 										>{{project&&project.summary.split(' ').slice(0,6).join(' ')+'...'}}</v-card-subtitle>
 										<div class="project-star d-flex align-center justify-center">
 											<div>
-												<v-icon color="info">mdi-star-outline</v-icon>
-												<small>12</small>
+												<v-icon color="info" @click="updatestar++">mdi-star-outline</v-icon>
+												<small>{{updatestar}}</small>
 											</div>
 										</div>
 									</v-card>
@@ -130,6 +130,7 @@ export default class Project extends Vue {
 	acceptJoin!: any;
 	rejectJoin!: any;
 	loadingproj!: any;
+	updatestar!: any;
 
 	mounted() {
 		this.getAllProjects();

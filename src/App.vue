@@ -6,17 +6,10 @@
 		>
 			<router-view></router-view>
 		</v-main>
-		<v-snackbar v-model="show" bottom dark left :timeout="snackbarTimeout">
-			{{snackbarText}}
-			<template v-slot:action="{ attrs }">
-				<v-btn color="pink lighten-3" text v-bind="attrs" @click="closeHideSnackbar()">Close</v-btn>
-			</template>
-		</v-snackbar>
 	</v-app>
 </template>
 
 <script lang="ts">
-// transition: slide-y-reverse-transition
 import { Component, Vue, Watch } from "vue-property-decorator";
 import { mapGetters, mapActions } from "vuex";
 

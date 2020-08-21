@@ -18,10 +18,10 @@ export default {
 		return {
 			langs: [
 				{ label: "English", value: "en" },
-				{ label: "French", value: "en" },
-				{ label: "አማርኛ", value: "am" },
-				{ label: "ሱማልኛ", value: "am" },
-				{ label: "Oromiffaa", value: "en" }
+				{ label: "አማርኛ", value: "am" }
+				// { label: "French", value: "en" },
+				// { label: "ሱማልኛ", value: "am" },
+				// { label: "Oromiffaa", value: "en" }
 			]
 		};
 	}

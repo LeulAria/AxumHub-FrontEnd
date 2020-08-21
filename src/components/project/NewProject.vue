@@ -2,13 +2,13 @@
 	<v-container class="mt-8">
 		<v-row no-gutters class="my-2 mb-1">
 			<v-col cols="10" sm="10" class="mx-5 mb-2 d-flex align-center">
-				<h3 class="grey--text text--darken-2 mr-auto">Create New Project</h3>
+				<h3 class="grey--text text--darken-2 mr-auto">{{$t("message.createNewProject")}}</h3>
 			</v-col>
 		</v-row>
 		<v-divider class="mb-2"></v-divider>
 		<v-row justify="center" class="question_form_container">
 			<v-col cols="12" sm="10" md="8">
-				<h3 class="grey--text mb-4 text--darken-2 form-header">Project Informations...</h3>
+				<h3 class="grey--text mb-4 text--darken-2 form-header">{{$t("message.projectInformations")}}...</h3>
 				<v-card elevation="0" class="pa-6 rounded-lg">
 					<ValidationObserver ref="newProjectObserver">
 						<form>
@@ -83,7 +83,7 @@
 								></v-text-field>
 							</ValidationProvider>
 
-							<v-subheader>Other optional infos</v-subheader>
+							<v-subheader>{{$t("message.otheroptionalinfos")}}</v-subheader>
 							<v-divider inset></v-divider>
 							<ValidationProvider v-slot="{ errors }" name="githubrepolink">
 								<v-text-field
@@ -107,7 +107,7 @@
 								></v-text-field>
 							</ValidationProvider>
 
-							<v-subheader>Axuhhub chat and colaboration Group</v-subheader>
+							<v-subheader>{{$t("message.axch")}}</v-subheader>
 							<v-divider inset></v-divider>
 							<ValidationProvider v-slot="{ errors }" rules="required" name="createchatgroup">
 								<v-checkbox
@@ -146,10 +146,10 @@
 									small
 									@click="submit"
 								>
-									<span v-show="!loading">Submit</span>
+									<span v-show="!loading">{{$t("message.submit")}}</span>
 									<v-icon class="px-4" dark v-show="loading">mdi-cloud-upload</v-icon>
 								</v-btn>
-								<v-btn depressed small @click="clear">clear</v-btn>
+								<v-btn depressed small @click="clear">{{$t("message.clear")}}</v-btn>
 							</v-card-actions>
 						</form>
 					</ValidationObserver>

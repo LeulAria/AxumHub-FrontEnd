@@ -28,43 +28,35 @@
 						<v-toolbar flat>
 							<v-toolbar-title>{{project && project.title}}</v-toolbar-title>
 
-							<v-spacer></v-spacer>
-
 							<v-dialog v-model="dialog" scrollable max-width="600px">
 								<template v-slot:activator="{ on, attrs }">
-									<v-btn icon class="mr-5" v-bind="attrs" v-on="on">
+									<v-btn fab small color="primary" depressed class="ml-5" v-bind="attrs" v-on="on">
 										<i class="bx bx-user-plus icon-size-md"></i>
 									</v-btn>
 								</template>
 								<v-card class="pa-5">
-									<p>Send invitation using email adress type in the input the email.</p>
+									<p>{{$t("message.ems")}}</p>
 
 									<v-text-field class="mx-4" v-model="email" placeholder="Email..."></v-text-field>
 
 									<v-card-actions>
-										<v-btn color="blue darken-1" text @click="dialog = false">Close</v-btn>
-										<v-btn color="blue darken-1" text @click="sendEmail()">Send</v-btn>
+										<v-btn color="blue darken-1" text @click="dialog = false">{{$t("message.close")}}Close</v-btn>
+										<v-btn color="blue darken-1" text @click="sendEmail()">{{$t("message.send")}}Send</v-btn>
 									</v-card-actions>
 								</v-card>
 							</v-dialog>
 
-							<!-- <v-btn icon link :to="{ name: 'TaskList' }" class="mr-5" v-bind="attrs" v-on="on">
-								<i class="bx bx-list-check icon-size-md"></i>
-							</v-btn>-->
+							<v-spacer></v-spacer>
 
-							<v-btn icon>
+							<v-btn icon :to="{ name: 'Conference' }">
 								<i class="bx bx-video icon-size-md"></i>
 							</v-btn>
 
-							<v-btn icon>
-								<i class="bx bx-video icon-size-md"></i>
-							</v-btn>
-
-							<v-btn icon>
+							<v-btn icon link :to="{ name: 'Chat', params: { id: project.title } }">
 								<v-icon>mdi-chat-processing-outline</v-icon>
 							</v-btn>
 
-							<v-btn icon link :to="{ name: 'Uploads', params: { id: project._id } }">
+							<v-btn icon link :to="{ name: 'Uploads', params: { id: project.title } }">
 								<v-icon>mdi-cloud-check-outline</v-icon>
 							</v-btn>
 						</v-toolbar>
@@ -74,11 +66,11 @@
 						<v-card-text class="pa-5">
 							<v-row justify="space-between">
 								<v-col cols="12" xs="12" sm="12" md="6">
-									<p class="grey--text text--darken-2">admins and memebers</p>
+									<p class="grey--text text--darken-2">{{$t("message.adminsandmemebers")}}</p>
 
 									<v-card outlined class="rounded-lg">
 										<v-card-title>
-											Admins
+											{{$t("message.admins")}}
 											<v-spacer></v-spacer>
 											<v-text-field
 												v-model="searchadmin"
@@ -103,7 +95,7 @@
 
 									<v-card outlined class="rounded-lg mt-5">
 										<v-card-title>
-											Members
+											{{$t("message.admins")}}
 											<v-spacer></v-spacer>
 											<v-text-field
 												v-model="searchcontrib"
@@ -130,29 +122,29 @@
 								<v-col cols="12" xs="12" sm="12" md="5">
 									<v-card outlined class="mx-auto" max-width="400">
 										<v-toolbar color="purple" dark>
-											<v-toolbar-title>Project Info</v-toolbar-title>
+											<v-toolbar-title>{{$t("message.projectInfo")}}</v-toolbar-title>
 										</v-toolbar>
 
 										<v-list subheader three-line>
-											<v-subheader>Details</v-subheader>
+											<v-subheader>{{$t("message.details")}}</v-subheader>
 
 											<v-list-item>
 												<v-list-item-content>
-													<v-list-item-title>Project Title</v-list-item-title>
+													<v-list-item-title>{{$t("message.projectTitle")}}</v-list-item-title>
 													<v-list-item-subtitle>{{project.title}}</v-list-item-subtitle>
 												</v-list-item-content>
 											</v-list-item>
 
 											<v-list-item>
 												<v-list-item-content>
-													<v-list-item-title>Project Summary</v-list-item-title>
+													<v-list-item-title>{{$t("message.projectSummary")}}</v-list-item-title>
 													<v-list-item-subtitle>{{project.summary}}</v-list-item-subtitle>
 												</v-list-item-content>
 											</v-list-item>
 
 											<v-list-item>
 												<v-list-item-content>
-													<v-list-item-title>Project License</v-list-item-title>
+													<v-list-item-title>{{$t("message.projectLicense")}}</v-list-item-title>
 													<v-list-item-subtitle>
 														<b>{{project.developmentmodel}}</b>
 													</v-list-item-subtitle>
@@ -161,26 +153,26 @@
 
 											<v-list-item>
 												<v-list-item-content>
-													<v-list-item-title>Project Chat</v-list-item-title>
+													<v-list-item-title>{{$t("message.projectChat")}}</v-list-item-title>
 													<v-list-item-subtitle>{{project.chatgroupname}}</v-list-item-subtitle>
 												</v-list-item-content>
 											</v-list-item>
 
 											<v-list-item>
 												<v-list-item-content>
-													<v-list-item-title>Stars</v-list-item-title>
+													<v-list-item-title>{{$t("message.stars")}}</v-list-item-title>
 													<v-list-item-subtitle>{{project.stars}}</v-list-item-subtitle>
 												</v-list-item-content>
 											</v-list-item>
 											<v-list-item v-if="project.website">
 												<v-list-item-content>
-													<v-list-item-title>Project Website</v-list-item-title>
+													<v-list-item-title>{{$t("message.projectWebsite")}}</v-list-item-title>
 													<v-list-item-subtitle>{{project.website}}</v-list-item-subtitle>
 												</v-list-item-content>
 											</v-list-item>
 											<v-list-item v-if="project.githubrepolink">
 												<v-list-item-content>
-													<v-list-item-title>Github Repolink</v-list-item-title>
+													<v-list-item-title>{{$t("message.githubRepolink")}}</v-list-item-title>
 													<v-list-item-subtitle>{{project.githubrepolink}}</v-list-item-subtitle>
 												</v-list-item-content>
 											</v-list-item>

@@ -1,3 +1,5 @@
 export default {
-  appName: 'አክሱም መገናኛ'
+  message: {
+    appName: 'አክሱም መገናኛ'
+  }
 }

@@ -2,14 +2,14 @@
 	<v-container>
 		<v-row justify="center" class="mt-10">
 			<v-col cols="12" sm="12">
-				<h2 class="form-header text-center">Setup Your Profile</h2>
+				<h2 class="form-header text-center">{{$t("message.setupYourProfile")}}</h2>
 				<v-card elevation="0" class="pa-6 rounded-lg">
 					<ValidationObserver ref="singupObserver">
 						<form>
 							<v-row justify="center">
 								<v-col cols="12" xs="12" sm="6" md="6">
 									<v-card class="pa-8 elevation-0">
-										<v-subheader class="mb-5">Basic Informations:</v-subheader>
+										<v-subheader class="mb-5">{{$t("message.basicInformations")}}:</v-subheader>
 										<ValidationProvider v-slot="{ errors }" name="username" rules="required|min:2|max:40">
 											<v-text-field
 												v-model="handle"
@@ -105,7 +105,7 @@
 
 								<v-col cols="12" xs="12" sm="6" md="6">
 									<v-card class="pa-8 elevation-0">
-										<v-subheader class="mb-5">Social Media Links:</v-subheader>
+										<v-subheader class="mb-5">{{$t("message.socialMediaLinks")}}:</v-subheader>
 										<ValidationProvider v-slot="{ errors }" name="youtube" rules="min:5">
 											<v-text-field
 												v-model="youtube"
@@ -168,10 +168,10 @@
 											small
 											@click="submit"
 										>
-											<span v-show="!loadingProfileInfo">Submit</span>
+											<span v-show="!loadingProfileInfo">{{$t("message.submit")}}</span>
 											<v-icon class="px-4" dark v-show="loadingProfileInfo">mdi-cloud-upload</v-icon>
 										</v-btn>
-										<v-btn depressed small @click="clear">clear</v-btn>
+										<v-btn depressed small @click="clear">{{$t("message.clear")}}</v-btn>
 									</v-card-actions>
 								</v-col>
 							</v-row>

@@ -2,13 +2,13 @@
 	<v-container class="mt-8">
 		<v-row no-gutters class="my-2 mb-1">
 			<v-col cols="10" sm="10" class="mx-5 mb-2 d-flex align-center">
-				<h3 class="grey--text text--darken-2 mr-auto">Axum HUB Q&A</h3>
+				<h3 class="grey--text text--darken-2 mr-auto">{{$t("message.qna")}}</h3>
 			</v-col>
 		</v-row>
 		<v-divider class="mb-2"></v-divider>
 		<v-row justify="center" class="question_form_container">
 			<v-col cols="12" sm="10" md="5">
-				<h1 class="form-header text-center">Ask Your Question?</h1>
+				<h1 class="form-header text-center">{{$t("message.askYourQuestion")}}?</h1>
 				<v-card elevation="0" class="pa-6 rounded-lg">
 					<ValidationObserver ref="createQuestionObserver">
 						<form>
@@ -66,7 +66,7 @@
 			</v-col>
 			<v-col cols="12" sm="10" md="5">
 				<v-expansion-panels popout>
-					<v-subheader class="ml-5 my-6">Make your questions more clearer by folowing this simple steps.</v-subheader>
+					<v-subheader class="ml-5 my-6">{{$t("message.qclear")}}</v-subheader>
 					<v-expansion-panel v-for="(instruction,i) in instructions" :key="i">
 						<v-expansion-panel-header>{{instruction.title}}</v-expansion-panel-header>
 						<v-expansion-panel-content>{{instruction.body}}</v-expansion-panel-content>

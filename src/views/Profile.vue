@@ -2,33 +2,38 @@
 	<v-main>
 		<v-row no-gutters class="my-2 mb-1">
 			<v-col cols="10" sm="10" class="mx-5 mb-2 d-flex align-center">
-				<h3 class="grey--text text--darken-2 mr-auto">Profile Detail</h3>
-				<v-menu transition="scroll-y-reverse-transition" class="ml-auto">
-					<template v-slot:activator="{ on, attrs }">
-						<v-btn class="ma-2 elevation-0" fab small v-bind="attrs" v-on="on">
-							<v-icon>mdi-pencil-plus-outline</v-icon>
-						</v-btn>
-					</template>
-					<v-list>
-						<v-list-item :to="{ name: 'ProfileInfo' }" link>
-							<v-list-item-title>Edit Profile Infos</v-list-item-title>
-						</v-list-item>
-						<v-list-item :to="{ name: 'ProfileExperiance' }" link>
-							<v-list-item-title>Add Experiance Field</v-list-item-title>
-						</v-list-item>
-						<v-list-item :to="{ name: 'ProfileEducation' }" link>
-							<v-list-item-title>Add Education Field</v-list-item-title>
-						</v-list-item>
-					</v-list>
-				</v-menu>
+				<h3 class="grey--text text--darken-2 mr-auto">{{$t("message.profileDetail")}}</h3>
+				<div class="d-flex justify-lg-space-between justify-sm-center">
+					<v-btn
+						small
+						depressed
+						color="primary ma-2"
+						:to="{ name: 'ProfileInfo' }"
+						link
+					>{{$t("message.editProfileInfos")}}</v-btn>
+					<v-btn
+						small
+						depressed
+						color="primary ma-2"
+						:to="{ name: 'ProfileExperiance' }"
+						link
+					>{{$t("message.addExperianceField")}}</v-btn>
+					<v-btn
+						small
+						depressed
+						color="primary ma-2"
+						:to="{ name: 'ProfileEducation' }"
+						link
+					>{{$t("message.addEducationField")}}</v-btn>
+				</div>
 			</v-col>
 		</v-row>
 
 		<v-row justify="center" class="mt-6">
-			<v-col cols="12" xs="12">
+			<v-col cols="12" sm="6" md="4">
 				<div class="d-flex justify-center">
 					<v-avatar rounded="true" color="indigo" size="200" class>
-						<v-img src="https://cdn.vuetifyjs.com/images/profiles/marcus.jpg"></v-img>
+						<v-img :src="userInfo.avatar"></v-img>
 					</v-avatar>
 				</div>
 				<v-row align="center" justify="center">
@@ -54,31 +59,43 @@
 					</v-col>
 				</v-row>
 			</v-col>
+
+			<v-col cols="12" xs="12" sm="6" md="4">
+				<v-card outlined class="pa-5">
+					<v-subheader>{{$t("message.bio")}}</v-subheader>
+					<p class="ml-4">{{ userProfile&&(userProfile.bio||'No user bio found...') }}</p>
+					<v-subheader>{{$t("message.githubusername")}}</v-subheader>
+					<div class="d-flex align-baseline ml-4">
+						<v-icon class="mr-3">mdi-github</v-icon>
+						<p>{{userProfile&&(userProfile.githubusername||'Git hub user name has\'t been set')}}</p>
+					</div>
+				</v-card>
+			</v-col>
 		</v-row>
 
 		<v-container>
 			<v-row>
 				<v-col cols="12" xs="12" sm="6">
 					<v-card outlined class="pa-4 elevation-0">
-						<v-subheader>Experiance</v-subheader>
+						<v-subheader>{{$t("message.experiance")}}</v-subheader>
 						<template v-for="(exp, i) in experiance">
 							<v-card :key="i" class="card_field ma-5 pa-4 elevation-0">
 								<div class="mb-2">
-									<h4>JobTitle:</h4>
+									<h4>{{$t("message.jobTitle")}}:</h4>
 									<span class="darken-3">{{exp.title}}</span>
 								</div>
 								<div class="mb-2">
-									<h4>Compay:</h4>
+									<h4>{{$t("message.compay")}}:</h4>
 									<span class="darken-3">{{exp.company}}</span>
 								</div>
 								<div class="mb-2">
-									<h4>From-To:</h4>
+									<h4>{{$t("message.fromTo")}}:</h4>
 									<span
 										class="darken-3"
 									>{{exp.from&&exp.from.slice(0,10)}} ~ {{exp.to?exp.to.slice(0,10):new Date().toISOString().slice(0,10)}}</span>
 								</div>
 								<div class="mb-2">
-									<h4>Description:</h4>
+									<h4>{{$t("message.description")}}:</h4>
 									<span class="darken-3">{{exp.description}}</span>
 								</div>
 								<div class="d-flex delete_btn" flat>
@@ -89,17 +106,19 @@
 										class="ml-auto elevation-0"
 										@click="deleteExperianceField(exp._id)"
 									>
-										Delete
+										{{$t("message.delete")}}
 										<v-icon right dark>mdi-delete-outline</v-icon>
 									</v-btn>
 								</div>
 								<v-divider class="my-3"></v-divider>
 							</v-card>
 						</template>
-						<v-subheader v-if="experiance&&experiance.length==0">No experiance profile found...</v-subheader>
+						<v-subheader
+							v-if="experiance&&experiance.length==0"
+						>{{$t("message.noexperianceprofilefound")}}...</v-subheader>
 						<div class="d-flex justify-center">
 							<v-btn color="primary" link :to="{ name: 'ProfileExperiance' }" class="elevation-0">
-								Add Profile Experiance
+								{{$t("message.addProfileExperiance")}}
 								<v-icon right dark>mdi-book-plus-multiple-outline</v-icon>
 							</v-btn>
 						</div>
@@ -107,25 +126,25 @@
 				</v-col>
 				<v-col cols="12" xs="12" sm="6">
 					<v-card outlined class="pa-5">
-						<v-subheader>Education</v-subheader>
+						<v-subheader>{{$t("message.education")}}</v-subheader>
 						<template v-for="(edu, i) in education">
 							<v-card :key="i" class="card_field ma-5 pa-4 elevation-0">
 								<div class="mb-2">
-									<h4>School:</h4>
+									<h4>{{$t("message.school")}}:</h4>
 									<span class="darken-3">{{edu.school}}</span>
 								</div>
 								<div class="mb-2">
-									<h4>Degree:</h4>
+									<h4>{{$t("message.degree")}}:</h4>
 									<span class="darken-3">{{edu.degree}}</span>
 								</div>
 								<div class="mb-2">
-									<h4>From-To:</h4>
+									<h4>{{$t("message.fromTo")}}:</h4>
 									<span
 										class="darken-3"
 									>{{edu.from&&edu.from.slice(0,10)}} ~ {{edu.to?edu.to.slice(0,10):new Date().toISOString().slice(0,10)}}</span>
 								</div>
 								<div class="mb-2">
-									<h4>Description:</h4>
+									<h4>{{$t("message.description")}}</h4>
 									<span class="darken-3">{{edu.description}}</span>
 								</div>
 								<div class="d-flex delete_btn" flat>
@@ -136,7 +155,7 @@
 										class="ml-auto elevation-0"
 										@click="deleteEducationField(edu._id)"
 									>
-										Delete
+										{{$t("message.delete")}}
 										<v-icon right dark>mdi-delete-outline</v-icon>
 									</v-btn>
 								</div>
@@ -146,7 +165,7 @@
 						<v-subheader v-if="education&&education.length==0">No education profile found...</v-subheader>
 						<div class="d-flex justify-center">
 							<v-btn color="primary" link :to="{ name: 'ProfileEducation' }" class="elevation-0">
-								Add Profile Education
+								{{$t("message.addProfileEducation")}}
 								<v-icon right dark>mdi-book-plus-multiple-outline</v-icon>
 							</v-btn>
 						</div>
@@ -158,19 +177,8 @@
 		<v-container>
 			<v-row>
 				<v-col cols="12" xs="12" sm="6">
-					<v-card outlined class="pa-5">
-						<v-subheader>Bio</v-subheader>
-						<p class="ml-4">{{ userProfile&&(userProfile.bio||'No user bio found...') }}</p>
-						<v-subheader>Github user name</v-subheader>
-						<div class="d-flex align-baseline ml-4">
-							<v-icon class="mr-3">mdi-github</v-icon>
-							<p>{{userProfile&&(userProfile.githubusername||'Git hub user name has\'t been set')}}</p>
-						</div>
-					</v-card>
-				</v-col>
-				<v-col cols="12" xs="12" sm="6">
 					<v-card outlined class="rounded-lg">
-						<v-subheader>Skills</v-subheader>
+						<v-subheader>{{$t("message.skills")}}</v-subheader>
 						<v-card class="mx-auto my-3 elevation-0" max-width="300" tile>
 							<v-list dense>
 								<v-list-item-group color="primary">
@@ -196,8 +204,8 @@
 			<v-row justify="center">
 				<v-col cols="12" xs="12" sm="8">
 					<v-card outlined class="pa-5">
-						<h3 class="error--text mb-4">Danger zone</h3>
-						<v-btn color="error" class="elevation-0">Delete Account</v-btn>
+						<h3 class="error--text mb-4">{{$t("message.dangerzone")}}</h3>
+						<v-btn color="error" class="elevation-0">{{$t("message.deleteAccount")}}</v-btn>
 					</v-card>
 				</v-col>
 			</v-row>
