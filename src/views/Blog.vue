@@ -1,13 +1,12 @@
 <template>
 	<v-card flat class="blog-container">
 		<v-toolbar color="purple" dark flat prominent>
-			<v-btn icon class="create-new" v-if="!(tabs==3)" :to="{ name: 'NewBlog' }" link>
+			<v-btn icon class="create-new" :to="{ name: 'NewBlog' }" link>
 				<i class="bx bxs-message-square-add add-icon"></i>
 			</v-btn>
 			<v-row>
 				<v-col cols="12" xs="12" sm="7" md="8">
 					<v-text-field
-						append-icon="mic"
 						class="mx-4 mt-3"
 						flat
 						:name="Math.random()"
