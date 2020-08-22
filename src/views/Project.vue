@@ -265,8 +265,8 @@ export default class Project extends Vue {
 		this.$router.push({ name: "Chat", params: { id } });
 	}
 
-	seeDetail(id: string) {
-		this.$router.push({ name: "ProjectDetail", params: { id } });
+	seeDetail(title: string) {
+		this.$router.push({ name: "ProjectDetail", params: { title } });
 	}
 
 	set filteredUserProjects(val: any) {

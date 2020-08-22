@@ -52,7 +52,7 @@
 								<i class="bx bx-video icon-size-md"></i>
 							</v-btn>
 
-							<v-btn icon link :to="{ name: 'Chat', params: { id: project.title } }">
+							<v-btn icon @click="openChat(project.chatgroupname)">
 								<v-icon>mdi-chat-processing-outline</v-icon>
 							</v-btn>
 
@@ -233,6 +233,11 @@ export default class ProjectDetail extends Vue {
 	];
 
 	created() {
+		this.getSingleProject(this.id);
+	}
+
+	openChat(id: string) {
+		this.$router.push({ name: "Chat", params: { id } });
 		this.getSingleProject(this.id);
 	}
 
