@@ -29,18 +29,9 @@ export const loginUser = (context: any, user: any) => {
   })
 }
 
-export const loginWithIdentityProvider = (context: any, user: any) => {
-  return new Promise((resolve: any, reject: any) => {
-    User.loginWithIdentityProvider().then((res) => {
-      console.log('their you go almost their 🔥🔥🔥🔥');
-      context.commit('SET_USER', res.data.user)
-      context.commit('SET_TOKEN', res.data.token, { root: true })
-      resolve(res)
-    }).catch((err: any) => {
-      console.log('i think im sleeping right now...🛌');
-      reject(err.response.data.detail)
-    })
-  })
+export const loginWithIdentityProvider = (context: any, data: any) => {
+  context.commit('SET_USER', data.user)
+  context.commit('SET_TOKEN', data.token, { root: true })
 }
 
 export const logOut = (context: any) => {

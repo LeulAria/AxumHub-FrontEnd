@@ -4,6 +4,7 @@ import questionRoutes from './questions-route'
 import profileRoutes from './profile-route'
 import projectRoutes from './project-routes'
 import blogRoutes from './blog-routes'
+import callbackRoutes from './callback-route'
 
 export default [
   ...authRoutes,
@@ -11,5 +12,6 @@ export default [
   ...profileRoutes,
   ...projectRoutes,
   ...questionRoutes,
-  ...blogRoutes
+  ...blogRoutes,
+  ...callbackRoutes
 ]
