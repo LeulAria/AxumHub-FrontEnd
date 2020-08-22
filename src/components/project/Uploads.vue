@@ -84,7 +84,7 @@
 									<v-btn icon @click="downloadUploadedFile(upload._id)">
 										<v-icon>mdi-cloud-download-outline</v-icon>
 									</v-btn>
-									<v-btn icon v-if="upload.userid.userid==userInfo.id" @click="deleteFileUpload(upload._id)">
+									<v-btn icon v-if="upload.userid._id==userInfo.id" @click="deleteFileUpload(upload._id)">
 										<v-icon>mdi-delete-sweep-outline</v-icon>
 									</v-btn>
 								</div>
