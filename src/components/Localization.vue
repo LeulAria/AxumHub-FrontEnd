@@ -18,7 +18,8 @@ export default {
 		return {
 			langs: [
 				{ label: "English", value: "en" },
-				{ label: "አማርኛ", value: "am" }
+				{ label: "አማርኛ", value: "am" },
+				{ label: "عربى", value: "ar" }
 				// { label: "French", value: "en" },
 				// { label: "ሱማልኛ", value: "am" },
 				// { label: "Oromiffaa", value: "en" }

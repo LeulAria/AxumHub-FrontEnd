@@ -106,5 +106,6 @@ export default {
     qclear: "እነዚህን ቀላል እርምጃዎች በመከተል ጥያቄዎችዎን የበለጠ ግልፅ ያድርጓቸው።.",
     location: "ቦታ",
     members: "አባል"
-  }
+  },
+  direction: "ltr"
 }
