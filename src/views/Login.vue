@@ -141,34 +141,6 @@ export default class Login extends Vue {
         setTimeout(() => (this.loadingLogin = false), 2000);
       });
   }
-
-  loginWithIdentityProvider() {
-    console.log("so mame u their 😇");
-    console.log("k lets do this thing 👨‍⚕️");
-    // this.$store.dispatch("navbar", true);
-    // this.$router.push({ name: "Dashboard" });
-
-    this.$store
-      .dispatch("users/loginWithIdentityProvider")
-      .then(res => {
-        this.$vs.notification({
-          icon: "<i class='bx bx-bell' ></i>",
-          color: "primary",
-          position: "top-right",
-          title: "Welcome",
-          text: `Success: Welcome again to axumhb`
-        });
-      })
-      .catch((err: string) => {
-        this.$vs.notification({
-          icon: "<i class='bx bxs-bug' ></i>",
-          color: "danger",
-          position: "top-right",
-          title: "Login Error",
-          text: `Error: ${err}`
-        });
-      });
-  }
 }
 </script>
 
