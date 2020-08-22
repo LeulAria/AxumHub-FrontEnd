@@ -17,7 +17,7 @@
 								:key="project._id"
 								ripple
 								class="chat-list d-flex align-content-center open-chat"
-								@click="openChat(project.title)"
+								@click="openChat(project.chatgroupname)"
 							>
 								<vs-avatar class="mr-3" circle link size="40">
 									<i class="bx bx-group"></i>
@@ -141,8 +141,8 @@ export default class Chat extends Vue {
 	}
 
 	openChat(id: string) {
-		this.getProjectByChatName(this.id);
-		this.setRoomId(this.id);
+		this.getProjectByChatName(id);
+		this.setRoomId(id);
 		this.$router.push({ name: "Chat", params: { id } });
 	}
 
@@ -185,13 +185,13 @@ export default class Chat extends Vue {
 	transition all .5s
 	height 50px
 	&:hover
-		transform scale(1.14)
+		transform scale(1.07)
 	.chat-list-txt
 		font-size .75em
 		line-height 40px
 .open-chat
 	transition all .5s
 	&:active
-		transform scale(.7)
+		transform scale(.93)
 
 </style>

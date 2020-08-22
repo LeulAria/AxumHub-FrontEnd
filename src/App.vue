@@ -1,8 +1,8 @@
 <template>
-	<v-app>
+	<v-app :class="{ 'arabicLayout': $root.$i18n.locale=='ar' }">
 		<side-navbar v-if="loggedIn && navbar"></side-navbar>
 		<v-main
-			:class="{'pa-0': loggedIn, 'mt-app-bar': loggedIn, 'nav-drawer-padding': !$vuetify.breakpoint.xsOnly && loggedIn}"
+			:class="{'pa-0': loggedIn, 'mt-app-bar': loggedIn, 'nav-drawer-padding': !$vuetify.breakpoint.xsOnly && loggedIn, 'nav-drawer-padding-ar': !$vuetify.breakpoint.xsOnly && loggedIn && $root.$i18n.locale=='ar'}"
 		>
 			<router-view></router-view>
 		</v-main>
@@ -61,6 +61,9 @@ export default class App extends Vue {
 	top 10px
 .nav-drawer-padding
 	margin-left 70px
+.nav-drawer-padding-ar
+	margin-left 0px
+	margin-right 70px !important
 .mt-app-bar
 	margin-top 48px
 </style>

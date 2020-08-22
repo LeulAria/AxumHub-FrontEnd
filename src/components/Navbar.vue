@@ -2,7 +2,7 @@
 <template>
 	<div>
 		<v-app-bar
-			:class="{ 'deep-purple': true, 'accent-4': true, 'ml-app-bar': !$vuetify.breakpoint.xsOnly }"
+			:class="{ 'deep-purple': true, 'accent-4': true, 'ml-app-bar': (!$vuetify.breakpoint.xsOnly && $root.$i18n.locale!=='ar'), 'ml-app-bar-ar': (!$vuetify.breakpoint.xsOnly && $root.$i18n.locale=='ar') }"
 			dense
 			dark
 			fixed
@@ -11,7 +11,13 @@
 			<v-toolbar-title class="ml-4">{{ $t("message.appName") }}</v-toolbar-title>
 			<v-spacer></v-spacer>
 
-			<v-menu v-model="menu" :close-on-content-click="false" :nudge-width="200" offset-y>
+			<v-menu
+				v-model="menu"
+				:close-on-content-click="false"
+				:nudge-width="200"
+				offset-y
+				class="navigation-drawer"
+			>
 				<template v-slot:activator="{ on, attrs }">
 					<v-avatar color="indigo" size="36" v-bind="attrs" v-on="on">
 						<img :src="userInfo.avatar" />
@@ -84,7 +90,7 @@
 			:expand-on-hover="$vuetify.breakpoint.smAndUp"
 			:mini-variant="$vuetify.breakpoint.smAndUp"
 			mini-variant-width="70"
-			:right="right"
+			:right="$root.$i18n.locale=='ar'"
 			:permanent="$vuetify.breakpoint.smAndUp"
 			src="https://www.omenkaonline.com/wp-content/uploads/2017/08/ETH_2015_DK_154_0.jpg"
 			gradient="to top right, rgba(0,0,0,0.8), rgba(0,0,0,.7)"
@@ -182,7 +188,9 @@ export default class Navbar extends Vue {
 		height 100%
 		background-image linear-gradient(to bottom, rgba(0,0,5,0.88),rgba(0,0,5,1))
 .ml-app-bar
-	margin-left 70px
+	margin-left 70px !important
+.ml-app-bar-ar
+	margin-right 70px !important
 .navigation-drawer
 	z-index 10000
 </style>
