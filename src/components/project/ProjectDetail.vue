@@ -40,8 +40,8 @@
 									<v-text-field class="mx-4" v-model="email" placeholder="Email..."></v-text-field>
 
 									<v-card-actions>
-										<v-btn color="blue darken-1" text @click="dialog = false">{{$t("message.close")}}Close</v-btn>
-										<v-btn color="blue darken-1" text @click="sendEmail()">{{$t("message.send")}}Send</v-btn>
+										<v-btn color="blue darken-1" text @click="dialog = false">{{$t("message.close")}}</v-btn>
+										<v-btn color="blue darken-1" text @click="sendEmail()">{{$t("message.send")}}</v-btn>
 									</v-card-actions>
 								</v-card>
 							</v-dialog>

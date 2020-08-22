@@ -74,7 +74,7 @@
 							<v-btn fab small text class="mr-1" @click="likePostedQuestion(question._id)">
 								<v-icon>mdi-heart</v-icon>
 							</v-btn>
-							<span class="subheading mr-2">{{question.likes.length}} {{t("message.likes")}}</span>
+							<span class="subheading mr-2">{{question.likes.length}} {{$t("message.likes")}}</span>
 							<span class="mr-1">·</span>
 							<v-btn fab small class="ml-auto" text @click="showDetail(question._id)">
 								<v-icon>mdi-eye</v-icon>

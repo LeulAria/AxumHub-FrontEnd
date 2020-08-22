@@ -35,6 +35,9 @@
 		<v-tabs-items v-model="tabs">
 			<v-tab-item class="tab-container">
 				<v-container fluid class="px-xs-4 px-sm-8 px-md-15">
+					<v-col v-if="isLoading" cols="12" xs="12" class="d-flex align-center justify-center mt-10">
+						<v-progress-circular :size="70" :width="7" color="purple" indeterminate></v-progress-circular>
+					</v-col>
 					<v-row justify="space-between">
 						<template v-if="!articleBlogsExist">
 							<v-col class="d-flex flex-column align-center justify-center mt-3 mb-14 mx-5">
@@ -46,6 +49,7 @@
 								<h2 class="grey-text text-center font-weight-medium">{{$t("message.noArticlePostsYet")}}!</h2>
 							</v-col>
 						</template>
+
 						<template v-for="blog in blogs">
 							<v-col
 								cols="12"
@@ -268,23 +272,6 @@ export default class Blog extends Vue {
 	created() {
 		console.log("start loading...");
 		this.getAllPostedBlogs();
-		this.loadingblog = this.$vs.loading({
-			type: "circles",
-			color: "#FF6",
-			background: "#000",
-			opacity: 0.8,
-			scale: 1.3,
-			text: "Loading blogs..."
-		});
-	}
-
-	@Watch("loading")
-	onLoading(newVal: boolean, oldVal: boolean) {
-		// FIXME: remove on prod
-		if (!newVal) {
-			console.log(newVal, " close the loading...");
-			setTimeout(() => this.loadingblog.close(), 1000);
-		}
 	}
 }
 </script>

@@ -180,8 +180,6 @@ export default class Uploads extends Vue {
 		fileLink.setAttribute("download", uploadFileName);
 		document.body.appendChild(fileLink);
 
-		// console.log(uploadFileName);
-
 		fileLink.click();
 	}
 
