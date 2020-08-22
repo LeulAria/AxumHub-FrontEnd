@@ -95,7 +95,7 @@
 
 									<v-card outlined class="rounded-lg mt-5">
 										<v-card-title>
-											{{$t("message.admins")}}
+											{{$t("message.members")}}
 											<v-spacer></v-spacer>
 											<v-text-field
 												v-model="searchcontrib"

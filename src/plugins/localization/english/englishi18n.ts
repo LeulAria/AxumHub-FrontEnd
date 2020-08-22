@@ -105,5 +105,6 @@ export default {
     askYourQuestion: 'Ask Your Question',
     qclear: 'Make your questions more clearer by folowing this simple steps.',
     location: 'Location',
+    members: "Members"
   }
 }

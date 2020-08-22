@@ -141,6 +141,8 @@ export default class Chat extends Vue {
 	}
 
 	openChat(id: string) {
+		this.getProjectByChatName(this.id);
+		this.setRoomId(this.id);
 		this.$router.push({ name: "Chat", params: { id } });
 	}
 

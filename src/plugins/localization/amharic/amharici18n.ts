@@ -104,6 +104,7 @@ export default {
     uploads: "ጫን",
     askYourQuestion: "ጥያቄዎን ይጠይቁ",
     qclear: "እነዚህን ቀላል እርምጃዎች በመከተል ጥያቄዎችዎን የበለጠ ግልፅ ያድርጓቸው።.",
-    location: "ቦታ"
+    location: "ቦታ",
+    members: "አባል"
   }
 }
