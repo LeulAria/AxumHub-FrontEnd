@@ -1,6 +1,5 @@
 import User from '../../../api/User'
 
-
 export const registerUser = (context: any, user: any) => {
   return new Promise((resolve: any, reject: any) => {
     User.register(user)

@@ -9,10 +9,6 @@ export default {
   login(user: any) {
     return Api.post(`${route}/login`, user)
   },
-  loginWithIdentityProvider() {
-    alert('go to server...')
-    return Api.post(`${route}/etp`, { code: 'change this mame...🔥 dont seep.. you can do it 😺 kidding...' })
-  },
   currentUser() {
     return Api.get(`${route}/current`);
   },

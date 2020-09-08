@@ -48,17 +48,36 @@
 
 							<v-spacer></v-spacer>
 
-							<v-btn icon :to="{ name: 'Conference' }">
-								<i class="bx bx-video icon-size-md"></i>
-							</v-btn>
-
-							<v-btn icon @click="openChat(project.chatgroupname)">
-								<v-icon>mdi-chat-processing-outline</v-icon>
-							</v-btn>
-
-							<v-btn icon link :to="{ name: 'Uploads', params: { id: project._id } }">
-								<v-icon>mdi-cloud-check-outline</v-icon>
-							</v-btn>
+							<v-tooltip top>
+								<template v-slot:activator="{ on, attrs }">
+									<v-btn v-bind="attrs" v-on="on" icon :to="{ name: 'Conference' }">
+										<i class="bx bx-video icon-size-md"></i>
+									</v-btn>
+								</template>
+								<span>{{ $t("message.videoChat") }}</span>
+							</v-tooltip>
+							<v-tooltip top>
+								<template v-slot:activator="{ on, attrs }">
+									<v-btn v-bind="attrs" v-on="on" icon @click="openChat(project.chatgroupname)">
+										<v-icon>mdi-chat-processing-outline</v-icon>
+									</v-btn>
+								</template>
+								<span>{{ $t("message.chat") }}</span>
+							</v-tooltip>
+							<v-tooltip top>
+								<template v-slot:activator="{ on, attrs }">
+									<v-btn
+										v-bind="attrs"
+										v-on="on"
+										icon
+										link
+										:to="{ name: 'Uploads', params: { id: project._id } }"
+									>
+										<v-icon>mdi-cloud-check-outline</v-icon>
+									</v-btn>
+								</template>
+								<span>{{ $t("message.uploads") }}</span>
+							</v-tooltip>
 						</v-toolbar>
 
 						<v-divider></v-divider>
