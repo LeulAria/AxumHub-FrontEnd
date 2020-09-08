@@ -1,8 +1,8 @@
 <template>
-	<div>
+	<div class="home">
 		<v-app-bar color="#4e54c8" elevate-on-scroll dark fixed>
 			<v-toolbar-title class="app_title">
-				<span class="logo_title_slim">axum</span>HUB
+				<span class="logo_title_slim ml-5">axum&nbsp;</span>HUB
 			</v-toolbar-title>
 
 			<v-spacer></v-spacer>
@@ -18,18 +18,30 @@
 			>Signup</v-btn>
 		</v-app-bar>
 		<div class="context">
-			<h2 class="line-1 anim-typewriter white--text">AXUM-HUB</h2>
 			<v-container class="mt-5 ma-auto">
 				<v-row justify="space-around">
-					<v-col cols="10" sm="5" md="4">
-						<img src="http://www.testqtech.com/assets/images/SEO-banner.png" height="300px" />
+					<v-col cols="10" sm="10" md="6" class>
+						<div class="desc-text">
+							<h1 class="white--text">Developers hub</h1>
+							<p
+								class="white--text text-center align-center"
+							>communication and colaboration platform for developers</p>
+							<div class="d-flex align-center justify-center">
+								<v-btn
+									large
+									class="start-btn align-center px-5 font-weight-bold"
+									link
+									:to="{ name: 'Signup' }"
+								>Get Started</v-btn>
+							</div>
+						</div>
 					</v-col>
-					<v-col cols="10" sm="5" md="4">
-						<h2 class="white--text">Developers</h2>
-						<p class="white--text">colaboration and communication platform</p>
-						<p
-							class="white--text"
-						>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Qui laudantium ex quisquam odit ab aut facilis soluta officia, ea nisi dolore reiciendis aliquid? Quos doloribus explicabo rerum eaque fugiat iusto?</p>
+					<v-col cols="10" sm="10" md="4" class="d-flex justify-center mb-5">
+						<img
+							class="mt-3 banner-img"
+							src="http://www.testqtech.com/assets/images/SEO-banner.png"
+							height="300px"
+						/>
 					</v-col>
 				</v-row>
 			</v-container>
@@ -69,34 +81,52 @@ export default class Home extends Vue {}
 /* Global */
 html{
   min-height: 100%;
-  overflow: hidden;
+  // overflow: hidden;
 }
 body{
-  height: calc(100vh - 8em);
+  min-height: calc(100vh - 8em);
   padding: 4em;
   color: rgba(255,255,255,.75); 
-  background-color: rgb(25,25,25);  
+  background-color: #333 !important;  
 }
 
-.line-1{
-    position: relative;
-    top: 50%;  
-    width: 10em;
-    margin: 0 auto;
-    border-right: 2px solid rgba(255,255,255,.75);
-    font-size: 180%;
-    font-weight: bolder;
-    letter-spacing: 3px;
-    text-align: center;
-    white-space: nowrap;
-    overflow: hidden;
-    transform: translateY(-50%);    
+.context 
+  background #4e54c8 !important;
+
+.v-application
+  background #4e54c8 !important
+
+
+.desc-text 
+  margin-top 3.5em
+  margin-bottom 5em
+
+.banner-img, .desc-text {
+  transform: scale(0);
+  animation: zoom-in 2s ease-out forwards normal;
+}
+
+.start-btn
+  border-radius 25px !important
+  margin 1em auto !important
+  transition all .4s !important
+  cursor pointer !important
+  &::hover
+    box-shadow 0 1px 10px rgba(0,0,0,0.4) !important
+
+@keyframes zoom-in {
+  0% {transform:scale(0)}
+  25% {transform:scale(1.15)}
+  50% {transform:scale(1.1)}
+  75% {transform:scale(1.13)}
+  80% {transform:scale(.9)}
+  100% {transform:scale(1)}
 }
 
 /* Animation */
 .anim-typewriter{
-  animation-delay: 1s;
-  animation: typewriter 4s steps(18) 800ms 2 normal both,
+  animation-delay: 2s;
+  animation: typewriter 4s steps(18) 800ms 1 normal both,
              blinkTextCursor 400ms steps(50) infinite normal;
 }
 @keyframes typewriter{
