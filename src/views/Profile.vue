@@ -95,9 +95,11 @@
 					<div :key="i" class="d-flex justify-center align-center">
 						<v-tooltip bottom>
 							<template v-slot:activator="{ on, attrs }">
-								<v-btn fav v-bind="attrs" v-on="on" icon class="mx-4" small :to="link.link" link>
-									<v-icon>{{link.icon}}</v-icon>
-								</v-btn>
+								<a target="blank" :href="link.link">
+									<v-btn fav v-bind="attrs" v-on="on" icon class="mx-4" small link>
+										<v-icon>{{link.icon}}</v-icon>
+									</v-btn>
+								</a>
 							</template>
 							<span>{{link.link}}</span>
 						</v-tooltip>
