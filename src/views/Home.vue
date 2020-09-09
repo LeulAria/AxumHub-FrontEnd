@@ -150,7 +150,7 @@ body{
 
 .area
   background #4e54c8
-  background -webkit-linear-gradient(to left, #8f94fb, #4e54c8) 
+  background #4e54c8 
   width 100%
   height 100vh
   

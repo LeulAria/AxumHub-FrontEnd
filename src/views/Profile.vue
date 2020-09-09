@@ -54,7 +54,7 @@
 								<v-fade-transition>
 									<v-overlay v-if="hover" absolute color="#036358">
 										<v-btn dark fab @click="profileEditDialog = true">
-											<i class="bx bx-edit-alt icon-size-md"></i>
+										  <i class="bx bx-edit-alt icon-size-md"></i>
 										</v-btn>
 									</v-overlay>
 								</v-fade-transition>
