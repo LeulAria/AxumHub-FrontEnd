@@ -39,7 +39,7 @@
 					<v-col cols="10" sm="10" md="4" class="d-flex justify-center mb-5">
 						<img
 							class="mt-3 banner-img"
-							src="http://www.testqtech.com/assets/images/SEO-banner.png"
+							src="https://www.mastersindatascience.org/wp-content/uploads/STEM-Guide-for-kids-hero-2-1024x467.jpg"
 							height="300px"
 						/>
 					</v-col>
