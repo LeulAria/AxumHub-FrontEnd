@@ -91,7 +91,8 @@ body{
   background #4e54c8 !important
 
 .logo-text
-  font-size 6rem
+  font-weight 900
+  font-size 8rem
   text-align center
 
 .desc-text 
