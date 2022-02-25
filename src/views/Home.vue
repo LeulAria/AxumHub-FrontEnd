@@ -19,9 +19,10 @@
 		</v-app-bar>
 		<div class="context">
 			<v-container class="mt-5 ma-auto">
-				<v-row justify="space-around">
+				<v-row justify="center">
 					<v-col cols="10" sm="10" md="6" class>
 						<div class="desc-text">
+							<h1 className="white--text logo-text">Axum Hub</h1>
 							<h1 class="white--text">Developers hub</h1>
 							<p
 								class="white--text text-center align-center"
@@ -35,13 +36,6 @@
 								>Get Started</v-btn>
 							</div>
 						</div>
-					</v-col>
-					<v-col cols="10" sm="10" md="4" class="d-flex justify-center mb-5">
-						<img
-							class="mt-3 banner-img"
-							src="https://www.mastersindatascience.org/wp-content/uploads/STEM-Guide-for-kids-hero-2-1024x467.jpg"
-							height="300px"
-						/>
 					</v-col>
 				</v-row>
 			</v-container>
@@ -96,10 +90,14 @@ body{
 .v-application
   background #4e54c8 !important
 
+.logo-text
+  font-size 6rem
+  text-align center
 
 .desc-text 
   margin-top 3.5em
   margin-bottom 5em
+  text-align center
 
 .banner-img, .desc-text {
   transform: scale(0);
